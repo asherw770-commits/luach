@@ -898,7 +898,10 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
       var edit=document.createElement("button");edit.className="editb";edit.textContent="✎";
       edit.addEventListener("click",function(){txt.contentEditable="true";txt.focus();function done(){txt.contentEditable="false";txt.removeEventListener("blur",done);var t=(txt.textContent||"").trim();if(t&&t!==m.text){m.text=t;saveMsgs();}else txt.textContent=m.text;}txt.addEventListener("blur",done);txt.addEventListener("keydown",function(k){if(k.key==="Enter"){k.preventDefault();txt.blur();}});});
       var del=document.createElement("button");del.className="trash";del.textContent="🗑";del.addEventListener("click",function(){messages=messages.filter(function(x){return x.id!==m.id;});saveMsgs();});
-      it.appendChild(mt);row.appendChild(it);row.appendChild(edit);row.appendChild(del);list.appendChild(row);
+      it.appendChild(mt);row.appendChild(it);
+      var urlM=(m.text||"").match(/https?:\/\/[^\s]+/i)||(m.text||"").match(/\bwww\.[^\s]+/i);
+      if(urlM){var cp=document.createElement("button");cp.className="editb";cp.textContent="🔗";cp.title="העתק קישור";cp.addEventListener("click",function(){var u=urlM[0];if(/^www\./i.test(u))u="https://"+u;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(function(){toast("הקישור הועתק ✓");},function(){prompt("העתק את הקישור:",u);});}else prompt("העתק את הקישור:",u);});row.appendChild(cp);}
+      row.appendChild(edit);row.appendChild(del);list.appendChild(row);
     });
   }
   function updatePreview(){
