@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>לוח הקומה</title>
+<meta name="theme-color" content="#070c1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="לוח הקומה">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Bellefair&family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;600;800;900&family=Rubik:wght@400;600;800&display=swap">
+<style>
+  :root{
+    --d-bg:radial-gradient(130% 100% at 50% -20%,#17244d 0%,rgba(23,36,77,0) 52%),radial-gradient(80% 60% at 100% 115%,#0f1c3e 0%,rgba(15,28,62,0) 60%),radial-gradient(70% 60% at 0% 115%,#0e1836 0%,rgba(14,24,54,0) 60%),#070c1a;
+    --d-text:#eef2fb;--d-muted:#93a0c1;--d-accent:#e7c072;--d-accent2:#8fb2ff;--d-clock:#eef2fb;--d-glow:rgba(91,141,239,.30);--d-secbar:linear-gradient(90deg,#e7c072,#5b8def);--d-card-bg:rgba(22,33,60,.55);--d-card-border:#26324f;--d-event-color:#a5adff;--d-line:#26324f;--d-font:"Heebo",-apple-system,"Segoe UI",Arial,sans-serif;--d-font-disp:"Frank Ruhl Libre",Georgia,serif;
+  }
+  :root[data-theme-name="apple"]{--d-bg:#eceef3;--d-text:#1c1c1e;--d-muted:#8e8e93;--d-accent:#0a84ff;--d-accent2:#0a84ff;--d-clock:#1c1c1e;--d-glow:transparent;--d-secbar:linear-gradient(90deg,#0a84ff,#30d158);--d-card-bg:#fff;--d-card-border:#e2e4ea;--d-event-color:#0a84ff;--d-line:#d6d8e0;--d-font:"Assistant","Heebo",sans-serif;--d-font-disp:"Assistant","Heebo",sans-serif;}
+  :root[data-theme-name="gold"]{--d-bg:radial-gradient(circle at 50% 0%,#17120a,#0a0806);--d-text:#e8d9a8;--d-muted:#b89a52;--d-accent:#d4af37;--d-accent2:#e9cf7e;--d-clock:#eacf7e;--d-glow:rgba(212,175,55,.3);--d-secbar:linear-gradient(90deg,#d4af37,#8a6a2f);--d-card-bg:rgba(212,175,55,.06);--d-card-border:rgba(212,175,55,.35);--d-event-color:#d4af37;--d-line:rgba(212,175,55,.3);--d-font:"Heebo",sans-serif;--d-font-disp:"Bellefair","Frank Ruhl Libre",serif;}
+  :root[data-theme-name="emerald"]{--d-bg:linear-gradient(160deg,#134a37,#0a2a20);--d-text:#f1e7cf;--d-muted:#b6c6ad;--d-accent:#dcbd6c;--d-accent2:#e6cb7c;--d-clock:#f6eeda;--d-glow:rgba(220,189,108,.25);--d-secbar:linear-gradient(90deg,#dcbd6c,#8fae8a);--d-card-bg:rgba(220,189,108,.08);--d-card-border:rgba(220,189,108,.35);--d-event-color:#e6cb7c;--d-line:rgba(220,189,108,.3);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  :root[data-theme-name="sunrise"]{--d-bg:linear-gradient(135deg,#ff9a5a 0%,#ff6a88 48%,#ffd07a 100%);--d-text:#fff;--d-muted:rgba(255,255,255,.92);--d-accent:#fff;--d-accent2:#fff;--d-clock:#fff;--d-glow:rgba(150,40,70,.3);--d-secbar:rgba(255,255,255,.85);--d-card-bg:rgba(255,255,255,.2);--d-card-border:rgba(255,255,255,.45);--d-event-color:#fff;--d-line:rgba(255,255,255,.4);--d-font:"Rubik",sans-serif;--d-font-disp:"Rubik",sans-serif;}
+  :root[data-theme-name="contrast"]{--d-bg:#000;--d-text:#fff;--d-muted:#ffe100;--d-accent:#ffe100;--d-accent2:#ffe100;--d-clock:#ffe100;--d-glow:transparent;--d-secbar:#ffe100;--d-card-bg:#111;--d-card-border:#333;--d-event-color:#ffe100;--d-line:#333;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  :root{--c-bg:#f2f2f7;--c-group:#fff;--c-text:#1c1c1e;--c-muted:#8a8a8e;--c-sep:#e5e5ea;--c-accent:#0a84ff;--c-green:#34c759;--c-red:#ff3b30;--c-fill:#78788033;--c-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Assistant","Heebo","Segoe UI",sans-serif;}
+  @media (prefers-color-scheme:dark){:root{--c-bg:#000;--c-group:#1c1c1e;--c-text:#fff;--c-muted:#8d8d93;--c-sep:#38383a;--c-fill:#7878805c;}}
+  *{box-sizing:border-box;} [hidden]{display:none!important;}
+  html,body{height:100%;} body{margin:0;-webkit-font-smoothing:antialiased;}
+  html{background:var(--d-bg);} body:not(.mode-manage){overflow:hidden;}
+  body{background:var(--d-bg);background-attachment:fixed;color:var(--d-text);font-family:var(--d-font);}
+  body.mode-manage{background:var(--c-bg);color:var(--c-text);font-family:var(--c-font);}
+  button{font-family:inherit;}
+
+  .display{position:relative;height:100%;display:flex;flex-direction:column;padding:clamp(20px,3.4vmin,52px);gap:clamp(12px,2.2vmin,28px);transition:filter 2s ease,transform 3s ease-in-out;filter:brightness(var(--disp-bright,1));}
+  .display.dimmed{filter:brightness(calc(var(--disp-bright,1)*.42)) saturate(.9);}
+  .screenoff{position:absolute;inset:0;background:#000;z-index:60;display:none;cursor:pointer;}
+  .screenoff.on{display:block;}
+  .mediashow{position:absolute;inset:0;z-index:13;background:#000;display:none;overflow:hidden;}
+  .mediashow.on{display:block;}
+  .mediashow .m-stage{position:absolute;inset:0;}
+  .mediashow .m-stage img,.mediashow .m-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;}
+  .mediashow .m-clock{position:absolute;top:3%;inset-inline-end:4%;z-index:2;font-weight:800;font-size:clamp(1.5rem,4.6vmin,3.4rem);color:#fff;font-variant-numeric:tabular-nums;direction:ltr;text-shadow:0 2px 14px rgba(0,0,0,.95);opacity:.9;pointer-events:none;}
+  .accent-top{position:fixed;top:0;left:0;right:0;height:4px;z-index:5;background:linear-gradient(90deg,var(--d-accent) 0%,var(--d-accent2) 50%,var(--d-accent) 100%);opacity:.9;}
+  .disp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+  .dow{font-family:var(--d-font-disp);font-weight:700;font-size:clamp(1.7rem,5.4vmin,3.8rem);line-height:1.02;color:var(--d-text);}
+  .hdate{color:var(--d-accent);font-family:var(--d-font-disp);font-weight:500;font-size:clamp(1.15rem,3.4vmin,2.35rem);margin-top:.18em;}
+  .chabad-ev{margin-top:.35em;color:var(--d-accent2);font-size:clamp(.9rem,2.3vmin,1.6rem);font-weight:700;line-height:1.2;max-width:min(72vw,1000px);}
+  .shabbat{position:absolute;inset:0;z-index:12;background:#05070f;overflow:hidden;}
+  .shabbat img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1.2s ease;}
+  .shabbat img.on{opacity:1;}
+  .sh-grad{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,0) 34%),linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,0) 20%);}
+  .sh-clock{position:absolute;top:4%;inset-inline-end:5%;z-index:2;font-weight:800;font-size:clamp(2rem,6vmin,4.5rem);color:#fff;font-variant-numeric:tabular-nums;direction:ltr;text-shadow:0 2px 16px rgba(0,0,0,.9);}
+  .sh-text{position:absolute;bottom:6%;inset-inline:0;text-align:center;z-index:2;padding:0 4%;}
+  .sh-greet{font-family:"Frank Ruhl Libre",Georgia,serif;font-weight:700;font-size:clamp(3.5rem,14vmin,11rem);color:#f0d79c;line-height:1;text-shadow:0 6px 40px rgba(0,0,0,.95);}
+  .sh-sub{margin-top:.28em;color:#fff;font-size:clamp(1.3rem,4vmin,2.6rem);text-shadow:0 2px 16px rgba(0,0,0,.95);}
+  .cstory{position:absolute;inset:0;z-index:11;background:var(--d-bg);display:flex;align-items:center;justify-content:center;gap:clamp(20px,4vmin,56px);padding:clamp(24px,5vmin,72px);overflow:hidden;}
+  .cstory .cs-photo-wrap{flex:none;width:min(38vmin,34%);}
+  .cstory .cs-photo-wrap img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:clamp(10px,1.6vmin,22px);border:1px solid var(--d-card-border);box-shadow:0 10px 44px rgba(0,0,0,.55);}
+  .cstory .cs-body{flex:1;max-width:62ch;}
+  .cstory .cs-eyebrow{color:var(--d-muted);font-size:clamp(1rem,2.6vmin,1.7rem);letter-spacing:.04em;margin-bottom:.5em;}
+  .cstory .cs-title{font-family:var(--d-font-disp);color:var(--d-accent);font-weight:700;font-size:clamp(2rem,6vmin,4.2rem);line-height:1.12;margin-bottom:.4em;}
+  .cstory .cs-story{color:var(--d-text);font-size:clamp(1.2rem,3.2vmin,2.15rem);line-height:1.55;white-space:pre-line;max-height:66vh;overflow:hidden;}
+  .cstory.hy .cs-story{font-size:clamp(1.05rem,2.7vmin,1.75rem);line-height:1.5;}
+  .cstory:not(.has-photo) .cs-body{text-align:center;max-width:72ch;}
+  .top-end{display:flex;flex-direction:column;align-items:flex-end;gap:.6em;}
+  .bsd-chip{color:var(--d-accent);border:1px solid var(--d-line);background:var(--d-card-bg);border-radius:999px;padding:.28em 1em;font-size:clamp(.82rem,1.9vmin,1.15rem);letter-spacing:.16em;}
+  .zman{display:flex;align-items:center;gap:.5em;background:var(--d-card-bg);border:1px solid var(--d-line);border-radius:999px;padding:.4em 1em;font-size:clamp(.9rem,2.1vmin,1.3rem);color:var(--d-muted);}
+  .zman b{color:var(--d-accent);font-weight:800;font-variant-numeric:tabular-nums;}
+  .clock-wrap{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.6vmin,34px);}
+  .clock-wrap::before{content:"";position:absolute;z-index:0;pointer-events:none;width:min(96vmin,1000px);height:min(58vmin,620px);border-radius:50%;background:radial-gradient(closest-side,var(--d-glow),transparent 72%);filter:blur(8px);}
+  .clock{position:relative;z-index:1;direction:ltr;font-weight:800;font-size:clamp(4.6rem,31vmin,27rem);line-height:.86;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;justify-content:center;color:var(--d-clock);text-shadow:0 6px 60px var(--d-glow);}
+  .clock .colon{margin:0 .04em;color:var(--d-accent2);animation:blink 2s steps(1,end) infinite;}
+  @keyframes blink{50%{opacity:.25}}
+  .secbar{position:relative;z-index:1;width:min(58vmin,560px);max-width:100%;height:clamp(5px,.85vmin,10px);border-radius:999px;background:var(--d-line);overflow:hidden;}
+  .secfill{height:100%;width:0;border-radius:999px;background:var(--d-secbar);}
+  .omer{align-self:center;text-align:center;color:var(--d-accent2);font-family:var(--d-font-disp);font-weight:700;font-size:clamp(1.05rem,3vmin,2.1rem);line-height:1.35;max-width:min(92vw,1200px);background:var(--d-card-bg);border:1px solid var(--d-card-border);border-radius:clamp(12px,1.8vmin,22px);padding:clamp(8px,1.4vmin,16px) clamp(18px,3.4vmin,40px);}
+  .hyy-panel{align-self:stretch;background:var(--d-card-bg);border:1px solid var(--d-card-border);border-radius:clamp(12px,1.8vmin,22px);padding:clamp(10px,1.7vmin,20px) clamp(16px,3vmin,34px);max-height:34vh;overflow:hidden;}
+  .hyy-head{color:var(--d-accent);font-family:var(--d-font-disp);font-weight:700;font-size:clamp(1rem,2.6vmin,1.75rem);margin-bottom:.3em;}
+  .hyy-text{color:var(--d-text);font-size:clamp(.95rem,2.35vmin,1.55rem);line-height:1.5;white-space:pre-line;}
+  .event{display:flex;align-items:center;gap:clamp(14px,2.4vmin,28px);padding:clamp(16px,2.6vmin,30px) clamp(20px,3vmin,40px);border-radius:clamp(14px,1.8vmin,24px);border:1px solid var(--d-card-border);background:var(--d-card-bg);position:relative;overflow:hidden;}
+  .event::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:6px;background:var(--d-muted);}
+  .event.ev-amber::before{background:#f9ad3c;} .event.ev-indigo::before{background:#818cf8;} .event.ev-shabbat::before{background:#7fd1c4;}
+  .event.pulse{animation:pulseG 1.8s ease-in-out infinite;}
+  @keyframes pulseG{0%,100%{box-shadow:0 0 0 0 rgba(143,178,255,0)}50%{box-shadow:0 0 46px -6px var(--d-glow)}}
+  .event-chip{flex:none;display:grid;place-items:center;width:clamp(3rem,8vmin,5.6rem);height:clamp(3rem,8vmin,5.6rem);border-radius:22%;background:rgba(127,127,127,.12);border:1px solid var(--d-card-border);font-size:clamp(1.7rem,5vmin,3.4rem);line-height:1;}
+  .event-body{flex:1;display:flex;flex-direction:column;gap:.06em;min-width:0;}
+  .event-label{font-size:clamp(1.15rem,3.2vmin,2.3rem);font-weight:600;color:var(--d-muted);}
+  .event-value{font-size:clamp(2.1rem,8vmin,5.6rem);font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--d-event-color);}
+  .event-sub{flex:none;font-size:clamp(1rem,2.8vmin,1.9rem);color:var(--d-muted);font-variant-numeric:tabular-nums;text-align:end;}
+  :root[data-theme-name="contrast"] .event{background:#ffe100;border-color:#ffe100;}
+  :root[data-theme-name="contrast"] .event .event-value{color:#000;}
+  :root[data-theme-name="contrast"] .event .event-label,:root[data-theme-name="contrast"] .event .event-sub{color:#222;}
+  :root[data-theme-name="glass"]{--d-bg:radial-gradient(42% 52% at 18% 18%,rgba(130,80,255,.6),transparent 70%),radial-gradient(42% 52% at 86% 22%,rgba(0,200,255,.55),transparent 70%),radial-gradient(55% 62% at 62% 95%,rgba(255,80,160,.55),transparent 70%),#0a0a16;--d-text:#fff;--d-muted:rgba(255,255,255,.8);--d-accent:#d7c3ff;--d-accent2:#8fd3ff;--d-clock:#fff;--d-glow:rgba(150,120,255,.35);--d-secbar:linear-gradient(90deg,#b69cff,#7ad0ff);--d-card-bg:rgba(255,255,255,.1);--d-card-border:rgba(255,255,255,.22);--d-event-color:#e7dbff;--d-line:rgba(255,255,255,.25);--d-font:"Assistant","Heebo",sans-serif;--d-font-disp:"Assistant","Heebo",sans-serif;}
+  :root[data-theme-name="glass"] .event,:root[data-theme-name="glass"] .msgs,:root[data-theme-name="glass"] .zman,:root[data-theme-name="glass"] .bsd-chip{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+  :root[data-theme-name="neon"]{--d-bg:radial-gradient(circle at 50% 42%,#13131f,#05050a);--d-text:#e6f7ff;--d-muted:#8aa0b2;--d-accent:#2ee6ff;--d-accent2:#ff5ec4;--d-clock:#2ee6ff;--d-glow:rgba(46,230,255,.5);--d-secbar:linear-gradient(90deg,#2ee6ff,#ff5ec4);--d-card-bg:rgba(255,46,160,.06);--d-card-border:rgba(255,46,160,.4);--d-event-color:#ff5ec4;--d-line:#1b2b36;--d-font:"Rubik","Heebo",sans-serif;--d-font-disp:"Rubik","Heebo",sans-serif;}
+  :root[data-theme-name="neon"] .clock{text-shadow:0 0 .28em rgba(46,230,255,.9),0 0 .6em rgba(46,230,255,.5);}
+  :root[data-theme-name="royal"]{--d-bg:linear-gradient(160deg,#14408f,#0d2a63);--d-text:#eaf1ff;--d-muted:#b9cdf0;--d-accent:#ecc978;--d-accent2:#f0d79c;--d-clock:#fff;--d-glow:rgba(236,201,120,.25);--d-secbar:linear-gradient(90deg,#ecc978,#8fb2ff);--d-card-bg:rgba(255,255,255,.08);--d-card-border:rgba(236,201,120,.4);--d-event-color:#ecc978;--d-line:rgba(255,255,255,.2);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  :root[data-theme-name="blueprint"]{--d-bg:repeating-linear-gradient(0deg,transparent 0 38px,rgba(120,180,255,.08) 38px 39px),repeating-linear-gradient(90deg,transparent 0 38px,rgba(120,180,255,.08) 38px 39px),#0a2744;--d-text:#dff0ff;--d-muted:#8fb6d8;--d-accent:#7fd0ff;--d-accent2:#7fd0ff;--d-clock:#eaf6ff;--d-glow:rgba(127,208,255,.25);--d-secbar:#7fd0ff;--d-card-bg:rgba(10,39,68,.5);--d-card-border:rgba(127,208,255,.45);--d-event-color:#7fd0ff;--d-line:rgba(127,208,255,.3);--d-font:"Heebo",monospace;--d-font-disp:"Heebo",sans-serif;}
+  :root[data-theme-name="parchment"]{--d-bg:radial-gradient(90% 120% at 50% 0%,#f6ecd2,#ecdcb8);--d-text:#43301b;--d-muted:#8a6a2f;--d-accent:#7d2436;--d-accent2:#a9812f;--d-clock:#3a2914;--d-glow:transparent;--d-secbar:linear-gradient(90deg,#a9812f,#7d2436);--d-card-bg:rgba(125,36,54,.07);--d-card-border:rgba(125,36,54,.3);--d-event-color:#7d2436;--d-line:rgba(125,36,54,.25);--d-font:"Frank Ruhl Libre",serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  :root[data-theme-name="minimal"]{--d-bg:#050505;--d-text:#fff;--d-muted:#8a8a8a;--d-accent:#f5a623;--d-accent2:#f5a623;--d-clock:#fff;--d-glow:transparent;--d-secbar:#f5a623;--d-card-bg:#121212;--d-card-border:#262626;--d-event-color:#f5a623;--d-line:#262626;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  :root[data-theme-name="wine"]{--d-bg:linear-gradient(160deg,#3a0e1a,#150406);--d-text:#f3e3e6;--d-muted:#c89aa0;--d-accent:#e7c072;--d-accent2:#f0d79c;--d-clock:#f6e8ea;--d-glow:rgba(231,192,114,.22);--d-secbar:linear-gradient(90deg,#e7c072,#9a3b4a);--d-card-bg:rgba(231,192,114,.07);--d-card-border:rgba(231,192,114,.3);--d-event-color:#e7c072;--d-line:rgba(231,192,114,.25);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  :root[data-theme-name="ocean"]{--d-bg:linear-gradient(160deg,#07323a,#041a20);--d-text:#e3f6f7;--d-muted:#8fc0c4;--d-accent:#4fe0d0;--d-accent2:#7fe8ff;--d-clock:#eafcff;--d-glow:rgba(79,224,208,.28);--d-secbar:linear-gradient(90deg,#4fe0d0,#7fb0ff);--d-card-bg:rgba(79,224,208,.08);--d-card-border:rgba(79,224,208,.32);--d-event-color:#7fe8ff;--d-line:rgba(79,224,208,.28);--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  :root[data-theme-name="purple"]{--d-bg:radial-gradient(circle at 50% 0%,#241041,#120726);--d-text:#efe7fb;--d-muted:#b7a6d6;--d-accent:#e7c072;--d-accent2:#c3a6ff;--d-clock:#f4eeff;--d-glow:rgba(195,166,255,.3);--d-secbar:linear-gradient(90deg,#e7c072,#9a6cff);--d-card-bg:rgba(255,255,255,.06);--d-card-border:rgba(195,166,255,.35);--d-event-color:#c3a6ff;--d-line:rgba(195,166,255,.3);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  :root[data-theme-name="charcoal"]{--d-bg:radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013);--d-text:#eceef2;--d-muted:#9aa0ab;--d-accent:#6aa0ff;--d-accent2:#9ab6ff;--d-clock:#f2f4f8;--d-glow:rgba(106,160,255,.22);--d-secbar:linear-gradient(90deg,#6aa0ff,#aab2bd);--d-card-bg:rgba(255,255,255,.05);--d-card-border:#2b303a;--d-event-color:#9ab6ff;--d-line:#2b303a;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  :root[data-theme-name="cream"]{--d-bg:#f3ecdd;--d-text:#3a2f1e;--d-muted:#8a7a5c;--d-accent:#915e2a;--d-accent2:#2f6d4a;--d-clock:#2e2516;--d-glow:transparent;--d-secbar:linear-gradient(90deg,#915e2a,#2f6d4a);--d-card-bg:#fff8ec;--d-card-border:#e3d8c0;--d-event-color:#915e2a;--d-line:#e3d8c0;--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  :root[data-theme-name="bronze"]{--d-bg:radial-gradient(circle at 50% 0%,#241a10,#120c06);--d-text:#f0e4cf;--d-muted:#bda886;--d-accent:#cf9a4e;--d-accent2:#e8c98a;--d-clock:#f6ecd6;--d-glow:rgba(207,154,78,.25);--d-secbar:linear-gradient(90deg,#cf9a4e,#8a6a3a);--d-card-bg:rgba(207,154,78,.08);--d-card-border:rgba(207,154,78,.32);--d-event-color:#e8c98a;--d-line:rgba(207,154,78,.28);--d-font:"Heebo",sans-serif;--d-font-disp:"Bellefair","Frank Ruhl Libre",serif;}
+  .msgs{background:var(--d-card-bg);border:1px solid var(--d-card-border);border-radius:clamp(14px,1.8vmin,24px);padding:clamp(16px,2.4vmin,28px) clamp(20px,3vmin,38px);}
+  .msgs-title{margin:0 0 .55em;display:flex;align-items:center;gap:.45em;font-family:var(--d-font-disp);font-weight:700;color:var(--d-accent);font-size:clamp(1.2rem,3vmin,2.05rem);padding-bottom:.35em;border-bottom:1px solid var(--d-line);}
+  .msgs-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5em;}
+  .msgs-list li{font-size:clamp(1.1rem,3vmin,2.15rem);line-height:1.35;padding-inline-start:1.15em;position:relative;color:var(--d-text);}
+  .msgs-list li::before{content:"";position:absolute;inset-inline-start:0;top:.6em;width:.46em;height:.46em;border-radius:50%;background:var(--d-accent);}
+  .fsbtn{position:fixed;z-index:6;left:18px;bottom:18px;display:flex;align-items:center;gap:.5em;background:var(--d-card-bg);border:1px solid var(--d-line);color:var(--d-text);border-radius:999px;padding:10px 18px;font-size:1rem;font-weight:600;cursor:pointer;transition:opacity .45s ease;}
+  .display.ui-idle{cursor:none;} .display.ui-idle .fsbtn{opacity:0;pointer-events:none;}
+
+  .m-wrap{max-width:540px;margin:0 auto;padding:16px 16px 56px;}
+  .m-title{font-size:2.05rem;font-weight:800;letter-spacing:-.02em;margin:14px 2px 2px;}
+  .m-subtitle{color:var(--c-muted);font-size:.95rem;margin:0 2px 18px;}
+  .c-gate{background:var(--c-group);border-radius:16px;padding:20px;margin-top:30px;display:flex;flex-direction:column;gap:14px;}
+  .c-gate h2{margin:0;font-size:1.25rem;font-weight:700;text-align:center;}
+  .c-input{width:100%;background:var(--c-fill);border:none;color:var(--c-text);border-radius:11px;padding:13px 14px;font-size:1.1rem;font-family:inherit;}
+  .c-input::placeholder{color:var(--c-muted);}
+  .c-btn{background:var(--c-accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:inherit;width:100%;}
+  .c-btn.secondary{background:var(--c-fill);color:var(--c-accent);}
+  .c-err{color:var(--c-red);font-size:.9rem;text-align:center;}
+  .c-status{text-align:center;font-size:.82rem;color:var(--c-muted);margin-top:4px;}
+  .c-status.off{color:#ff9f0a;}
+  .c-section{margin-top:26px;}
+  .c-hdr{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted);margin:0 14px 7px;}
+  .c-group{background:var(--c-group);border-radius:16px;overflow:hidden;}
+  .c-row{display:flex;align-items:center;gap:12px;padding:13px 16px;min-height:52px;position:relative;}
+  .c-row + .c-row::before{content:"";position:absolute;top:0;inset-inline-start:16px;inset-inline-end:0;height:1px;background:var(--c-sep);}
+  .c-row .lbl{flex:1;font-size:1.04rem;}
+  .c-row .lbl small{display:block;color:var(--c-muted);font-size:.82rem;margin-top:1px;}
+  .c-row .val{color:var(--c-muted);font-variant-numeric:tabular-nums;font-size:1.02rem;}
+  .c-row input[type="time"],.c-row input[type="date"]{background:var(--c-fill);border:none;color:var(--c-text);border-radius:9px;padding:8px 10px;font-size:1.02rem;font-family:inherit;font-variant-numeric:tabular-nums;}
+  .c-row.tap{cursor:pointer;} .chev{color:var(--c-muted);font-size:1.1rem;}
+  .sw{position:relative;width:51px;height:31px;flex:none;}
+  .sw input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:2;}
+  .sw .track{position:absolute;inset:0;background:var(--c-fill);border-radius:999px;transition:background .2s;}
+  .sw .knob{position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s;}
+  .sw input:checked ~ .track{background:var(--c-green);}
+  html[dir="rtl"] .sw input:checked ~ .knob{transform:translateX(20px);}
+  .stepper{display:flex;align-items:center;background:var(--c-fill);border-radius:9px;overflow:hidden;}
+  .stepper button{width:42px;height:38px;border:none;background:transparent;color:var(--c-accent);font-size:1.4rem;font-weight:600;cursor:pointer;}
+  .stepper .sval{min-width:3.4ch;text-align:center;font-weight:700;font-variant-numeric:tabular-nums;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;}
+  .chips button{background:var(--c-fill);color:var(--c-accent);border:none;border-radius:999px;padding:8px 15px;font-size:.98rem;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums;font-family:inherit;}
+  .chips button.ghost{color:var(--c-muted);}
+  .themes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px;max-height:400px;overflow-y:auto;}
+  .chips button.on{background:var(--c-accent);color:#fff;}
+  .brightrow{display:flex;align-items:center;gap:12px;padding:6px 18px 14px;}
+  .brightrow .bico{font-size:1.1rem;flex:none;}.brightrow .bico.sm{font-size:.85rem;opacity:.7;}.brightrow .bico.lg{font-size:1.35rem;}
+  .brange{flex:1;-webkit-appearance:none;appearance:none;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--c-accent) 0%,var(--c-accent) var(--fill,100%),var(--c-fill) var(--fill,100%));outline:none;}
+  .brange::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer;border:none;}
+  .brange::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer;border:none;}
+  .up-card{display:flex;gap:14px;align-items:flex-start;background:radial-gradient(130% 100% at 50% -20%,#17244d,rgba(23,36,77,0) 55%),#0a0f1e;border:1px solid #26324f;border-radius:14px;padding:14px;margin-bottom:12px;}
+  .up-photo{width:84px;height:110px;object-fit:cover;border-radius:10px;flex:none;border:1px solid #2a3654;}
+  .up-body{flex:1;min-width:0;}
+  .up-when{color:#8fb2ff;font-size:.8rem;margin-bottom:3px;}
+  .up-title{color:#e7c072;font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:1.25rem;line-height:1.15;margin-bottom:5px;}
+  .up-story{color:#cdd5ea;font-size:.92rem;line-height:1.45;}
+  .up-row{display:flex;justify-content:space-between;gap:10px;padding:10px 2px;border-top:1px solid var(--c-sep);font-size:.95rem;}
+  .up-rtitle{color:var(--c-text);} .up-rwhen{color:var(--c-muted);white-space:nowrap;}
+  .theme-opt{border:none;background:transparent;cursor:pointer;padding:0;font-family:inherit;}
+  .theme-sw{height:58px;border-radius:12px;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;font-size:1rem;}
+  .theme-opt.active .theme-sw{border-color:var(--c-accent);}
+  .theme-opt.active .theme-name{color:var(--c-accent);font-weight:700;}
+  .theme-name{display:block;text-align:center;font-size:.82rem;color:var(--c-muted);margin-top:5px;}
+  .addwrap{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+  .addrow{display:flex;gap:8px;} .addrow .c-input{flex:1;} .addrow .c-btn{width:auto;padding-inline:18px;background:var(--c-green);}
+  .exprow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--c-muted);}
+  .msgitem{display:flex;align-items:center;gap:10px;flex:1;}
+  .msgitem .mt{flex:1;min-width:0;} .msgitem .mt .txt{font-size:1.02rem;word-break:break-word;}
+  .msgitem .mt .ex{font-size:.76rem;color:var(--c-muted);margin-top:1px;} .msgitem .mt .ex.soon{color:#ff9f0a;}
+  .trash{border:none;background:transparent;color:var(--c-red);font-size:1.15rem;cursor:pointer;flex:none;padding:6px;}
+  .editb{border:none;background:transparent;color:var(--c-accent);font-size:1.05rem;cursor:pointer;flex:none;padding:6px;}
+  .c-empty{padding:16px;color:var(--c-muted);text-align:center;font-size:.95rem;}
+  .saved-toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;padding:10px 20px;border-radius:999px;font-size:.95rem;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none;z-index:40;}
+  .saved-toast.show{opacity:1;}
+  .m-preview{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;container-type:inline-size;background:var(--d-bg);color:var(--d-text);box-shadow:0 8px 26px rgba(0,0,0,.18);filter:brightness(var(--disp-bright,1));transition:filter .3s ease;}
+  .pv-in{position:absolute;inset:0;display:flex;flex-direction:column;padding:4cqw;gap:2cqw;}
+  .pv-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .pv-dow{font-family:var(--d-font-disp);font-weight:700;font-size:4cqw;color:var(--d-text);}
+  .pv-hdate{font-family:var(--d-font-disp);color:var(--d-accent);font-size:2.8cqw;}
+  .pv-bsd{color:var(--d-accent);font-size:2.3cqw;letter-spacing:.08em;}
+  .pv-clock{flex:1;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19cqw;font-variant-numeric:tabular-nums;direction:ltr;color:var(--d-clock);font-family:var(--d-font);}
+  .pv-event{display:flex;align-items:center;gap:1.6cqw;background:var(--d-card-bg);border:1px solid var(--d-card-border);border-radius:2.4cqw;padding:1.8cqw 2.4cqw;font-size:3.2cqw;font-weight:700;color:var(--d-event-color);font-variant-numeric:tabular-nums;}
+  .pv-msgs{font-size:2.6cqw;color:var(--d-text);opacity:.85;line-height:1.3;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  @media (prefers-reduced-motion:reduce){.clock .colon,.event.pulse{animation:none;}.display{transition:filter 2s ease;}}
+</style>
+</head>
+<body>
+
+<main id="display" class="display" hidden>
+  <div class="accent-top"></div>
+  <div class="disp-top">
+    <div class="top-start"><div class="dow" id="dow">—</div><div class="hdate" id="hdate">—</div><div class="chabad-ev" id="chabadEv" hidden></div></div>
+    <div class="top-end"><div class="bsd-chip">בס״ד</div><div class="zman" id="zman" hidden><span>🌅</span><span>סוף זמן ק״ש</span><b id="zmanVal">—</b></div></div>
+  </div>
+  <div class="clock-wrap">
+    <div class="clock" id="clock"><span id="cH">--</span><span class="colon">:</span><span id="cM">--</span></div>
+    <div class="secbar"><div class="secfill" id="secfill"></div></div>
+  </div>
+  <div class="omer" id="omer" hidden></div>
+  <div class="event" id="event" hidden>
+    <div class="event-chip" id="eventIcon">📱</div>
+    <div class="event-body"><span class="event-label" id="eventLabel"></span><span class="event-value" id="eventValue"></span></div>
+    <div class="event-sub" id="eventSub"></div>
+  </div>
+  <section class="msgs" id="msgs" hidden><h2 class="msgs-title">📋 הודעות</h2><ul class="msgs-list" id="msgsList"></ul></section>
+  <div class="hyy-panel" id="hyyPanel" hidden><div class="hyy-head">📖 היום יום · <span id="hyyPanelDate"></span></div><div class="hyy-text" id="hyyPanelText"></div></div>
+  <div class="screenoff" id="screenOff" title="הקש להצגת המסך לכמה דקות"></div>
+  <div id="shabbat" class="shabbat" hidden>
+    <img id="shPhoto" alt="">
+    <div class="sh-grad"></div>
+    <div class="sh-clock" id="shClock"></div>
+    <div class="sh-text"><div class="sh-greet">גוט שבת</div><div class="sh-sub" id="shDate"></div></div>
+  </div>
+  <div id="chabadStory" class="cstory" hidden>
+    <div class="cs-photo-wrap" id="csPhotoWrap" hidden><img id="csPhoto" alt=""></div>
+    <div class="cs-body">
+      <div class="cs-eyebrow" id="csEyebrow"></div>
+      <div class="cs-title" id="csTitle"></div>
+      <div class="cs-story" id="csStory"></div>
+    </div>
+  </div>
+  <div class="mediashow" id="mediaShow"><div class="m-stage" id="mediaStage"></div><div class="m-clock" id="mediaClock"></div></div>
+  <button class="fsbtn" id="fsBtn" type="button" hidden><span id="fsIco">⛶</span><span id="fsLabel">מסך מלא</span></button>
+</main>
+
+<main id="manage" hidden>
+  <div class="m-wrap">
+    <div class="m-title">לוח הקומה</div>
+    <div class="m-subtitle">מערכת ניהול · שליטה מלאה במסך</div>
+    <a id="backToDisplay" href="./" class="c-btn secondary" style="width:auto;padding:7px 15px;text-decoration:none;display:inline-block;margin:0 0 6px;">← חזרה לתצוגת המסך</a>
+    <div id="panel">
+      <div class="c-section"><div class="c-hdr">👁️ תצוגה מקדימה חיה</div>
+        <div class="m-preview" id="preview"><div class="pv-in">
+          <div class="pv-top"><div><div class="pv-dow" id="pvDow">—</div><div class="pv-hdate" id="pvHdate">—</div></div><div class="pv-bsd">בס״ד</div></div>
+          <div class="pv-clock" id="pvClock">--:--</div><div class="pv-event" id="pvEvent" hidden></div><div class="pv-msgs" id="pvMsgs"></div>
+        </div></div>
+      </div>
+      <div class="c-section"><div class="c-hdr">📨 הודעות למסך</div><div class="c-group">
+        <div class="addwrap"><div class="addrow"><input id="newMsg" class="c-input" placeholder="הודעה חדשה…" maxlength="140"><button id="addMsg" class="c-btn">הוסף</button></div>
+          <div class="exprow"><span>להסרה אוטומטית עד תאריך</span><input id="newMsgExp" type="date"></div></div>
+        <div id="adminMsgs"></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">🎬 תמונות וסרטונים</div><div class="c-group">
+        <div class="c-row"><span class="lbl">אופן התצוגה<small>איך המדיה מוצגת על המסך</small></span></div>
+        <div class="chips" id="mediaModeChips"><button data-mm="off">כבוי</button><button data-mm="single">בודד</button><button data-mm="rotate">סבב (אחד אחרי השני)</button></div>
+        <div class="c-row"><span class="lbl">משך כל תמונה<small>בסבב בלבד</small></span><span class="val"><b id="mediaDwellVal">8</b> ש׳</span></div>
+        <div class="chips" id="mediaDwellChips"><button data-dw="5">5 ש׳</button><button data-dw="8">8 ש׳</button><button data-dw="12">12 ש׳</button><button data-dw="20">20 ש׳</button></div>
+        <div class="addwrap"><label class="c-btn" for="mediaFile" style="cursor:pointer;text-align:center;display:block">⬆️ העלאה מהגלריה (תמונות / סרטונים)</label><input id="mediaFile" type="file" accept="image/*,video/*" multiple hidden></div>
+        <div id="mediaProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
+        <div id="adminMedia"></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">🌙 כיבוי אורות</div><div class="c-group">
+        <div class="c-row"><span class="lbl">הלילה<small>ברירת מחדל <b id="loDefault">22:00</b> · מתאפס מחר</small></span><input id="loTime" type="time"></div>
+        <div class="chips"><button data-lo="22:00">22:00</button><button data-lo="22:15">22:15</button><button data-lo="22:40">22:40</button><button data-lo="23:15">23:15</button><button id="loReset" class="ghost">↺ ברירת מחדל</button></div>
+        <div class="c-row"><span class="lbl">להציג במסך</span><label class="sw"><input type="checkbox" id="loEnabled"><span class="track"></span><span class="knob"></span></label></div>
+        <div class="c-row"><span class="lbl">עמעום לילה<small>המסך מחשיך אחרי כיבוי אורות</small></span><label class="sw"><input type="checkbox" id="nightDim"><span class="track"></span><span class="knob"></span></label></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">☀️ בהירות המסך</div><div class="c-group">
+        <div class="c-row"><span class="lbl">עוצמת בהירות<small>בהירות התצוגה בטלוויזיה</small></span><span class="val"><b id="brightVal">100%</b></span></div>
+        <div class="brightrow"><span class="bico sm">🌙</span><input type="range" id="brightRange" min="20" max="100" step="5" value="100" class="brange"><span class="bico lg">☀️</span></div>
+        <div class="chips" id="brightChips"><button data-br="100">100%</button><button data-br="75">75%</button><button data-br="50">50%</button><button data-br="30">30%</button></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">🌑 כיבוי מסך בלילה</div><div class="c-group">
+        <div class="c-row"><span class="lbl">כיבוי אוטומטי<small>המסך נהיה שחור בשעות הלילה — מגן על הטלוויזיה</small></span><label class="sw"><input type="checkbox" id="scEnabled"><span class="track"></span><span class="knob"></span></label></div>
+        <div class="c-row"><span class="lbl">כיבוי בשעה</span><input id="scStart" type="time"></div>
+        <div class="c-row"><span class="lbl">חזרה בשעה</span><input id="scEnd" type="time"></div>
+        <div class="c-note" style="font-size:12px;opacity:.7;padding:2px 2px 0">הקשה על המסך השחור מציגה את הלוח ל-2 דקות.</div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">📱 הפקדת טלפונים</div><div class="c-group">
+        <div class="c-row"><span class="lbl">שעת יעד<small>סוף ההפקדה</small></span><input id="pdTime" type="time"></div>
+        <div class="c-row"><span class="lbl">להציג ספירה לאחור</span><label class="sw"><input type="checkbox" id="pdEnabled"><span class="track"></span><span class="knob"></span></label></div>
+        <div class="c-row"><span class="lbl">הפקדת ערב<small>תמיד 10 דק׳ לפני כיבוי אורות</small></span><label class="sw"><input type="checkbox" id="pdEveningEnabled"><span class="track"></span><span class="knob"></span></label></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">🕗 סוף זמן ק״ש</div><div class="c-group">
+        <div class="c-row"><span class="lbl">מחושב להיום (בעל התניא)<small>כיול להתאמה ללוח כולל חב״ד</small></span><span class="val"><b id="ksFinal">—</b></span></div>
+        <div class="c-row"><span class="lbl">כיול בדקות</span><div class="stepper"><button id="ksMinus">−</button><span class="sval" id="ksOffVal">0</span><button id="ksPlus">+</button></div></div>
+        <div class="c-row"><span class="lbl">להציג סוף זמן ק״ש</span><label class="sw"><input type="checkbox" id="ksShow"><span class="track"></span><span class="knob"></span></label></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">🕯️ מצב שבת</div><div class="c-group">
+        <div class="c-row"><span class="lbl">מצב שבת אוטומטי<small>מסתיר ספירות ומציג "שבת שלום"</small></span><label class="sw"><input type="checkbox" id="shabbatMode"><span class="track"></span><span class="knob"></span></label></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">📖 היום יום</div><div class="c-group">
+        <div class="c-row"><span class="lbl">הצגת "היום יום"<small>כבוי · בסבב (מתחלף) · קבוע (תמיד בתחתית)</small></span></div>
+        <div class="chips" id="hyyChips"><button data-hyy="off">כבוי</button><button data-hyy="rotate">בסבב</button><button data-hyy="always">קבוע</button></div>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">🎨 עיצוב המסך</div><div class="c-group"><div class="themes" id="themeGrid"></div><div class="c-row"><span class="lbl">מעבר אוטומטי בין רקעים<small>מחליף רקע לפי זמן</small></span></div><div class="chips" id="rotateChips"><button data-rot="0">כבוי</button><button data-rot="30">30 דק׳</button><button data-rot="60">שעה</button><button data-rot="360">6 שעות</button><button data-rot="1440">יום</button></div></div></div>
+      <div class="c-section"><div class="c-hdr">🖥️ המסך וקישורים</div><div class="c-group">
+        <div class="c-row"><span class="lbl">סטטוס המסך<small>האם הטלוויזיה מחוברת כעת</small></span><span class="val" id="screenStatus">בודק…</span></div>
+        <div class="c-row"><span class="lbl">פתיחת תצוגת המסך</span><a class="c-btn secondary" id="openDisplay" href="./" style="width:auto;padding:8px 16px;text-decoration:none;">פתח ↗</a></div>
+        <div class="c-row tap" id="copyLink"><span class="lbl">העתקת קישור המסך<small id="copyHint">לפתיחה בטלוויזיה</small></span><span class="chev">⧉</span></div>
+        <a class="c-row tap" href="./backgrounds.html" target="_blank" style="text-decoration:none;color:inherit;"><span class="lbl">כל הרקעים<small>100 עיצובים · 10 סגנונות</small></span><span class="chev">↗</span></a>
+        <a class="c-row tap" href="./dates.html" target="_blank" style="text-decoration:none;color:inherit;"><span class="lbl">כל התאריכים<small>כל אירועי דברי ימי חב״ד + תמונות</small></span><span class="chev">↗</span></a>
+      </div></div>
+      <div class="c-section"><div class="c-hdr">📅 לוח אירועים חב״די</div><div class="c-group"><div id="upcoming" style="padding:14px 16px"></div></div></div>
+      <div class="c-status" id="syncStatus"></div>
+    </div>
+  </div>
+  <div class="saved-toast" id="toast">נשמר ✓</div>
+</main>
+
+<!-- ========= Firebase ========= -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+/* ============================================================
+   👇 הדבק כאן את פרטי ה-Firebase שלך (מתוך קונסולת Firebase).
+   רק את הבלוק הזה צריך לשנות — כל השאר מוכן.
+   ============================================================ */
+var firebaseConfig = {
+  apiKey: "PASTE_API_KEY_HERE",
+  authDomain: "luach-9fd14.firebaseapp.com",
+  databaseURL: "https://luach-9fd14-default-rtdb.firebaseio.com",
+  projectId: "luach-9fd14"
+};
+/* אחסון תמונות/סרטונים מהגלריה (Cloudinary — חינמי, בלי כרטיס אשראי).
+   מלא את שם הענן ושם ה-preset (unsigned) שלך: */
+var MEDIA_UPLOAD = { cloud: "", preset: "" };
+/* ============================================================ */
+</script>
+
+<script src="hayomyom.js"></script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+<script>
+(function(){
+  "use strict";
+  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60};
+  var THEMES=[{k:"night",n:"לילה כחול",bg:"linear-gradient(135deg,#17244d,#0a0f1e)",fg:"#e7c072"},{k:"apple",n:"אפל בהיר",bg:"#eceef3",fg:"#0a84ff"},{k:"sunrise",n:"זריחה",bg:"linear-gradient(135deg,#ff9a5a,#ff6a88)",fg:"#fff"},{k:"emerald",n:"אזמרגד",bg:"linear-gradient(160deg,#134a37,#0a2a20)",fg:"#dcbd6c"},{k:"gold",n:"זהב",bg:"radial-gradient(circle at 50% 0%,#17120a,#0a0806)",fg:"#d4af37"},{k:"contrast",n:"ניגודיות",bg:"#000",fg:"#ffe100"},{k:"glass",n:"זכוכית",bg:"linear-gradient(135deg,#7a50ff,#00c8ff)",fg:"#fff"},{k:"neon",n:"ניאון",bg:"radial-gradient(circle,#13131f,#05050a)",fg:"#2ee6ff"},{k:"royal",n:"כחול חב״ד",bg:"linear-gradient(160deg,#14408f,#0d2a63)",fg:"#ecc978"},{k:"blueprint",n:"שרטוט",bg:"#0a2744",fg:"#7fd0ff"},{k:"parchment",n:"קלף",bg:"linear-gradient(135deg,#f6ecd2,#ecdcb8)",fg:"#7d2436"},{k:"minimal",n:"מינימל",bg:"#050505",fg:"#f5a623"},{k:"wine",n:"בורדו",bg:"linear-gradient(160deg,#3a0e1a,#150406)",fg:"#e7c072"},{k:"ocean",n:"ים",bg:"linear-gradient(160deg,#07323a,#041a20)",fg:"#4fe0d0"},{k:"purple",n:"סגול מלכותי",bg:"radial-gradient(circle at 50% 0%,#241041,#120726)",fg:"#c3a6ff"},{k:"charcoal",n:"פחם",bg:"radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013)",fg:"#6aa0ff"},{k:"cream",n:"קרם",bg:"#f3ecdd",fg:"#915e2a"},{k:"bronze",n:"ברונזה",bg:"radial-gradient(circle at 50% 0%,#241a10,#120c06)",fg:"#cf9a4e"}];
+  var PHONE_LEAD_MIN=10,LO_INFO_FROM_H=21,LO_LEAD_MIN=15,GOODNIGHT_MIN=20,LAT=32.0807,LON=34.8338,DIM_END_H=6.5;
+  var config=Object.assign({},DEFAULTS),messages=[],store=null;
+  var mediaList=[],mediaU=0;
+  var mode=(location.hash==="#admin"||location.hash==="#manage")?"manage":"display";
+  var startDay=(new Date()).toDateString();
+
+  function $(id){return document.getElementById(id);}
+  function pad2(n){return(n<10?"0":"")+n;}
+  function parseHM(s){if(typeof s!=="string")return null;var m=s.match(/^(\d{1,2}):(\d{2})$/);if(!m)return null;var h=+m[1],mi=+m[2];if(h>23||mi>59)return null;return{h:h,m:mi};}
+  var wakeUntil=0; // כשמקישים על המסך השחור — מציג את התצוגה לכמה דקות
+  function inTimeWindow(now,startHM,endHM){var s=parseHM(startHM),e=parseHM(endHM);if(!s||!e)return false;var cur=now.getHours()*60+now.getMinutes(),a=s.h*60+s.m,b=e.h*60+e.m;if(a===b)return false;return a<b?(cur>=a&&cur<b):(cur>=a||cur<b);}
+  function screenOffNow(now){return !!config.screenOffEnabled&&inTimeWindow(now,config.screenOffStart,config.screenOffEnd)&&nowSync()>=wakeUntil;}
+  function atToday(now,h,m){var d=new Date(now);d.setHours(h,m,0,0);return d;}
+  function todayKey(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());}
+  function msToMMSS(ms){var s=Math.max(0,Math.ceil(ms/1000));return pad2(Math.floor(s/60))+":"+pad2(s%60);}
+  function fmtHM(d){return d.getHours()+":"+pad2(d.getMinutes());}
+  function effectiveLightsOut(){if(!config.lightsOutEnabled)return null;if(config.lightsOutOverride&&config.lightsOutOverrideDate===todayKey())return config.lightsOutOverride;return config.lightsOutDefault||null;}
+  function loForDim(){if(config.lightsOutOverride&&config.lightsOutOverrideDate===todayKey())return config.lightsOutOverride;return config.lightsOutDefault||"22:00";}
+
+  function rad(d){return d*Math.PI/180;}function deg(r){return r*180/Math.PI;}
+  function sunEvent(y,mo,da,rise){var a=Math.floor((14-mo)/12),yy=y+4800-a,mm=mo+12*a-3;var JDN=da+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045;var n=JDN-2451545.0+0.0008,Jstar=n-LON/360.0;var M=(357.5291+0.98560028*Jstar)%360;var C=1.9148*Math.sin(rad(M))+0.0200*Math.sin(rad(2*M))+0.0003*Math.sin(rad(3*M));var lam=(M+C+180+102.9372)%360;var Jt=2451545.0+Jstar+0.0053*Math.sin(rad(M))-0.0069*Math.sin(rad(2*lam));var delta=deg(Math.asin(Math.sin(rad(lam))*Math.sin(rad(23.4397))));var cosH=(Math.sin(rad(-0.833))-Math.sin(rad(LAT))*Math.sin(rad(delta)))/(Math.cos(rad(LAT))*Math.cos(rad(delta)));if(cosH>1||cosH<-1)return null;var H=deg(Math.acos(cosH));var J=rise?Jt-H/360.0:Jt+H/360.0;return new Date((J-2440587.5)*86400000);}
+  function sunrise(d){return sunEvent(d.getFullYear(),d.getMonth()+1,d.getDate(),true);}
+  function sunset(d){return sunEvent(d.getFullYear(),d.getMonth()+1,d.getDate(),false);}
+  function sofZmanKS(d){var sr=sunrise(d),ss=sunset(d);if(!sr||!ss)return null;var se=(ss.getTime()-sr.getTime())/12;return new Date(sr.getTime()+3*se+(config.ksOffsetMin||0)*60000);}
+  function isShabbat(now){var dow=now.getDay();if(dow===5){var ss=sunset(now);return ss&&now.getTime()>=ss.getTime()-18*60000;}if(dow===6){var s2=sunset(now);return s2&&now.getTime()<=s2.getTime()+35*60000;}return false;}
+
+  var fDow,fHeParts;
+  try{fDow=new Intl.DateTimeFormat("he-IL",{weekday:"long"});}catch(e){}
+  try{fHeParts=new Intl.DateTimeFormat("en-u-ca-hebrew",{day:"numeric",month:"long",year:"numeric"});}catch(e){}
+  var HE_MONTHS={"Tishri":"תשרי","Heshvan":"חשוון","Kislev":"כסלו","Tevet":"טבת","Shevat":"שבט","Adar":"אדר","Adar I":"אדר א׳","Adar II":"אדר ב׳","Nisan":"ניסן","Iyar":"אייר","Sivan":"סיוון","Tamuz":"תמוז","Av":"אב","Elul":"אלול"};
+  var GEM=[[400,"ת"],[300,"ש"],[200,"ר"],[100,"ק"],[90,"צ"],[80,"פ"],[70,"ע"],[60,"ס"],[50,"נ"],[40,"מ"],[30,"ל"],[20,"כ"],[10,"י"],[9,"ט"],[8,"ח"],[7,"ז"],[6,"ו"],[5,"ה"],[4,"ד"],[3,"ג"],[2,"ב"],[1,"א"]];
+  function heLetters(n){var s="",r=n;for(var i=0;i<GEM.length;i++){while(r>=GEM[i][0]){s+=GEM[i][1];r-=GEM[i][0];}}return s.replace("יה","טו").replace("יו","טז");}
+  function heNum(n){var s=heLetters(n);return s.length===1?s+"׳":s.slice(0,-1)+"״"+s.slice(-1);}
+  function hebrewDate(d){if(!fHeParts)return"";var day=0,year=0,mon="",p=fHeParts.formatToParts(d);for(var i=0;i<p.length;i++){var t=p[i].type;if(t==="day")day=parseInt(p[i].value,10);else if(t==="year")year=parseInt(p[i].value,10);else if(t==="month")mon=p[i].value;}if(!day||!year)return"";return heNum(day)+" ב"+(HE_MONTHS[mon]||mon)+" "+heNum(year%1000);}
+  function hebParts(d){if(!fHeParts)return null;var day=0,mon="",p=fHeParts.formatToParts(d);for(var i=0;i<p.length;i++){if(p[i].type==="day")day=parseInt(p[i].value,10);else if(p[i].type==="month")mon=p[i].value;}return day?{day:day,mon:mon}:null;}
+  var REBBE_B="https://static.wixstatic.com/media/622c32_b667863f2f6c4a1faf9301b5f5e6d56a~mv2_d_3497_2359_s_2.jpg/v1/fit/w_1000,h_1000,q_90/img.jpg";
+  var REBBE_T="https://static.wixstatic.com/media/622c32_e074ac6da7784e48b93ea76a610c23a6~mv2_d_3501_2326_s_2.jpg/v1/fit/w_1000,h_1000,q_90/img.jpg";
+  var P_ZEKAN="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Schneur_Zalman_of_Liadi.jpg/500px-Schneur_Zalman_of_Liadi.jpg";
+  var P_TZEMACH="https://upload.wikimedia.org/wikipedia/commons/d/dc/%D7%94%D7%90%D7%93%D7%9E%D7%95%22%D7%A8_%D7%94%D7%A6%D7%9E%D7%97-%D7%A6%D7%93%D7%A7_%D7%9E%D7%9C%D7%99%D7%95%D7%91%D7%90%D7%95%D7%95%D7%99%D7%98%D7%A9.jpg";
+  var P_MAHARASH="https://upload.wikimedia.org/wikipedia/commons/4/41/Stamp_of_Rabbi_Shmuel_Schneerson.jpg";
+  var P_RASHAB="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/The_Rebbe_Rashab_%28Original_Passport_Picture%29.jpg/500px-The_Rebbe_Rashab_%28Original_Passport_Picture%29.jpg";
+  var P_RAYATZ="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Frierdiger_Rebbe.tif/lossy-page1-500px-Frierdiger_Rebbe.tif.jpg";
+  var P_REBETZIN="https://upload.wikimedia.org/wikipedia/en/b/b3/Chaya_Mushka_Schneerson.jpg";
+  var P_LEVIK="https://upload.wikimedia.org/wikipedia/en/0/01/Rebbi_Levi_Yitzchak_Schneerson.jpg";
+  var CHABAD_DAYS={
+    "Tishri-3":[{t:"ג׳ תשרי · הסתלקות הרבנית דבורה לאה",s:"בג׳ תשרי תקנ״ג (1792) נסתלקה הרבנית דבורה לאה, בתו של אדמו״ר הזקן ואם הצמח צדק. לפי המסופר, בהרגישה שנגזרה גזֵרה על אביה כינסה שלושה מזקני החסידים כבית-דין והכריזה שהיא מוסרת את נפשה תמורת חיי אביה, וביקשה ממנו לגדל את בנה הקטן מנחם מענדל. היא נפטרה זמן קצר לאחר מכן בגיל צעיר, ואדמו״ר הזקן גידל וחינך בעצמו את נכדו — לימים ה'צמח צדק'.",p:""}],
+    "Tishri-6":[{t:"ו׳ תשרי · יארצייט הרבנית חנה",s:"יומא דהילולא של הרבנית חנה שניאורסאהן, אמו של הרבי מליובאוויטש, בשנת תשכ״ה (1964). עמדה לימין בעלה הרב לוי יצחק בגלותו ברוסיה, ומסרה נפשה על שמירת היהדות.",p:""}],
+    "Tishri-8":[{t:"ח׳ תשרי · הסתלקות ר׳ ברוך אבי אדמו״ר הזקן",s:"בח׳ תשרי תקנ״ב (1791) נסתלק ר׳ ברוך, אביו של אדמו״ר הזקן רבי שניאור זלמן מליאדי, שהיה מצאצאי המהר״ל מפראג. אדמו״ר הזקן נולד לו ולאשתו רבקה בעיר ליאזנא, ומילדותו ניכרו בו כישרונות נדירים.",p:""}],
+    "Tishri-13":[{t:"יארצייט אדמו״ר מהר״ש",s:"יומא דהילולא של אדמו״ר מהר״ש (רבי שמואל), הרבי הרביעי בשושלת חב״ד, שנסתלק בשנת תרמ״ג (1882). נודע בפתגמו 'לכתחילה אַריבער' — לא לעקוף קושי אלא להתעלות מעליו מלכתחילה.",p:P_MAHARASH}],
+    "Tishri-16":[{t:"ט״ז תשרי · יארצייט ר׳ זושא (ווילימובסקי) הפּאַרטיזאַן",s:"ר׳ זושא ווילימובסקי, שלחם במלחמה כפרטיזן והציל יהודים, ולימים נודע כאחד מלוחמי הפצת היהדות הנלהבים בארץ. בהתוועדות כינה אותו הרבי לראשונה ׳פּאַרטיזאַן׳, ובלכתו בין הספסלים אמר לו: ״תלך ישר, אני שומר עליך״. נפטר ט״ז תשרי תשמ״ז.",p:"https://chabadpedia.co.il/images/thumb/2/28/%D7%96%D7%95%D7%A9%D7%90_%D7%95%D7%99%D7%9C%D7%99%D7%9E%D7%95%D7%91%D7%A1%D7%A7%D7%99.jpg/220px-%D7%96%D7%95%D7%A9%D7%90_%D7%95%D7%99%D7%9C%D7%99%D7%9E%D7%95%D7%91%D7%A1%D7%A7%D7%99.jpg"}],
+    "Tishri-25":[{t:"כ״ה תשרי · יארצייט ר׳ מרדכי מענטליק",s:"ר׳ מרדכי מענטליק, ראש ישיבת תומכי תמימים המרכזית ב-770 ו׳שר המשקים׳ של הרבי קרוב לשלושים שנה. לאחר הסתלקות אדמו״ר הריי״צ, כשאמר הרבי לחסידים ללכת לסעוד סעודת שבת שאין בה אבלות, קרא ר׳ מרדכי בהתרגשות עזה: ״יש לנו רבי!״. נפטר כ״ה תשרי תשמ״ח.",p:"https://chabadpedia.co.il/images/thumb/b/b9/%D7%94%D7%A8%D7%91_%D7%9E%D7%A8%D7%93%D7%9B%D7%99_%D7%9E%D7%A2%D7%A0%D7%98%D7%9C%D7%99%D7%A7.jpeg/220px-%D7%94%D7%A8%D7%91_%D7%9E%D7%A8%D7%93%D7%9B%D7%99_%D7%9E%D7%A2%D7%A0%D7%98%D7%9C%D7%99%D7%A7.jpeg"}],
+    "Heshvan-2":[{t:"ב׳ חשוון · יום הולדת הרבנית נחמה דינה",s:"בב׳ חשוון תרמ״ב (1881) נולדה הרבנית נחמה דינה, רעיית הרבי הריי״צ. היא עמדה לצד בעלה בשנות המאסר, הגלות והמנוסה מרוסיה ומאירופה, ולאחר הסתלקותו המשיכה לשמש עוגן לחסידים ואירחה בביתה את סעודות החג.",p:""}],
+    "Heshvan-10":[{t:"י׳ מרחשוון · יארצייט ר׳ ישראל נח בליניצקי",s:"ר׳ ישראל נח בליניצקי, משפיע בכיר בישיבות תומכי תמימים (קרמנצ׳וג, סמרקנד וברינואה) ששימש גם כמנהל חשבונות הישיבה ללא שכר. היה נודע בהתרגשותו העצומה בתפילה, ועל אמירת ה׳אמן יהא שמיה רבא׳ שלו נאמר שהיא בוקעת את כל הרקיעים. נפטר בגיל קרוב למאה י׳ מרחשוון תשמ״ג.",p:"https://chabadpedia.co.il/images/thumb/c/c1/Blinitzky%2C_Yisrael_Noach_01.jpg/220px-Blinitzky%2C_Yisrael_Noach_01.jpg"}],
+    "Heshvan-20":[{t:"יום הולדת אדמו״ר הרש״ב",s:"יום הולדתו של אדמו״ר הרש״ב (רבי שלום דובער), הרבי החמישי, שנולד בשנת תר״כ (1860). ייסד את ישיבת תומכי תמימים, שהעמידה דורות של 'חיילי בית דוד'.",p:P_RASHAB}],
+    "Kislev-1":[{t:"א׳ כסלו · יום ההודיה",s:"בשמחת תורה תשל״ח (1977) לקה הרבי בהתקף לב בעת ההקפות, אך התעקש להמשיך. במשך כחמישה שבועות שהה בחדרו שב-770 והוסיף לנהל את ענייני השליחות, ובא׳ כסלו שב לביתו ואף ערך התוועדות בעודו מחובר בסתר למכשירי ניטור לב. מאז מציינים חסידים את ראש חודש כסלו כיום הודיה ושמחה.",p:REBBE_B}],
+    "Kislev-5":[{t:"ה׳ כסלו · חתונת הצמח צדק",s:"בה׳ כסלו תקס״ד (1803) נשא רבי מנחם מענדל, לימים ה'צמח צדק', את הרבנית חיה מושקא, בתו של אדמו״ר האמצעי. הצמח צדק התייתם בילדותו וגודל בבית סבו אדמו״ר הזקן, וכעת נכנס אל המשפחה כחתן בן-דודתו. מנישואים אלו יצאו בנים שהקימו שושלות אדמו״רים בחב״ד.",p:P_TZEMACH}],
+    "Kislev-9":[{t:"אדמו״ר האמצעי · הולדת והסתלקות",s:"יום הולדתו (תקל״ד) ויום הסתלקותו (תקפ״ח) של אדמו״ר האמצעי (רבי דובער), בנו וממלא מקומו של אדמו״ר הזקן, שהרחיב והעמיק את תורת חב״ד.",p:""}],
+    "Kislev-10":[{t:"י׳ כסלו · גאולת אדמו״ר האמצעי",s:"חג הגאולה של אדמו״ר האמצעי, שנאסר ושוחרר ביום זה בשנת תקפ״ז (1826) מעלילה על הפצת החסידות.",p:""},{t:"י׳ כסלו · יארצייט ר׳ איטשע דער מתמיד (ר׳ יצחק הורוביץ)",s:"ר׳ יצחק הורוביץ, ׳איטשע דער מתמיד׳, מהתמימים הראשונים בליובאוויטש ושליח אדמו״ר הרש״ב והריי״צ להרביץ חסידות. בשקידתו הנפלאה היה מניח רגליו בקערת מים בלילות כדי שלא יירדם מרוב לימוד, וחבריו היו מכבים את נרו כדי שישן; בגיל שבע־עשרה כבר נסמך להוראה. נפטר י׳ כסלו תש״ב בתל אביב.",p:"https://chabadpedia.co.il/images/thumb/d/d0/%D7%90%D7%99%D7%A6%27%D7%94.jpg/220px-%D7%90%D7%99%D7%A6%27%D7%94.jpg"},{t:"י׳ כסלו · יארצייט ר׳ אליהו חיים אלטהויז",s:"ר׳ אליהו חיים אלטהויז, מחשובי חסידי אדמו״ר הרש״ב והריי״צ ומנהל רשת ה׳חדרים׳ המחתרתית ברוסיה. דבקותו ברבי היתה כה גדולה שכאשר נודע לו על הסתלקות אדמו״ר הרש״ב התעלף. נספה על קידוש השם בשריפת בית הכנסת בריגא בידי הנאצים י׳ כסלו תש״ב.",p:"https://chabadpedia.co.il/images/thumb/b/bd/%D7%90%D7%9C%D7%99%D7%94%D7%95_%D7%97%D7%99%D7%99%D7%9D_%D7%90%D7%9C%D7%98%D7%94%D7%95%D7%99%D7%96.jpg/220px-%D7%90%D7%9C%D7%99%D7%94%D7%95_%D7%97%D7%99%D7%99%D7%9D_%D7%90%D7%9C%D7%98%D7%94%D7%95%D7%99%D7%96.jpg"},{t:"י׳ כסלו · יארצייט ר׳ יחזקאל (חאַטשע) פייגין",s:"ר׳ יחזקאל פייגין, ממזכירי אדמו״ר הריי״צ ומעמודי הפעילות החסידית ברוסיה. נספה על קידוש השם בשריפת בית הכנסת בריגא בידי הנאצים; לפני ההצתה רקדו הוא והחסידים עם ספר תורה, באומרם שזכו לקיים מצות מסירות נפש על קידוש השם ועליהם להיות בשמחה. נפטר י׳ כסלו תש״ב.",p:"https://chabadpedia.co.il/images/thumb/2/24/%D7%A8%27_%D7%97%D7%90%D7%98%D7%A9%D7%A2_%D7%A4%D7%99%D7%99%D7%92%D7%99%D7%9F.png/220px-%D7%A8%27_%D7%97%D7%90%D7%98%D7%A9%D7%A2_%D7%A4%D7%99%D7%99%D7%92%D7%99%D7%9F.png"}],
+    "Kislev-14":[{t:"י״ד כסלו · יום נישואי הרבי",s:"יום נישואי הרבי והרבנית חיה מושקא, בוורשה בשנת תרפ״ט (1928). הרבי אמר שביום זה 'נתקשרתי עמכם, ואתם עמי'.",p:REBBE_B}],
+    "Kislev-19":[{t:"י״ט כסלו · חג הגאולה · ראש השנה לחסידות",s:"'ראש השנה לחסידות' — היום שבו שוחרר אדמו״ר הזקן, בעל התניא, ממאסרו בפטרבורג בשנת תקנ״ט (1798), לאחר שנאסר בעקבות הלשנה על הפצת החסידות. ביום זה חל גם יארצייט רבו, המגיד ממעזריטש. משחרורו פרצה והתפשטה תורת החסידות בעולם.",p:P_ZEKAN}],
+    "Kislev-20":[{t:"כ׳ כסלו · המשך חג הגאולה",s:"היום השני של חג הגאולה, בו שב אדמו״ר הזקן לביתו לאחר שחרורו.",p:P_ZEKAN}],
+    "Kislev-25":[{t:"חנוכה · נר ראשון",s:"מתחילים להדליק נרות חנוכה, זכר לנס פך השמן ולניצחון המכבים. שמונה ימים של אור ההולך וגובר — מוסיפים אור וקדושה בעולם.",p:""}],
+    "Tevet-5":[{t:"ה׳ טבת · דידן נצח",s:"'דידן נצח' — ביום זה בשנת תשמ״ז (1987) פסק בית המשפט הפדרלי בניו יורק שספריית רבותינו נשיאינו שייכת לליובאוויטש. ניצחון לשמירת אוצרות הספרים, המצוין מדי שנה בהוספה בלימוד ובקניית ספרים.",p:""}],
+    "Tevet-8":[{t:"ח׳ טבת · הסתלקות הרבנית חיה מושקא (אשת הצמח צדק)",s:"בח׳ טבת תרכ״א (1861) נסתלקה הרבנית חיה מושקא, רעיית ה'צמח צדק' ובתו של אדמו״ר האמצעי. מבניה יצאו נשיאי חב״ד וראשי שושלות חסידיות, ועל שמה נקראה לימים הרבנית חיה מושקא רעיית הרבי.",p:""}],
+    "Tevet-10":[{t:"י׳ טבת · הסתלקות הרבנית נחמה דינה",s:"בי׳ טבת תשל״א (1971) נסתלקה הרבנית נחמה דינה, אלמנת הרבי הריי״צ ואם הרבנית חיה מושקא. עד ימיה האחרונים נהגה לארח בביתה את סעודות החג לבני המשפחה והמקורבים, והמשיכה להוות דמות מרכזית לחסידים גם לאחר הסתלקות בעלה.",p:""}],
+    "Tevet-15":[{t:"ט״ו טבת · יום הולדת הרבנית שטערנא שרה",s:"בט״ו טבת תרי״ט (1859) נולדה הרבנית שטערנא שרה, נינת ה'צמח צדק', לימים רעיית הרבי הרש״ב ואם הרבי הריי״צ. היא ליוותה את משפחת האדמו״רים במעבר מרוסיה הסובייטית ובשנותיה האחרונות בארצות הברית.",p:""}],
+    "Tevet-19":[{t:"י״ט טבת · דידן נצח (פסק הערעור)",s:"בי״ט טבת תש״נ (1990) אישר בית המשפט הפדרלי לערעורים בניו יורק את ההכרעה שספריית אדמו״ר הריי״צ שייכת לחסידות חב״ד ולא ליורשים. היה זה המשך לניצחון של ה׳ טבת, שבו פרצו החסידים בקריאת 'דידן נצח'. הרבי ראה במשפט הספרים שאלה עקרונית — האם הרבי והספרים 'שייכים' לכלל החסידים.",p:"https://upload.wikimedia.org/wikipedia/commons/b/b4/770_Eastern_Parkway.jpg"}],
+    "Tevet-21":[{t:"כ״א טבת · יארצייט ר׳ פרץ מוצ׳קין",s:"ר׳ פרץ מוצ׳קין, חסיד שעמד במסירות נפש ברוסיה ולימים שימש כמשפיע חב״ד במונטריאול כשלושים שנה. כשחלה במחלת הטיפוס בסימפרופול והרגיש שכוחותיו כלים, אמר וידוי ושלושה־עשר עיקרי האמונה והכריז על אמונתו בכל אחד מרבותינו נשיאינו בשמותיהם — ואז החלים. נפטר כ״א טבת תשמ״ב.",p:"https://chabadpedia.co.il/images/thumb/4/45/%D7%A4%D7%A8%D7%A5_%D7%9E%D7%95%D7%A6%27%D7%A7%D7%99%D7%9F.jpg/220px-%D7%A4%D7%A8%D7%A5_%D7%9E%D7%95%D7%A6%27%D7%A7%D7%99%D7%9F.jpg"}],
+    "Tevet-22":[{t:"כ״ב טבת · יארצייט ר׳ מנחם זאב גרינגלאס",s:"ר׳ מנחם זאב הלוי גרינגלאס, משפיע ומחנך ותיק בתומכי תמימים במונטריאול שהעמיד אלפי תלמידים, והרבי כינהו ׳מקובל ממונטריאול׳. בנעוריו בישיבת אטבוצק בירך אדמו״ר הריי״צ שהצעיר שבחבורה ׳יחיה מתים׳ — והצעיר היה הוא. על דרכו החינוכית אמר: ״לעולם לא ׳ירדתי׳ על בחור, רק העליתי אותו״. נפטר כ״ב טבת תשע״א.",p:"https://chabadpedia.co.il/images/thumb/0/0b/%D7%92%D7%A8%D7%99%D7%A0%D7%92%D7%9C%D7%90%D7%A1_2.jpg/220px-%D7%92%D7%A8%D7%99%D7%A0%D7%92%D7%9C%D7%90%D7%A1_2.jpg"}],
+    "Tevet-24":[{t:"כ״ד טבת · יארצייט אדמו״ר הזקן",s:"יומא דהילולא של אדמו״ר הזקן, רבי שניאור זלמן מליאדי, בעל התניא והשולחן ערוך, מייסד חסידות חב״ד, שנסתלק בדרך בריחתו מצבא נפוליון בשנת תקע״ג (1812).",p:P_ZEKAN}],
+    "Tevet-28":[{t:"כ״ח טבת · יום הולדת הרבנית חנה",s:"בכ״ח טבת תר״מ (1880) נולדה בניקולייב הרבנית חנה שניאורסון, אמו של הרבי. בשנות גלותו של בעלה רבי לוי יצחק בקזחסטן הכינה עבורו דיו מעשבי השדה כדי שיוכל להמשיך לכתוב את חידושי תורתו על גיליונות ספריו, ובזכותה נשתמרו כתביו.",p:""}],
+    "Shevat-3":[{t:"ג׳ שבט · יארצייט ר׳ זלמן משה היצחקי",s:"ר׳ זלמן משה היצחקי, משפיע ושוחט מנעוול שנודע בהתוועדויותיו החריפות. אדמו״ר הריי״צ הורה לו להתבונן בחסידות בדרכו לבית המטבחיים, והוא קיים זאת גם בלילות חשוכים בבוץ של נעוול. חתנו היה המשפיע ר׳ אברהם מאיור דרייזין. נפטר ג׳ שבט תשי״ב ונטמן בצפת.",p:"https://chabadpedia.co.il/images/thumb/d/d4/%D7%96%D7%9C%D7%9E%D7%9F_%D7%9E%D7%A9%D7%94_%D7%94%D7%99%D7%A6%D7%97%D7%A7%D7%99.jpg/205px-%D7%96%D7%9C%D7%9E%D7%9F_%D7%9E%D7%A9%D7%94_%D7%94%D7%99%D7%A6%D7%97%D7%A7%D7%99.jpg"}],
+    "Shevat-8":[{t:"ח׳ שבט · יארצייט ר׳ שמואל דוד רייטשיק",s:"ר׳ שמואל דוד רייטשיק, מ׳חוזרי׳ אדמו״ר הריי״צ ושלוחו של הרבי ללוס אנג׳לס. עם פתיחת מבצע תפילין בשנת תשכ״ז החל לסובב מדי יום ברחובות פערפקס לחפש יהודים שעדיין לא הניחו תפילין, והמשיך בכך עד יומו האחרון, כהוראת הרבי ׳לפרוס את מצודתו על כל העיר וסביבתה׳. נפטר ח׳ שבט תשנ״ח.",p:"https://chabadpedia.co.il/images/thumb/c/c3/%D7%A9%D7%9E%D7%95%D7%90%D7%9C_%D7%93%D7%95%D7%93_%D7%A8%D7%99%D7%99%D7%98%D7%A9%D7%99%D7%A7.jpg/220px-%D7%A9%D7%9E%D7%95%D7%90%D7%9C_%D7%93%D7%95%D7%93_%D7%A8%D7%99%D7%99%D7%98%D7%A9%D7%99%D7%A7.jpg"}],
+    "Shevat-10":[{t:"י׳ שבט · יארצייט אדמו״ר הריי״צ וקבלת הנשיאות",s:"יומא דהילולא של אדמו״ר הריי״צ (רבי יוסף יצחק), הרבי השישי, שנסתלק בשנת תש״י (1950). כעבור שנה, בי׳ שבט תשי״א, קיבל הרבי מליובאוויטש את נשיאות חב״ד.",p:P_RAYATZ}],
+    "Shevat-12":[{t:"י״ב שבט · יארצייט ר׳ זושא פּוזנר",s:"ר׳ זושא פּוזנר, שליח ומשפיע ותיק שנודע בהתוועדויותיו המלהיבות שמשכו רבים. בשנת תשט״ז, כשהוחזרו שלוחי הרבי מארץ הקודש, קיבל מברק אישי מהרבי להישאר בארץ, ולימים הפקידוֹ הרבי על החינוך ברשת ׳אהלי יוסף יצחק׳. נפטר בערב שבת פרשת בשלח י״ב שבט תשפ״ב.",p:"https://chabadpedia.co.il/images/thumb/c/c9/%D7%96%D7%95%D7%A9%D7%90_%D7%A4%D7%95%D7%96%D7%A0%D7%A8_%D7%91%D7%94%D7%AA%D7%95%D7%95%D7%A2%D7%93%D7%95%D7%AA_%D7%94%D7%90%D7%97%D7%A8%D7%95%D7%A0%D7%94_%D7%A9%D7%9C%D7%95.jpeg/250px-%D7%96%D7%95%D7%A9%D7%90_%D7%A4%D7%95%D7%96%D7%A0%D7%A8_%D7%91%D7%94%D7%AA%D7%95%D7%95%D7%A2%D7%93%D7%95%D7%AA_%D7%94%D7%90%D7%97%D7%A8%D7%95%D7%A0%D7%94_%D7%A9%D7%9C%D7%95.jpeg"}],
+    "Shevat-13":[{t:"י״ג שבט · הסתלקות הרבנית שטערנא שרה",s:"בי״ג שבט תש״ב (1942) נסתלקה בניו יורק הרבנית שטערנא שרה, רעיית הרבי הרש״ב ואם הרבי הריי״צ. היא נמלטה מרוסיה הסובייטית עם המשפחה ועברה את תלאות הגלות עד שהגיעה לארצות הברית, שם נפטרה בשיבה טובה.",p:""}],
+    "Shevat-15":[{t:"ט״ו בשבט · ראש השנה לאילנות",s:"ראש השנה לאילנות — נוהגים לאכול מפירות ארץ ישראל ולהודות על ברכת הטבע.",p:""}],
+    "Shevat-17":[{t:"י״ז שבט · יארצייט ר׳ יהודה חיטריק",s:"ר׳ יהודה חיטריק, מזקני חסידי חב״ד ושוחט, שהעלה את זכרונותיו מליובאוויטש בספרי ׳רשימות דברים׳. לאחר שהרבי אמר מאמר ׳באתי לגני׳ אמר לו ר׳ יהודה ש׳המאמר לקח׳ וביקש לברכו, והרבי השיב לו לומר ׳לחיים׳. נפטר בגיל מאה ושש י״ז שבט תשס״ו.",p:"https://chabadpedia.co.il/images/thumb/1/12/5752-02-20_%2826%29.jpg/220px-5752-02-20_%2826%29.jpg"}],
+    "Shevat-22":[{t:"כ״ב שבט · יארצייט הרבנית חי״מ",s:"יומא דהילולא של הרבנית הצדקנית חיה מושקא, רעיית הרבי, בשנת תשמ״ח (1988). אשת חיל שהקדישה חייה לתמיכה בפעילות הרבי מתוך צניעות ואצילות.",p:P_REBETZIN}],
+    "Shevat-26":[{t:"כ״ו שבט · יארצייט ר׳ יעקב לנדא",s:"ר׳ יעקב לנדא, מזכירו האישי של אדמו״ר הרש״ב וכותב מאמריו, ולימים גאב״ד בני ברק. בחיפוש של חיילי השלטון בבית אדמו״ר הריי״צ הצליח להעלים מכתב מסוכן והציל בכך את הרבי מגזר דין; על גדולתו אמר אדמו״ר הרש״ב ״א רב ביסטו שוין״ (כבר רב אתה). נפטר כ״ו שבט תשמ״ו.",p:"https://chabadpedia.co.il/images/thumb/f/f4/%D7%A8%D7%91%D7%99-%D7%99%D7%A2%D7%A7%D7%91-%D7%9C%D7%A0%D7%93%D7%90-%D7%96%D7%A6%D7%9C-%D7%92%D7%90%D7%91%D7%93-%D7%91%D7%A0%D7%99-%D7%91%D7%A8%D7%A7.jpg/220px-%D7%A8%D7%91%D7%99-%D7%99%D7%A2%D7%A7%D7%91-%D7%9C%D7%A0%D7%93%D7%90-%D7%96%D7%A6%D7%9C-%D7%92%D7%90%D7%91%D7%93-%D7%91%D7%A0%D7%99-%D7%91%D7%A8%D7%A7.jpg"},{t:"כ״ו שבט · יארצייט ר׳ אפרים וולף",s:"ר׳ אפרים וולף, מנהל ישיבת תומכי תמימים בלוד ונציגו הנאמן של הרבי בארץ במשך עשרות שנים, שעמד בקשר מכתבים מתמיד עם הרבי. הרבי אמר עליו: ״האיש שלי בארץ ישראל הוא אפרים וולף״. נפטר כ״ו שבט תשס״ג.",p:"https://chabadpedia.co.il/images/a/a4/%D7%90%D7%A4%D7%A8%D7%99%D7%9D_%D7%95%D7%95%D7%9C%D7%A3.jpg"}],
+    "Adar-6":[{t:"ו׳ אדר א׳ · יארצייט הרש״ג (ר׳ שמריהו גוראריה)",s:"הרש״ג, ר׳ שמריהו גוראריה, חתנו של אדמו״ר הריי״צ ומנהל רשת ישיבות תומכי תמימים. בתחילה התקשה לקבל את מרות גיסו הצעיר, עד שפעם ביקש לשאול את הרבי בעניין, והרבי השיב בפשטות שישאל את חותנו באוהל — ומהתמימות הזו הבין הרש״ג שעליו להתבטל לרבי בכל לב. נפטר ו׳ אדר א׳ תשמ״ט.",p:"https://chabadpedia.co.il/images/thumb/0/09/%D7%94%D7%A8%D7%A9%22%D7%921.png/220px-%D7%94%D7%A8%D7%A9%22%D7%921.png"}],
+    "Adar-7":[{t:"ז׳ אדר · משה רבנו",s:"יום הולדתו ויום הסתלקותו של משה רבנו, רועה ישראל הנאמן.",p:""}],
+    "Adar-8":[{t:"ח׳ אדר · יארצייט ר׳ שניאור זלמן דוכמן",s:"ר׳ שניאור זלמן הלוי דוכמן, מזקני החסידים ובעל תפילה ב-770 שעורר יראת שמים בשומעיו. בתקופת מאסר אדמו״ר הריי״צ הופקד על שמירת חלק מכתבי היד, ובספרו ׳לשמע אוזן׳ העלה סיפורי חסידים ששמע מדורות קודמים. נפטר ח׳ אדר תש״ל.",p:"https://chabadpedia.co.il/images/thumb/f/fe/%D7%96%D7%9C%D7%9E%D7%9F_%D7%94%D7%9C%D7%95%D7%99_%D7%93%D7%95%D7%9B%D7%9E%D7%9F.jpg/250px-%D7%96%D7%9C%D7%9E%D7%9F_%D7%94%D7%9C%D7%95%D7%99_%D7%93%D7%95%D7%9B%D7%9E%D7%9F.jpg"}],
+    "Adar-9":[{t:"ט׳ אדר · הגעת אדמו״ר הריי״צ לאמריקה",s:"ביום זה בשנת ת״ש (1940) הגיע אדמו״ר הריי״צ לארצות הברית, לאחר הצלתו מוורשה הכבושה. בהגיעו הכריז 'אמריקה אינה שונה' — שאף באמריקה אפשר לבנות חיי תורה ויהדות שלמים, ובכך פתח תקופה חדשה בהפצת היהדות באמריקה.",p:P_RAYATZ}],
+    "Adar-14":[{t:"פורים",s:"חג פורים — זכר לנס הצלת עם ישראל מגזירת המן בימי מרדכי ואסתר. קוראים מגילה, משלוח מנות, מתנות לאביונים וסעודת פורים.",p:""}],
+    "Adar-17":[{t:"י״ז אדר · יארצייט ר׳ זלמן שמעון דוורקין",s:"ר׳ זלמן שמעון דוורקין, גאב״ד שכונת קראון הייטס ופוסק חב״ד הנודע. בשבוע שלפני פטירתו, בעודו חולה אנוש, סיפר בהתרגשות על ׳מיימינים ומשמאילים׳ שנאבקו עליו, ואמר שהמיימינים נתנו לו עוד שבעה ימים — וכעבור שבעה ימים נפטר. נסתלק במוצאי שבת פרשת כי תשא י״ז אדר תשמ״ה.",p:"https://chabadpedia.co.il/images/thumb/e/e1/Dvorkin%2C_Zalman_Shimon_06.jpg/220px-Dvorkin%2C_Zalman_Shimon_06.jpg"}],
+    "Adar-20":[{t:"כ׳ אדר ב׳ · יארצייט ר׳ ניסן טעלושקין",s:"ר׳ ניסן טעלושקין, רב ופוסק בברוקלין כארבעים שנה ומחבר ׳טהרת מים׳ על הלכות מקוואות. הרבי עודד את חיבורו וביקש להוציאו במהדורה שנייה, בשבחו את המחבר כמומחה בתחום: ״אתמחי גברא ואתמחי קמיע״. נפטר כ׳ אדר ב׳ תש״ל.",p:"https://chabadpedia.co.il/images/2/2a/%D7%A0%D7%99%D7%A1%D7%9F_%D7%98%D7%A2%D7%9C%D7%95%D7%A9%D7%A7%D7%99%D7%9F.jpg"}],
+    "Adar-25":[{t:"כ״ה אדר · יום הולדת הרבנית חיה מושקא",s:"בכ״ה אדר תרס״א (1901) נולדה הרבנית חיה מושקא, בתו של הרבי הריי״צ ורעיית הרבי. בשנת תשמ״ח, בעקבות הסתלקותה, עודד הרבי כל אדם לציין את יום הולדתו בהוספה בתורה, בצדקה ובקבלת החלטות טובות, וייסד מבצע עולמי לציון ימי הולדת.",p:P_REBETZIN}],
+    "Adar I-6":[{t:"ו׳ אדר א׳ · יארצייט הרש״ג (ר׳ שמריהו גוראריה)",s:"הרש״ג, ר׳ שמריהו גוראריה, חתנו של אדמו״ר הריי״צ ומנהל רשת ישיבות תומכי תמימים. בתחילה התקשה לקבל את מרות גיסו הצעיר, עד שפעם ביקש לשאול את הרבי בעניין, והרבי השיב בפשטות שישאל את חותנו באוהל — ומהתמימות הזו הבין הרש״ג שעליו להתבטל לרבי בכל לב. נפטר ו׳ אדר א׳ תשמ״ט.",p:"https://chabadpedia.co.il/images/thumb/0/09/%D7%94%D7%A8%D7%A9%22%D7%921.png/220px-%D7%94%D7%A8%D7%A9%22%D7%921.png"}],
+    "Adar I-7":[{t:"ז׳ אדר · משה רבנו",s:"יום הולדתו ויום הסתלקותו של משה רבנו, רועה ישראל הנאמן.",p:""}],
+    "Adar II-7":[{t:"ז׳ אדר · משה רבנו",s:"יום הולדתו ויום הסתלקותו של משה רבנו, רועה ישראל הנאמן.",p:""}],
+    "Adar II-9":[{t:"ט׳ אדר · הגעת אדמו״ר הריי״צ לאמריקה",s:"ביום זה בשנת ת״ש (1940) הגיע אדמו״ר הריי״צ לארצות הברית, לאחר הצלתו מוורשה הכבושה. בהגיעו הכריז 'אמריקה אינה שונה' — שאף באמריקה אפשר לבנות חיי תורה ויהדות שלמים, ובכך פתח תקופה חדשה בהפצת היהדות באמריקה.",p:P_RAYATZ}],
+    "Adar II-14":[{t:"פורים",s:"חג פורים — זכר לנס הצלת עם ישראל מגזירת המן בימי מרדכי ואסתר. קוראים מגילה, משלוח מנות, מתנות לאביונים וסעודת פורים.",p:""}],
+    "Adar II-20":[{t:"כ׳ אדר ב׳ · יארצייט ר׳ ניסן טעלושקין",s:"ר׳ ניסן טעלושקין, רב ופוסק בברוקלין כארבעים שנה ומחבר ׳טהרת מים׳ על הלכות מקוואות. הרבי עודד את חיבורו וביקש להוציאו במהדורה שנייה, בשבחו את המחבר כמומחה בתחום: ״אתמחי גברא ואתמחי קמיע״. נפטר כ׳ אדר ב׳ תש״ל.",p:"https://chabadpedia.co.il/images/2/2a/%D7%A0%D7%99%D7%A1%D7%9F_%D7%98%D7%A2%D7%9C%D7%95%D7%A9%D7%A7%D7%99%D7%9F.jpg"}],
+    "Adar II-25":[{t:"כ״ה אדר · יום הולדת הרבנית חיה מושקא",s:"בכ״ה אדר תרס״א (1901) נולדה הרבנית חיה מושקא, בתו של הרבי הריי״צ ורעיית הרבי. בשנת תשמ״ח, בעקבות הסתלקותה, עודד הרבי כל אדם לציין את יום הולדתו בהוספה בתורה, בצדקה ובקבלת החלטות טובות, וייסד מבצע עולמי לציון ימי הולדת.",p:P_REBETZIN}],
+    "Nisan-2":[{t:"ב׳ ניסן · יארצייט אדמו״ר הרש״ב",s:"יומא דהילולא של אדמו״ר הרש״ב, הרבי החמישי, שנסתלק בשנת תר״פ (1920). בנו, אדמו״ר הריי״צ, קיבל ביום זה את הנשיאות.",p:P_RASHAB}],
+    "Nisan-8":[{t:"ח׳ ניסן · יארצייט ר׳ אלחנן דוב (חאָנְיֶע) מרוזוב",s:"ר׳ אלחנן דוב מרוזוב, מזכירו וגזברו של אדמו״ר הרש״ב ואחריו של הריי״צ, וממנהיגי הפעילות החב״דית המחתרתית ברוסיה. בעת שרֵפה רץ להציל את בית הרבי במקום את ביתו שלו, ואדמו״ר הרש״ב אמר על התמימים לשמוע לו: ״אליו תשמעון כאשר שמעתם אליי״. נורה בידי השלטונות הסובייטיים בשבת ח׳ ניסן תרח״צ.",p:"https://chabadpedia.co.il/images/thumb/1/1f/%D7%90%D7%9C%D7%97%D7%A0%D7%9F_%D7%93%D7%95%D7%91_%D7%9E%D7%A8%D7%95%D7%96%D7%95%D7%91.jpg/220px-%D7%90%D7%9C%D7%97%D7%A0%D7%9F_%D7%93%D7%95%D7%91_%D7%9E%D7%A8%D7%95%D7%96%D7%95%D7%91.jpg"}],
+    "Nisan-10":[{t:"י׳ ניסן · יארצייט ר׳ אברהם (מאיור) דרייזין",s:"ר׳ אברהם מאיור דרייזין, משפיע ומנהל בתומכי תמימים ברוסיה ובכפר חב״ד, שנודע בישירותו ובמסירות נפשו. בשנת תר״פ, כשביקשו הוא וחבריו להסתכן ולנסוע לאדמו״ר הרש״ב לרוסטוב, אמר להם הרבי שאין לחפש מסירות נפש: ״צריכים להתנהג כמו אברהם אבינו; לא צריכים לחפש מסירות נפש״. נפטר י׳ ניסן תנש״א.",p:"https://chabadpedia.co.il/images/thumb/8/87/Drizin_%28Mayor%29%2C_Avraham_04.jpg/220px-Drizin_%28Mayor%29%2C_Avraham_04.jpg"}],
+    "Nisan-11":[{t:"י״א ניסן · יום הולדת הרבי",s:"יום הולדתו של הרבי מליובאוויטש, רבי מנחם מענדל שניאורסאהן, הרבי השביעי, שנולד בשנת תרס״ב (1902). בכל שנה סימן את יומו בהוספה בהפצת התורה והיהדות לכל יהודי באשר הוא.",p:REBBE_B}],
+    "Nisan-12":[{t:"י״ב ניסן · יארצייט ר׳ חיים שאול ברוק",s:"ר׳ חיים שאול ברוק, משפיע ומעתיק מאמרי חסידות שהחזיק ישיבות תומכי תמימים מחתרתיות ברוסיה במסירות נפש. כשהגיעו אנשי היֶבְסֶקְצְיָה לחפש, היה קופץ מן החלון אל בית המטבחיים הסמוך ומעמיד פני עובד; עוד בנעוריו בליובאוויטש סירב לעזוב באומרו ׳כאן מקומי׳. נפטר י״ב ניסן תשכ״ה.",p:"https://chabadpedia.co.il/images/thumb/3/35/%D7%97%D7%99%D7%99%D7%9D_%D7%A9%D7%90%D7%95%D7%9C_%D7%91%D7%A8%D7%95%D7%A7.jpg/220px-%D7%97%D7%99%D7%99%D7%9D_%D7%A9%D7%90%D7%95%D7%9C_%D7%91%D7%A8%D7%95%D7%A7.jpg"}],
+    "Nisan-13":[{t:"י״ג ניסן · יארצייט הצמח צדק",s:"יומא דהילולא של אדמו״ר ה'צמח צדק' (רבי מנחם מענדל), הרבי השלישי, שנסתלק בשנת תרכ״ו (1866). מגדולי הפוסקים, חיבר אלפי תשובות ומאמרי חסידות.",p:P_TZEMACH}],
+    "Nisan-14":[{t:"י״ד ניסן · יארצייט ר׳ יהודה לייב גרונר",s:"ר׳ יהודה לייב (לייבל) גרונר, ממזכירי הרבי במשך עשרות שנים. בבר המצווה שלו, לאחר שהרבי דיבר כשעה ועשרים, שאלו הרבי אם הבין, וכששתק הרגיעוֹ: ״אל לך להתבייש, גם רבים מן העומדים בצד לא הבינו״. נפטר ערב פסח י״ד ניסן תש״פ.",p:"https://chabadpedia.co.il/images/thumb/0/0d/%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%9C%D7%99%D7%99%D7%91_%D7%92%D7%A8%D7%95%D7%A0%D7%A8.jpg/220px-%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%9C%D7%99%D7%99%D7%91_%D7%92%D7%A8%D7%95%D7%A0%D7%A8.jpg"}],
+    "Nisan-16":[{t:"ט״ז ניסן · יארצייט ר׳ שלמה זלמן הבלין",s:"ר׳ שלמה זלמן הבלין, מתלמידיה הראשונים של ישיבת תומכי תמימים בליובאוויטש ומראשי עדת חב״ד בארץ. ייסד את ישיבות ׳תורת אמת׳ בחברון ובירושלים והעמיד דורות של תלמידים. נפטר ט״ז ניסן תרצ״ו ונטמן בהר הזיתים.",p:"https://chabadpedia.co.il/images/thumb/a/a4/%D7%A8%27_%D7%A9%D7%9C%D7%9E%D7%94_%D7%96%D7%9C%D7%9E%D7%9F_%D7%94%D7%91%D7%9C%D7%99%D7%9F.png/220px-%D7%A8%27_%D7%A9%D7%9C%D7%9E%D7%94_%D7%96%D7%9C%D7%9E%D7%9F_%D7%94%D7%91%D7%9C%D7%99%D7%9F.png"}],
+    "Nisan-18":[{t:"י״ח ניסן · יום הולדת רבי לוי יצחק",s:"בי״ח ניסן תרל״ח (1878) נולד רבי לוי יצחק שניאורסון, אביו של הרבי ורבה של יקטרינוסלב. הוא עמד באומץ מול השלטון הסובייטי, ובין היתר פיקח במסירות נפש על כשרות קמח המצות לפסח — פעילות שהביאה בסופו של דבר למאסרו ולגלותו בקזחסטן, שם נסתלק.",p:P_LEVIK}],
+    "Nisan-27":[{t:"כ״ז ניסן · תקנת לימוד הרמב״ם",s:"ביום זה בשנת תשד״מ (1984) החל מחזור הלימוד היומי ברמב״ם, בתקנת הרבי מליובאוויטש — לאחד את עם ישראל בלימוד תורה משותף: שלושה פרקים ליום, או פרק ליום, או ספר המצוות, ובכך להחיש את הגאולה.",p:REBBE_B}],
+    "Iyar-2":[{t:"ב׳ אייר · יום הולדת אדמו״ר מהר״ש",s:"יום הולדתו של אדמו״ר מהר״ש, הרבי הרביעי, בשנת תקצ״ד (1834).",p:P_MAHARASH}],
+    "Iyar-3":[{t:"ג׳ אייר · יארצייט ר׳ חיים מרדכי אייזיק חדקוב",s:"ר׳ חיים מרדכי אייזיק חדקוב, ראש מזכירות הרבי ומנהל מוסדות חב״ד המרכזיים במשך למעלה מארבעים שנה. סופר עליו שבמשך שעות רבות של שיחה לא נשמע מפיו דיבור רע על אף אדם, והיה מופת לשליטה עצמית ולמידות טובות. נפטר ג׳ אייר תשנ״ג.",p:"https://chabadpedia.co.il/images/d/dc/%D7%94%D7%A8%D7%91_%D7%97%D7%93%D7%A7%D7%95%D7%91.jpg"}],
+    "Iyar-7":[{t:"ז׳ אייר · יארצייט ר׳ דוד רסקין",s:"ר׳ דוד רסקין, יו״ר צעירי אגודת חב״ד וממקורבי הרבי שהיה שותף להנהגת המבצעים ו׳טנקי המצוות׳. בשנת תשמ״ה בחרוֹ הרבי לחבר הנהלת ׳אגודת חסידי חב״ד׳, וכתב לצד שמו את הנימוק: ״מרץ לעשיה בפועל״. נפטר ז׳ אייר תשע״א.",p:"https://chabadpedia.co.il/images/thumb/3/3a/%D7%93%D7%95%D7%93_%D7%A8%D7%A1%D7%A7%D7%99%D7%9F_%D7%A0%22%D7%91.jpg/220px-%D7%93%D7%95%D7%93_%D7%A8%D7%A1%D7%A7%D7%99%D7%9F_%D7%A0%22%D7%91.jpg"}],
+    "Iyar-9":[{t:"ט׳ אייר · יארצייט ר׳ ניסן נעמנוב",s:"ר׳ ניסן נעמנוב, המשפיע הראשי של ישיבת תומכי תמימים בברינואה שבצרפת. כשהוגלה אדמו״ר הריי״צ מלנינגרד וביקש שלא יבואו לתחנת הרכבת מחשש השלטונות, ציית ר׳ ניסן ונשאר בביתו; כששמע זאת הרבי, כינהו ״א זיסער סאלדאַט״ (חייל מתוק). נפטר ט׳ אייר תשד״מ.",p:"https://chabadpedia.co.il/images/thumb/8/8d/%D7%A8_%D7%A0%D7%99%D7%A1%D7%9F.jpg/220px-%D7%A8_%D7%A0%D7%99%D7%A1%D7%9F.jpg"}],
+    "Iyar-13":[{t:"י״ג אייר · הסתלקות רבי ישראל אריה לייב",s:"בי״ג אייר תשי״ב (1952) נסתלק בליברפול רבי ישראל אריה לייב, אחיו הצעיר של הרבי. מכיוון שנפטר ללא בן שיאמר עליו קדיש, נהג הרבי לומר עליו קדיש בעצמו מדי שנה ביום זה, ולעיתים אף אמר מאמר חסידות לזכרו.",p:""},{t:"י״ג אייר · יארצייט ר׳ ישראל אריה לייב שניאורסאהן",s:"ר׳ ישראל אריה לייב, אחיו הצעיר של הרבי, שנודע בכישרונותיו המופלגים בתורה ובמדע וקרבתו היתרה לאחיו. פעם שאל את אדמו״ר הריי״צ שאלה בחסידות, והרבי נמנע מלהשיב; רק בביקור מאוחר יותר, בלב נשבר, זכה לקבל את הביאור. נפטר בליברפול שבאנגליה י״ג אייר תשי״ב ונטמן בצפת.",p:"https://chabadpedia.co.il/images/thumb/0/08/%D7%99%D7%A9%D7%A8%D7%90%D7%9C_%D7%90%D7%A8%D7%99%D7%94_%D7%9C%D7%99%D7%91.jpg/220px-%D7%99%D7%A9%D7%A8%D7%90%D7%9C_%D7%90%D7%A8%D7%99%D7%94_%D7%9C%D7%99%D7%91.jpg"}],
+    "Iyar-14":[{t:"פסח שני",s:"פסח שני — 'אין דבר אבוד'. תמיד יש הזדמנות שנייה לתקן ולהשלים.",p:""}],
+    "Iyar-18":[{t:"ל״ג בעומר",s:"הילולת התנא רבי שמעון בר יוחאי. יום של שמחה, אחדות ואהבת ישראל.",p:""}],
+    "Iyar-19":[{t:"י״ט אייר · יארצייט ר׳ שלמה חיים קסלמן",s:"ר׳ שלמה חיים קסלמן, משפיע נודע בישיבות תומכי תמימים בארץ ובכפר חב״ד. כשנאסר בפולוצק על לימוד תורה עם בחורים ונידון לנקות את רחובות העיר, קיבל זאת כאות כבוד על הפצת התורה ועשה את המלאכה בבגדי השבת שלו. נפטר בערב שבת י״ט אייר תשל״א.",p:"https://chabadpedia.co.il/images/thumb/7/77/%D7%94%D7%9E%D7%A9%D7%A4%D7%99%D7%A2_%D7%A9%D7%9C%D7%9E%D7%94_%D7%97%D7%99%D7%99%D7%9D.jpg/220px-%D7%94%D7%9E%D7%A9%D7%A4%D7%99%D7%A2_%D7%A9%D7%9C%D7%9E%D7%94_%D7%97%D7%99%D7%99%D7%9D.jpg"}],
+    "Iyar-21":[{t:"כ״א אייר · יום הולדת רבי ישראל אריה לייב",s:"בכ״א אייר תרס״ו (1906) נולד בניקולייב רבי ישראל אריה לייב, אחיו של הרבי. בצעירותם היו האחים קרובים מאוד, והוא נודע כעילוי שהתמחה במתמטיקה ובפיזיקה עיונית.",p:""}],
+    "Iyar-26":[{t:"כ״ו אייר · יארצייט ר׳ יצחק אייזיק מהאמיל",s:"ר׳ יצחק אייזיק הלוי עפשטיין מהאמיל, מגדולי חסידי אדמו״ר הזקן, האמצעי והצמח צדק, ורב העיר הומיל למעלה מחמישים שנה. לאחר הסתלקות אדמו״ר האמצעי ביקשו ממנו חסידים לקבל את הנשיאות; כשכבר עלה על המרכבה לנסוע הוריד את רגלו מן המדרגה וסירב, באומרו שבאותו רגע נתבהרו שכלו וליבו פי אלף. על עצמו אמר: ״אין לי רוח הקודש אך יש לי השגה ברוח הקודש״. נפטר כ״ו אייר תרי״ז.",p:"https://chabadpedia.co.il/images/thumb/1/19/%D7%97%D7%A0%D7%94_%D7%90%D7%A8%D7%99%D7%90%D7%9C.jpg/250px-%D7%97%D7%A0%D7%94_%D7%90%D7%A8%D7%99%D7%90%D7%9C.jpg"}],
+    "Sivan-3":[{t:"ג׳ סיון · קבלת הנשיאות של הצמח צדק",s:"בג׳ סיון תקפ״ט (1829) קיבל ה'צמח צדק' עליו את נשיאות חב״ד. במשך כשנתיים לאחר הסתלקות חותנו אדמו״ר האמצעי סירב לקבל את ההנהגה, עד שנעתר להפצרות החסידים. הוא עמד כמגן על יהדות רוסיה בוועידות הרבנים מטעם הממשלה והותיר ספרים רבים בהלכה ובחסידות.",p:P_TZEMACH}],
+    "Sivan-4":[{t:"ד׳ סיון · יארצייט ר׳ בערקע (חיים דובער) חן",s:"ר׳ חיים דובער (בערקע) חן, חסיד שנאסר ברוסיה על הפצת היהדות ונידון למיתה, ועונשו הומתק לשנות עבודת פרך. לאחר שנחלץ מברית המועצות בשנת תשכ״א, הופקד בידיו על ידי הרבי ׳קופת רבינו׳. נפטר ד׳ סיון תש״נ בכפר חב״ד.",p:"https://chabadpedia.co.il/images/thumb/e/e4/%D7%91%D7%A2%D7%A8%D7%A7%D7%A2_%D7%97%D7%9F.jpg/220px-%D7%91%D7%A2%D7%A8%D7%A7%D7%A2_%D7%97%D7%9F.jpg"}],
+    "Sivan-5":[{t:"ה׳ סיון · יארצייט ר׳ מיכאל דווארקין",s:"ר׳ מיכאל (דער אַלטער) דווארקין, חסיד נלהב ובעל תפילה ומנגן. בשמחת שחרור אדמו״ר הריי״צ ממאסרו בי״ב-י״ג תמוז רקד סביב הבית שבו עמד הרבי לשהות, אוחז בקבוק משקה מבלי לטעום ממנו ומזמר ניגון משלו. נפטר בערב חג השבועות ה׳ סיון תש״ט.",p:"https://chabadpedia.co.il/images/thumb/f/fe/%D7%9E%D7%99%D7%9B%D7%90%D7%9C.jpg/220px-%D7%9E%D7%99%D7%9B%D7%90%D7%9C.jpg"}],
+    "Sivan-6":[{t:"חג השבועות · מתן תורה",s:"זמן מתן תורתנו. ביום זה חל גם יומא דהילולא של הבעל שם טוב, מייסד תנועת החסידות (ת״ק/1760).",p:""}],
+    "Sivan-13":[{t:"י״ג סיון · חתונת הורי הרבי",s:"בי״ג סיון תר״ס (1900) נישאו רבי לוי יצחק שניאורסון והרבנית חנה, הוריו של הרבי. בנם בכורם, מנחם מענדל, נולד כעבור כשנתיים בי״א ניסן ונעשה לימים לרבי השביעי של חב״ד.",p:P_LEVIK}],
+    "Sivan-15":[{t:"ט״ו סיון · מאסר הרבי הריי״צ",s:"בליל ט״ו סיון תרפ״ז (1927) נאסר הרבי הריי״צ בלנינגרד בידי המשטרה החשאית בעוון פעילותו להחזקת היהדות. לפי המסופר, כאשר כיוון אליו חוקר אקדח, השיב הרבי בשלווה שרובה כזה מפחיד רק מי שיש לו אלים רבים ועולם אחד, אך לא את מי שיש לו א-ל אחד ושני עולמות. הוא נידון תחילה למוות, אך גזר-דינו הומתק לגלות והוא שוחרר בי״ב-י״ג תמוז.",p:P_RAYATZ},{t:"ט״ו סיון · יארצייט ר׳ שמואל בצלאל שעפטיל",s:"ר׳ שמואל בצלאל שעפטיל, משפיע בתומכי תמימים ומלמדו של אדמו״ר הריי״צ בצעירותו. כבחור שנמשך לחסידות הכוהו מתנגדים שמצאו אצלו ספר תניא עד שנותרה צלקת בראשו, והוא ראה בכך זכות על דבקותו בחסידות. נפטר ט״ו סיון תרס״ה ונטמן בתוך חמישים האמה של אוהל הצמח צדק והמהר״ש בליובאוויטש.",p:""}],
+    "Sivan-17":[{t:"י״ז סיון · יארצייט ר׳ ישראל דזשייקאבסאן",s:"ר׳ ישראל דזשייקאבסאן, שנשלח בשנת תרפ״ו כשליח לאמריקה והניח שם את יסודות חב״ד. ייסד את ישיבות תומכי תמימים ו׳אחי תמימים׳ בארה״ב, וסייע בהצלת אדמו״ר הריי״צ מאירופה הכבושה. נפטר י״ז סיון תשל״ה.",p:"https://chabadpedia.co.il/images/thumb/6/62/%D7%99%D7%A9%D7%A8%D7%90%D7%9C_%D7%92%27%D7%99%D7%99%D7%A7%D7%95%D7%91%D7%A1%D7%95%D7%9F1.png/250px-%D7%99%D7%A9%D7%A8%D7%90%D7%9C_%D7%92%27%D7%99%D7%99%D7%A7%D7%95%D7%91%D7%A1%D7%95%D7%9F1.png"}],
+    "Sivan-18":[{t:"י״ח סיון · יארצייט ר׳ בנימין קליין",s:"ר׳ בנימין קליין, ממזכירי הרבי שטיפל בהתכתבות האישית וקישר בין הרבי לאישי ציבור וביטחון בישראל. בשנת 1977, בעת פגישת ראש הממשלה מנחם בגין עם הרבי, כינהו הרבי בפניו ״מיין גענעראל״ (הגנרל שלי). נפטר י״ח סיון תשע״ה.",p:"https://chabadpedia.co.il/images/thumb/0/05/%D7%94%D7%A8%D7%91_%D7%A7%D7%9C%D7%99%D7%99%D7%9F.jpg/220px-%D7%94%D7%A8%D7%91_%D7%A7%D7%9C%D7%99%D7%99%D7%9F.jpg"}],
+    "Sivan-28":[{t:"כ״ח סיון · הגעת הרבי לארה״ב",s:"ביום זה בשנת תש״א (1941) הגיעו הרבי והרבנית לארצות הברית לאחר הצלתם מאירופה הכבושה — יום שפתח תקופה חדשה בהפצת היהדות בעולם.",p:REBBE_B}],
+    "Tamuz-3":[{t:"ג׳ תמוז · יארצייט הרבי",s:"יומא דהילולא של הרבי מליובאוויטש, רבי מנחם מענדל שניאורסאהן, הרבי השביעי, בשנת תשנ״ד (1994). מנהיג הדור שעורר יהודים בכל העולם לתורה, מצוות ואהבת ישראל, ולציפייה לגאולה.",p:REBBE_T}],
+    "Tamuz-4":[{t:"ד׳ תמוז · הסתלקות ר׳ מענדל פוטרפאס",s:"בד׳ תמוז תשנ״ה (1995) נסתלק החסיד ר׳ מנחם מענדל פוטרפאס, מגדולי המשפיעים, ששהה כשמונה שנים במחנות העבודה בסיביר על פעילותו החינוכית. בהתוועדויותיו היה שוזר לקחי עבודת ה'; מפורסם המשל שלמד מלוליין על חבל — שסוד שיווי המשקל הוא לתקן מיד כל נטייה ולא להישאר במקום. דורות של חסידים התחנכו על ברכיו בכפר חב״ד.",p:"https://upload.wikimedia.org/wikipedia/commons/b/bc/Grave_of_Menachem_Mendel_Futerfas.jpg"},{t:"ד׳ תמוז · יארצייט ר׳ מענדל פוטערפאס",s:"ר׳ מנחם מענדל פוטערפאס, משפיע נודע שישב שנים במחנות העבודה בסיביר ולימים שימש משפיע בתומכי תמימים בכפר חב״ד. ממשליו הידועים הוא משל הלוליין שראה בגולאג: סוד שמירת שיווי המשקל הוא שכשמרגישים נטייה לצד אחד — נוטים מיד לצד שכנגד, וכך בעבודת ה׳. נפטר ד׳ תמוז תשנ״ה.",p:"https://chabadpedia.co.il/images/thumb/6/64/%D7%9E%D7%A2%D7%A0%D7%93%D7%9C_%D7%A4%D7%95%D7%98%D7%A2%D7%A8%D7%A4%D7%90%D7%A1_%D7%94%D7%AA%D7%95%D7%95%D7%A2%D7%93%D7%95%D7%AA.jpg/220px-%D7%9E%D7%A2%D7%A0%D7%93%D7%9C_%D7%A4%D7%95%D7%98%D7%A2%D7%A8%D7%A4%D7%90%D7%A1_%D7%94%D7%AA%D7%95%D7%95%D7%A2%D7%93%D7%95%D7%AA.jpg"}],
+    "Tamuz-5":[{t:"ה׳ תמוז · יארצייט ר׳ בן ציון שם טוב",s:"ר׳ בן ציון שם טוב, עסקן ומסור נפש להפצת היהדות וחינוך הכשר ברוסיה הסובייטית. כשנאסר במוסקבה ונמנעו ממנו תפילין, פתח בשביתת רעב של כשבעה ימים עד שהחזירו לו את תפיליו. נפטר בשבת קודש ה׳ תמוז תשל״ה.",p:"https://chabadpedia.co.il/images/thumb/6/62/%D7%91%D7%A2%D7%A0%D7%98%D7%A9%D7%A22.png/220px-%D7%91%D7%A2%D7%A0%D7%98%D7%A9%D7%A22.png"}],
+    "Tamuz-12":[{t:"י״ב תמוז · חג הגאולה",s:"חג הגאולה של אדמו״ר הריי״צ, שנאסר ע״י השלטון הסובייטי על פעילותו להחזקת היהדות ושוחרר ביום זה בשנת תרפ״ז (1927). ביום זה חל גם יום הולדתו.",p:P_RAYATZ}],
+    "Tamuz-13":[{t:"י״ג תמוז · המשך חג הגאולה",s:"היום השני של חג הגאולה י״ב-י״ג תמוז של אדמו״ר הריי״צ.",p:P_RAYATZ}],
+    "Av-6":[{t:"ו׳ מנחם אב · יארצייט ר׳ יואל כהן",s:"ר׳ יואל כהן, ה׳חוזר׳ הראשי של הרבי ועורך ראשי של ׳ספר הערכים חב״ד׳, מגדולי המשפיעים ולמדני החסידות. בחג השבועות תשי״ב המתין הרבי לאמירת המאמר ׳באתי לגני׳ עד שובו של ר׳ יואל מן המקווה, שכן הוטל עליו להכין את הנחת המאמר. נפטר ו׳ מנחם אב תשפ״א.",p:"https://chabadpedia.co.il/images/thumb/5/54/%D7%A8%27_%D7%99%D7%95%D7%90%D7%9C_%D7%94%D7%9B%D7%94%D7%9F_%D7%9B%D7%94%D7%9F.jpg/220px-%D7%A8%27_%D7%99%D7%95%D7%90%D7%9C_%D7%94%D7%9B%D7%94%D7%9F_%D7%9B%D7%94%D7%9F.jpg"}],
+    "Av-11":[{t:"י״א מנחם-אב · הסתלקות ר׳ הלל מפּאריטש",s:"בי״א מנחם-אב תרכ״ד (1864) נסתלק ר׳ הלל מפּאריטש, גאון בנגלה ובנסתר ומחבר 'פלח הרימון'. בצעירותו, כשהכין קושיא חמורה כדי 'לבחון' את אדמו״ר הזקן והתחבא בחדרו, שמע את הרבי אומר בקול דווקא את הפסוק שבו עסקה שאלתו — ומרוב התרגשות התעלף ולא זכה לשאול. לימים נעשה מחשובי חסידי אדמו״ר האמצעי וה'צמח צדק'.",p:"https://upload.wikimedia.org/wikipedia/commons/e/e1/Hillel_Paritcher.jpg"},{t:"י״א מנחם אב · יארצייט ר׳ הלל מפּאַריטש",s:"ר׳ הלל הלוי מאליסאוו מפּאַריטש, מגדולי חסידי אדמו״ר האמצעי והצמח צדק ומחבר ׳פלח הרימון׳. השתוקק בכל נפשו להתקשר לאדמו״ר הזקן, אך בכל פעם שהגיע לעיר כבר יצא ממנה הרבי; פעם הסתתר תחת השולחן לשמוע מאמר, ובשומעו רמז שעל השואל לבחון תחילה את עצמו התעלף, וכשהתעורר כבר נסע הרבי. הצמח צדק כינה אותו כ׳חצי רבי׳. נפטר י״א מנחם אב תרכ״ד.",p:"https://chabadpedia.co.il/images/thumb/a/a0/%D7%A4%D7%9C%D7%97_%D7%94%D7%A8%D7%9E%D7%95%D7%9F_%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA_%D7%A9%D7%A2%D7%A8_%D7%9E%D7%9C%D7%90.jpg/220px-%D7%A4%D7%9C%D7%97_%D7%94%D7%A8%D7%9E%D7%95%D7%9F_%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA_%D7%A9%D7%A2%D7%A8_%D7%9E%D7%9C%D7%90.jpg"}],
+    "Av-12":[{t:"י״ב מנחם-אב · חתונת אדמו״ר הזקן",s:"בי״ב מנחם-אב תק״כ (1760) נשא אדמו״ר הזקן רבי שניאור זלמן את הרבנית סטערנא, בתו של גביר מוויטבסק. תמיכת חותנו העשיר אפשרה לו להתמסר ללימוד התורה בשנותיו הראשונות, אף שחלק ניכר מן התמיכה חילק לצדקה ולהחזקת לומדי תורה.",p:P_ZEKAN}],
+    "Av-15":[{t:"ט״ו באב",s:"'לא היו ימים טובים לישראל כט״ו באב'. יום של אהבה, אחדות וחיזוק בלימוד התורה.",p:""},{t:"ט״ו מנחם אב · יארצייט ר׳ יעקב יהודה (ג׳ייקוב) העכט",s:"ר׳ יעקב יהודה העכט, עסקן ומחנך נודע בניו יורק שתירגם את שיחות הרבי לאנגלית בזמן אמת וניהל את עצרות ותהלוכות ל״ג בעומר לילדים. בתהלוכת ל״ג בעומר תשמ״ז, כששאלוֹ הרבי על מצב רוחו, השיב ׳הרבי משך אותי מזה׳, והרבי הרים ידיו ואמר: ״רוממתי אותך מזה״. נפטר ט״ו מנחם אב תש״נ.",p:"https://chabadpedia.co.il/images/thumb/0/04/%D7%99%D7%A2%D7%A7%D7%91_%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%94%D7%A2%D7%9B%D7%98.png/220px-%D7%99%D7%A2%D7%A7%D7%91_%D7%99%D7%94%D7%95%D7%93%D7%94_%D7%94%D7%A2%D7%9B%D7%98.png"}],
+    "Av-20":[{t:"כ׳ מנחם אב · יארצייט ר׳ לוי יצחק",s:"יומא דהילולא של הרב לוי יצחק שניאורסאהן, אביו של הרבי ורבה של יקטרינוסלב, שמסר נפשו על היהדות תחת השלטון הסובייטי ונפטר בגלות בשנת תש״ד (1944).",p:""}],
+    "Elul-11":[{t:"י״א אלול · חתונת הרבי הרש״ב",s:"בי״א אלול תרל״ה (1875) נשא הרבי הרש״ב את הרבנית שטערנא שרה. השידוך נקבע עוד בחיי סבו ה'צמח צדק', והחתן היה אז כבן חמש-עשרה. מנישואים אלו נולד הרבי הריי״צ.",p:P_RASHAB},{t:"י״א אלול · יארצייט ר׳ שמואל לויטין",s:"ר׳ שמואל לויטין, מזקני החסידים והרבנים ומראשי אגודת חסידי חב״ד בארה״ב. בצעירותו שמע מאמרי חסידות מאדמו״ר הרש״ב, והיה ממקושרי שלושה מרבותינו נשיאינו. נפטר י״א אלול תשל״ד.",p:"https://chabadpedia.co.il/images/thumb/0/0e/%D7%A9%D7%9E%D7%95%D7%90%D7%9C_%D7%9C%D7%95%D7%99%D7%98%D7%99%D7%9F.jpg/250px-%D7%A9%D7%9E%D7%95%D7%90%D7%9C_%D7%9C%D7%95%D7%99%D7%98%D7%99%D7%9F.jpg"}],
+    "Elul-13":[{t:"י״ג אלול · חתונת הרבי הריי״צ",s:"בי״ג אלול תרנ״ז (1897) נשא הרבי הריי״צ את הרבנית נחמה דינה. בימי השבע-ברכות הכריז אביו הרש״ב על ייסוד ישיבת תומכי תמימים, וכך נקשרו ימי שמחת החתונה בהנחת היסוד למוסד המרכזי של חב״ד.",p:P_RAYATZ}],
+    "Elul-15":[{t:"ט״ו אלול · ייסוד תומכי תמימים",s:"בט״ו אלול תרנ״ז (1897) ייסד הרבי הרש״ב את ישיבת תומכי תמימים בליובאוויטש. הוא כינה את תלמידיה 'חיילי בית דוד' שתפקידם לפעול לגילוי המשיח, ברוח ההנהגה 'לכתחילה אַריבער' — לכוון מראש אל מעבר למכשול. הלימוד בנגלה ובחסידות החל בח״י אלול.",p:P_RASHAB}],
+    "Elul-18":[{t:"ח״י אלול · הולדת הבעש״ט ואדמו״ר הזקן",s:"יום הולדת הבעל שם טוב (ת״נ/1698) ואדמו״ר הזקן (תק״ה/1745). 'ח״י' — היום שמכניס חיות בעבודת חודש אלול.",p:P_ZEKAN}],
+    "Elul-22":[{t:"כ״ב אלול · יארצייט ר׳ אברהם פריז",s:"ר׳ אברהם פריז, חסיד נלהב שהדפיס והפיץ ספרי תורה וחסידות וספרי תניא. לאחר הסתלקות אדמו״ר הריי״צ, בהתכנסות חסידי חב״ד בתל אביב, קם והכריז בביטחון מלא שגיסו הרמ״מ הוא הרבי: ״אני אומר לכם – שהוא הרבי!״, ודבריו הפכו לאבן פינה בקבלת הנשיאות בארץ. נפטר במוצאי שבת סליחות כ״ב אלול תשכ״ח.",p:"https://chabadpedia.co.il/images/thumb/8/8c/%D7%A4%D7%90%D7%A8%D7%99%D7%96.jpg/220px-%D7%A4%D7%90%D7%A8%D7%99%D7%96.jpg"}],
+    "Elul-24":[{t:"כ״ד אלול · מבצע נרות שבת קודש",s:"בכ״ד אלול תשל״ד (1974) יצא הרבי בקריאה למבצע נרות שבת קודש, וקרא גם לילדות יהודיות להדליק נר לכבוד שבת עוד לפני גיל בת-מצווה. הרבי הדגיש שהדלקת הנרות מוסיפה אור ושלום בבית ומקרבת את הגאולה, ומיליוני נרות הודלקו בעקבות הקריאה.",p:REBBE_B}],
+    "Elul-29":[{t:"כ״ט אלול · יום הולדת הצמח צדק",s:"בכ״ט אלול תקמ״ט (1789), ערב ראש השנה, נולד ה'צמח צדק', נכד אדמו״ר הזקן והרבי השלישי של חב״ד. מיוחסת לו האמרה הידועה לחסיד שהיה שרוי בדאגה: 'טראַכט גוט וועט זײַן גוט' — חשוב טוב ויהיה טוב. הוא הנהיג את חב״ד כ-37 שנה והותיר ספרי שו״ת וחסידות רבים.",p:P_TZEMACH}]
+  };
+  function dayEvents(d){var p=hebParts(d);if(!p)return [];var v=CHABAD_DAYS[p.mon+"-"+p.day];if(!v)return [];return Array.isArray(v)?v:[v];}
+  function getChabadDay(d){var e=dayEvents(d);return e.length?e[0]:null;}
+  function todayChabadEvent(d){var e=dayEvents(d);if(!e.length)return "";return e[0].t+(e.length>1?" +"+(e.length-1):"");}
+  /* ===== היום יום — מפתח "MonthEng-Day" (כמו CHABAD_DAYS). יוזן מהספר שהמשתמש יעלה. ===== */
+  var HAYOMYOM=(typeof window!=="undefined"&&window.HAYOMYOM)||{};
+  function hayomYomFor(d){var p=hebParts(d);if(!p)return null;var v=HAYOMYOM[p.mon+"-"+p.day];return v?{t:"היום יום",s:v,p:"",hy:true}:null;}
+  function storyCards(d){var out=dayEvents(d).slice();if(config.hyyMode==="rotate"){var hy=hayomYomFor(d);if(hy)out.push(hy);}return out;}
+  /* ===== ספירת העומר ===== */
+  function omerDay(d){var p=hebParts(d);if(!p)return 0;var n=0;if(p.mon==="Nisan"&&p.day>=16)n=p.day-15;else if(p.mon==="Iyar")n=15+p.day;else if(p.mon==="Sivan"&&p.day<=5)n=44+p.day;return (n>=1&&n<=49)?n:0;}
+  function omerNusach(n){
+    var DW={1:"יום אחד",2:"שני ימים",3:"שלושה ימים",4:"ארבעה ימים",5:"חמישה ימים",6:"שישה ימים",7:"שבעה ימים",8:"שמונה ימים",9:"תשעה ימים",10:"עשרה ימים",11:"אחד עשר יום",12:"שנים עשר יום",13:"שלושה עשר יום",14:"ארבעה עשר יום",15:"חמישה עשר יום",16:"שישה עשר יום",17:"שבעה עשר יום",18:"שמונה עשר יום",19:"תשעה עשר יום",20:"עשרים יום",30:"שלושים יום",40:"ארבעים יום"};
+    var U={1:"אחד",2:"שנים",3:"שלושה",4:"ארבעה",5:"חמישה",6:"שישה",7:"שבעה",8:"שמונה",9:"תשעה"},TENS={20:"עשרים",30:"שלושים",40:"ארבעים"};
+    var day=DW[n];if(!day){var t=Math.floor(n/10)*10,u=n%10;day=U[u]+" ו"+TENS[t]+" יום";}
+    if(n<7)return "היום "+day+" לעומר";
+    var w=Math.floor(n/7),rem=n%7;
+    var WK={1:"שבוע אחד",2:"שני שבועות",3:"שלושה שבועות",4:"ארבעה שבועות",5:"חמישה שבועות",6:"שישה שבועות",7:"שבעה שבועות"};
+    var RD={1:"יום אחד",2:"שני ימים",3:"שלושה ימים",4:"ארבעה ימים",5:"חמישה ימים",6:"שישה ימים"};
+    return "היום "+day+" שהם "+WK[w]+(rem?" ו"+RD[rem]:"")+" לעומר";
+  }
+  function listUpcoming(n){var out=[],base=new Date();base.setHours(12,0,0,0);for(var i=0;i<400&&out.length<n;i++){var d=new Date(base);d.setDate(d.getDate()+i);var evs=dayEvents(d);for(var j=0;j<evs.length&&out.length<n;j++)out.push({days:i,date:hebrewDate(d),cd:evs[j]});}return out;}
+  function renderUpcoming(){var box=document.getElementById("upcoming");if(!box)return;var up=listUpcoming(6);if(!up.length){box.innerHTML='<div class="c-empty">אין אירועים קרובים ברשימה.</div>';return;}var f=up[0],when=f.days===0?"היום":("בעוד "+f.days+" ימים");var html='<div class="up-card'+(f.cd.p?" has-photo":"")+'">';if(f.cd.p)html+='<img class="up-photo" src="'+f.cd.p+'" alt="" onerror="this.style.display=\'none\'">';html+='<div class="up-body"><div class="up-when">הקרוב · '+when+' · '+f.date+'</div><div class="up-title">'+f.cd.t+'</div><div class="up-story">'+f.cd.s+'</div></div></div>';for(var i=1;i<up.length;i++){var w=up[i].days===0?"היום":("בעוד "+up[i].days+" ימים");html+='<div class="up-row"><span class="up-rtitle">'+up[i].cd.t+'</span><span class="up-rwhen">'+w+'</span></div>';}box.innerHTML=html;}
+  var SHABBAT_PHOTOS=[
+    "https://static.wixstatic.com/media/622c32_44af8d12a54f42659865e916effce207~mv2_d_3519_2371_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
+    "https://static.wixstatic.com/media/622c32_b667863f2f6c4a1faf9301b5f5e6d56a~mv2_d_3497_2359_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
+    "https://static.wixstatic.com/media/622c32_86f3263cf1e94e93bed4299ee950dc67~mv2_d_3510_2348_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
+    "https://static.wixstatic.com/media/622c32_7166479057e74a7f9fc65ccc34e4cd46~mv2_d_2700_1817_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
+    "https://static.wixstatic.com/media/622c32_ad8dc175ae1849fd9db182397768c3c1~mv2_d_3088_2048_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
+    "https://static.wixstatic.com/media/622c32_4cff3ae86fba487a91aa803164cb66dd~mv2_d_2095_1590_s_2.png/v1/fit/w_1600,h_1200,q_90/img.png"
+  ];
+  var shActive=false,shTimer=null,shIdx=0;
+  function showShPhoto(i){var img=document.getElementById("shPhoto");if(!img||!SHABBAT_PHOTOS.length)return;var n=SHABBAT_PHOTOS.length;shIdx=((i%n)+n)%n;var url=SHABBAT_PHOTOS[shIdx];var pre=new Image();pre.onload=function(){img.src=url;img.classList.add("on");};pre.onerror=function(){img.classList.remove("on");};pre.src=url;}
+  function nextShPhoto(){showShPhoto(shIdx+1);}
+  function activeMessages(){var now=Date.now();return messages.filter(function(m){return !m.expiresAt||now<=m.expiresAt;});}
+  var lastScreen=null,msgsU=0,serverSkew=0;
+  function nowSync(){return Date.now()+serverSkew;}
+  function loadCache(){try{var sk=localStorage.getItem("board_skew");if(sk!=null)serverSkew=parseInt(sk,10)||0;var c=localStorage.getItem("board_config");if(c)config=Object.assign({},DEFAULTS,JSON.parse(c));var mm=localStorage.getItem("board_msgs");if(mm){var o=JSON.parse(mm);if(o){msgsU=o.u||0;if(o.list&&o.list.length)messages=o.list;}}else{var m=localStorage.getItem("board_messages");if(m){var arr=JSON.parse(m);if(arr&&arr.length)messages=arr;}}var md=localStorage.getItem("board_media");if(md){var mo=JSON.parse(md);if(mo){mediaU=mo.u||0;if(mo.list&&mo.list.length)mediaList=mo.list;}}}catch(e){}}
+  function saveCache(){try{localStorage.setItem("board_config",JSON.stringify(config));localStorage.setItem("board_msgs",JSON.stringify({u:msgsU,list:messages}));localStorage.setItem("board_media",JSON.stringify({u:mediaU,list:mediaList}));}catch(e){}}
+  function sortMsgs(){messages.sort(function(a,b){return (a.createdAt||0)-(b.createdAt||0);});}
+  function fmtClock(ts){try{var d=new Date(ts);return d.getHours()+":"+pad2(d.getMinutes());}catch(e){return"";}}
+  function renderScreenStatus(){var el=$("screenStatus");if(!el)return;var ts=(lastScreen&&lastScreen.ts)||0,online=false;if(lastScreen&&lastScreen.online)online=(Date.now()-ts)<70000;if(online){el.textContent="🟢 מחובר";el.style.color="var(--c-green)";}else{el.textContent="🔴 לא מחובר"+(ts?" · נראה "+fmtClock(ts):"");el.style.color="#ff453a";}}
+
+  function computeEvent(now){
+    if(config.shabbatMode&&isShabbat(now))return{cls:"ev-shabbat",icon:"🕯️",label:"",value:"גוט שבת",sub:"",urgent:false};
+    var nowMs=now.getTime();
+    if(config.phoneDepositEnabled){var pt=parseHM(config.phoneDepositTime);if(pt){var pT=atToday(now,pt.h,pt.m).getTime(),pLead=pT-PHONE_LEAD_MIN*60000;
+      if(nowMs>=pLead&&nowMs<pT)return{cls:"ev-amber",icon:"📱",label:"הפקדת טלפונים בעוד",value:msToMMSS(pT-nowMs),sub:"עד "+config.phoneDepositTime,urgent:true};
+      if(nowMs>=pT&&nowMs<pT+2*60000)return{cls:"ev-amber",icon:"📱",label:"",value:"הגיע זמן ההפקדה",sub:"",urgent:true};}}
+    if(config.phoneEveningEnabled){var loe=effectiveLightsOut();if(loe){var lteo=parseHM(loe);if(lteo){var eT=atToday(now,lteo.h,lteo.m).getTime()-10*60000,eLead=eT-PHONE_LEAD_MIN*60000;
+      if(nowMs>=eLead&&nowMs<eT)return{cls:"ev-amber",icon:"📱",label:"הפקדת טלפונים בעוד",value:msToMMSS(eT-nowMs),sub:"עד "+fmtHM(new Date(eT)),urgent:true};
+      if(nowMs>=eT&&nowMs<eT+2*60000)return{cls:"ev-amber",icon:"📱",label:"",value:"הגיע זמן הפקדת הערב",sub:"",urgent:true};}}}
+    var lo=effectiveLightsOut();if(lo){var lt=parseHM(lo);if(lt){var lT=atToday(now,lt.h,lt.m).getTime(),lInfo=atToday(now,LO_INFO_FROM_H,0).getTime(),lLead=lT-LO_LEAD_MIN*60000;
+      if(nowMs>=lLead&&nowMs<lT)return{cls:"ev-indigo",icon:"🌙",label:"כיבוי אורות בעוד",value:msToMMSS(lT-nowMs),sub:"בשעה "+lo,urgent:true};
+      if(nowMs>=lInfo&&nowMs<lLead)return{cls:"ev-indigo",icon:"🌙",label:"כיבוי אורות",value:"בשעה "+lo,sub:"",urgent:false};
+      if(nowMs>=lT&&nowMs<lT+GOODNIGHT_MIN*60000)return{cls:"ev-indigo",icon:"🌙",label:"",value:"לילה טוב",sub:"",urgent:false};}}
+    return null;
+  }
+  var DVARS=["--d-bg","--d-text","--d-muted","--d-accent","--d-accent2","--d-clock","--d-glow","--d-secbar","--d-card-bg","--d-card-border","--d-event-color","--d-line","--d-font","--d-font-disp"];
+  var GENMAP={};
+  /* GEN-THEMES-START (shared with gallery כל-הרקעים.html) */
+  function hslc(h,s,l){h=((h%360)+360)%360;return "hsl("+h+","+s+"%,"+l+"%)";}
+  function hsla(h,s,l,a){h=((h%360)+360)%360;return "hsla("+h+","+s+"%,"+l+"%,"+a+")";}
+  function hueName(h){h=((h%360)+360)%360;var n=[[14,"אדום"],[32,"כתום"],[48,"ענבר"],[65,"זהב"],[85,"ליים"],[140,"ירוק"],[165,"טורקיז"],[190,"תכלת"],[215,"כחול"],[245,"כחול עז"],[272,"אינדיגו"],[300,"סגול"],[325,"ורוד"],[345,"מג׳נטה"],[360,"אדום"]];for(var i=0;i<n.length;i++)if(h<=n[i][0])return n[i][1];return "צבע";}
+  var SERIF='"Frank Ruhl Libre",serif',MODERN='"Rubik","Heebo",sans-serif',SANS='"Heebo",sans-serif';
+  var HUES10=[215,255,290,325,10,40,100,150,180,235];
+  var GENSTYLES=[
+   {sn:"זוהר",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(42% 55% at 18% 20%,"+hsla(h,85,60,.55)+",transparent 70%),radial-gradient(45% 55% at 85% 22%,"+hsla(h+140,80,55,.5)+",transparent 72%),radial-gradient(62% 66% at 55% 110%,"+hsla(h+280,85,62,.55)+",transparent 68%),#070a16","--d-text":"#f3f5ff","--d-muted":hsla(h,25,85,.85),"--d-accent":hslc(h+140,85,82),"--d-accent2":hslc(h+280,85,82),"--d-clock":"#ffffff","--d-glow":hsla(h,85,65,.4),"--d-secbar":"linear-gradient(90deg,"+hslc(h+140,85,75)+","+hslc(h+280,85,78)+")","--d-card-bg":"rgba(255,255,255,.08)","--d-card-border":"rgba(255,255,255,.2)","--d-event-color":hslc(h+280,85,85),"--d-line":"rgba(255,255,255,.16)","--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"שקיעה",pal:HUES10,f:function(h){return {"--d-bg":"linear-gradient(145deg,"+hslc(h,92,64)+" 0%,"+hslc(h+22,88,58)+" 46%,"+hslc(h+46,92,66)+" 100%)","--d-text":"#ffffff","--d-muted":"rgba(255,255,255,.9)","--d-accent":"#ffffff","--d-accent2":"#fff4e6","--d-clock":"#ffffff","--d-glow":hsla(h,60,40,.4),"--d-secbar":"rgba(255,255,255,.9)","--d-card-bg":"rgba(255,255,255,.18)","--d-card-border":"rgba(255,255,255,.4)","--d-event-color":"#ffffff","--d-line":"rgba(255,255,255,.35)","--d-font":MODERN,"--d-font-disp":MODERN};}},
+   {sn:"רשת צבע",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(42% 52% at 0% 0%,"+hsla(h,70,45,.6)+",transparent 60%),radial-gradient(46% 56% at 100% 0%,"+hsla(h+80,65,45,.55)+",transparent 60%),radial-gradient(46% 56% at 0% 100%,"+hsla(h+180,65,42,.55)+",transparent 60%),radial-gradient(52% 56% at 100% 100%,"+hsla(h+260,70,45,.6)+",transparent 60%),#0a0c14","--d-text":"#eef1fb","--d-muted":"rgba(255,255,255,.78)","--d-accent":hslc(h+80,75,80),"--d-accent2":hslc(h+260,75,80),"--d-clock":"#ffffff","--d-glow":hsla(h+80,70,60,.3),"--d-secbar":"linear-gradient(90deg,"+hslc(h,75,65)+","+hslc(h+260,75,70)+")","--d-card-bg":"rgba(255,255,255,.07)","--d-card-border":"rgba(255,255,255,.2)","--d-event-color":hslc(h+80,75,82),"--d-line":"rgba(255,255,255,.16)","--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"ניאון",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(circle at 50% 38%,"+hslc(h,30,12)+","+hslc(h,45,5)+")","--d-text":hslc(h,30,92),"--d-muted":hslc(h,22,66),"--d-accent":hslc(h,95,62),"--d-accent2":hslc(h+40,95,66),"--d-clock":hslc(h,95,72),"--d-glow":hsla(h,95,60,.55),"--d-secbar":"linear-gradient(90deg,"+hslc(h,95,60)+","+hslc(h+40,95,64)+")","--d-card-bg":hsla(h,80,50,.08),"--d-card-border":hsla(h,90,55,.45),"--d-event-color":hslc(h+40,95,70),"--d-line":hsla(h,60,50,.25),"--d-font":MODERN,"--d-font-disp":MODERN};}},
+   {sn:"עומק",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(120% 90% at 50% -10%,"+hsla(h,55,28,.9)+",transparent 55%),linear-gradient(160deg,"+hslc(h,50,12)+","+hslc(h,62,5)+")","--d-text":hslc(h,20,92),"--d-muted":hslc(h,18,66),"--d-accent":hslc(h+35,78,70),"--d-accent2":hslc(h,55,60),"--d-clock":"#f4f1ea","--d-glow":hsla(h+35,70,55,.25),"--d-secbar":"linear-gradient(90deg,"+hslc(h+35,78,64)+","+hslc(h,55,52)+")","--d-card-bg":hsla(h,45,55,.08),"--d-card-border":hsla(h,50,55,.3),"--d-event-color":hslc(h+35,78,74),"--d-line":hsla(h,40,50,.25),"--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"שרטוט",pal:HUES10,f:function(h){return {"--d-bg":"repeating-linear-gradient(0deg,transparent 0 37px,"+hsla(h,60,60,.09)+" 37px 38px),repeating-linear-gradient(90deg,transparent 0 37px,"+hsla(h,60,60,.09)+" 37px 38px),radial-gradient(120% 100% at 50% 0%,"+hslc(h,45,16)+","+hslc(h,58,8)+")","--d-text":hslc(h,22,92),"--d-muted":hslc(h,18,64),"--d-accent":hslc(h,80,74),"--d-accent2":hslc(h,70,66),"--d-clock":hslc(h,25,96),"--d-glow":hsla(h,70,55,.22),"--d-secbar":"linear-gradient(90deg,"+hslc(h,80,66)+","+hslc(h,60,58)+")","--d-card-bg":hsla(h,50,40,.4),"--d-card-border":hsla(h,70,60,.4),"--d-event-color":hslc(h,80,76),"--d-line":hsla(h,60,55,.28),"--d-font":SANS,"--d-font-disp":SANS};}},
+   {sn:"נקודות",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient("+hsla(h,70,65,.16)+" 1.6px,transparent 1.7px) 0 0/22px 22px,linear-gradient(160deg,"+hslc(h,45,14)+","+hslc(h,58,7)+")","--d-text":hslc(h,20,93),"--d-muted":hslc(h,16,64),"--d-accent":hslc(h+30,80,74),"--d-accent2":hslc(h,70,68),"--d-clock":"#ffffff","--d-glow":hsla(h,70,55,.25),"--d-secbar":"linear-gradient(90deg,"+hslc(h+30,80,66)+","+hslc(h,65,60)+")","--d-card-bg":hsla(h,45,50,.08),"--d-card-border":hsla(h,55,55,.32),"--d-event-color":hslc(h+30,80,76),"--d-line":hsla(h,45,50,.24),"--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"מניפה",pal:HUES10,f:function(h){return {"--d-bg":"conic-gradient(from 210deg at 50% 118%,"+hslc(h,55,18)+","+hslc(h+40,55,12)+","+hslc(h+320,55,16)+","+hslc(h,55,18)+")","--d-text":hslc(h,22,93),"--d-muted":hslc(h,18,66),"--d-accent":hslc(h+40,80,76),"--d-accent2":hslc(h+320,75,76),"--d-clock":"#ffffff","--d-glow":hsla(h+40,70,58,.26),"--d-secbar":"linear-gradient(90deg,"+hslc(h+40,80,66)+","+hslc(h+320,75,68)+")","--d-card-bg":"rgba(255,255,255,.06)","--d-card-border":"rgba(255,255,255,.2)","--d-event-color":hslc(h+320,75,80),"--d-line":"rgba(255,255,255,.16)","--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"דו-גוון",pal:HUES10,f:function(h){return {"--d-bg":"linear-gradient(125deg,"+hslc(h,72,44)+" 0%,"+hslc(h,72,42)+" 42%,"+hslc(h+210,66,34)+" 100%)","--d-text":"#ffffff","--d-muted":"rgba(255,255,255,.85)","--d-accent":"#ffffff","--d-accent2":"#ffffff","--d-clock":"#ffffff","--d-glow":hsla(h,60,35,.35),"--d-secbar":"rgba(255,255,255,.85)","--d-card-bg":"rgba(255,255,255,.14)","--d-card-border":"rgba(255,255,255,.35)","--d-event-color":"#ffffff","--d-line":"rgba(255,255,255,.3)","--d-font":MODERN,"--d-font-disp":MODERN};}},
+   {sn:"פסטל",light:true,pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(46% 56% at 15% 20%,"+hsla(h,80,86,.85)+",transparent 60%),radial-gradient(46% 56% at 86% 24%,"+hsla(h+90,80,86,.8)+",transparent 60%),radial-gradient(56% 60% at 55% 102%,"+hsla(h+200,80,88,.85)+",transparent 60%),#f6f7fb","--d-text":hslc(h,30,22),"--d-muted":hslc(h,18,46),"--d-accent":hslc(h+200,60,42),"--d-accent2":hslc(h+90,55,42),"--d-clock":hslc(h,30,18),"--d-glow":"transparent","--d-secbar":"linear-gradient(90deg,"+hslc(h+200,60,52)+","+hslc(h+90,55,52)+")","--d-card-bg":"rgba(255,255,255,.7)","--d-card-border":hslc(h,25,85),"--d-event-color":hslc(h+200,60,42),"--d-line":hslc(h,25,86),"--d-font":SANS,"--d-font-disp":SERIF};}}
+  ];
+  (function(){var gi=0;GENSTYLES.forEach(function(st){st.pal.forEach(function(h){var k="g"+gi;gi++;var v=st.f(h);GENMAP[k]=v;THEMES.push({k:k,n:st.sn+" · "+hueName(h),bg:v["--d-bg"],fg:v["--d-accent"]});});});})();
+  /* GEN-THEMES-END */
+  function effectiveTheme(){if(config.themeRotate>0){var n=THEMES.length;if(n){var idx=Math.floor(Date.now()/(config.themeRotate*60000))%n;return THEMES[idx].k;}}return config.displayTheme||"night";}
+  var _appliedTheme=null;
+  function applyThemeKey(k){var root=document.documentElement;for(var i=0;i<DVARS.length;i++)root.style.removeProperty(DVARS[i]);if(GENMAP[k]){root.setAttribute("data-theme-name","night");var c=GENMAP[k];for(var v in c)root.style.setProperty(v,c[v]);}else root.setAttribute("data-theme-name",k||"night");}
+  function maybeApplyTheme(){var k=effectiveTheme();if(k!==_appliedTheme){_appliedTheme=k;applyThemeKey(k);}}
+  function updateThemeHighlight(){var g=$("themeGrid");if(g)Array.prototype.forEach.call(g.children,function(b){b.classList.toggle("active",b.getAttribute("data-theme")===(config.displayTheme||"night"));});var rg=$("rotateChips");if(rg)Array.prototype.forEach.call(rg.children,function(b){b.classList.toggle("on",(+b.getAttribute("data-rot"))===(config.themeRotate||0));});}
+  function applyTheme(){_appliedTheme=null;maybeApplyTheme();updateThemeHighlight();}
+
+  var elDow=$("dow"),elHdate=$("hdate"),elZman=$("zman"),elZmanVal=$("zmanVal"),elCH=$("cH"),elCM=$("cM"),elSecFill=$("secfill"),elEvent=$("event"),elEvIcon=$("eventIcon"),elEvLabel=$("eventLabel"),elEvValue=$("eventValue"),elEvSub=$("eventSub"),elMsgs=$("msgs"),elMsgsList=$("msgsList"),elDisplay=$("display");
+  var driftPos=[[0,0],[3,2],[-2,3],[2,-2],[-3,-2]],driftI=0,lastDriftMin=-1;
+  function renderClock(){
+    var now=new Date();
+    maybeApplyTheme();
+    elCH.textContent=pad2(now.getHours());elCM.textContent=pad2(now.getMinutes());
+    if(elSecFill)elSecFill.style.width=((now.getSeconds()+now.getMilliseconds()/1000)/60*100).toFixed(2)+"%";
+    if(fDow)elDow.textContent=fDow.format(now);
+    var hd=hebrewDate(now);if(hd)elHdate.textContent=hd;
+    var ce=document.getElementById("chabadEv");if(ce){var cev=todayChabadEvent(now);if(cev){ce.textContent="✡️ "+cev;ce.hidden=false;}else ce.hidden=true;}
+    if(config.ksShow){var ks=sofZmanKS(now);if(ks){elZmanVal.textContent=fmtHM(ks);elZman.hidden=false;}else elZman.hidden=true;}else elZman.hidden=true;
+    var ev=computeEvent(now);
+    if(ev){elEvent.className="event "+ev.cls+(ev.urgent?" pulse":"");elEvIcon.textContent=ev.icon;elEvLabel.textContent=ev.label;elEvLabel.hidden=!ev.label;elEvValue.textContent=ev.value;elEvSub.textContent=ev.sub;elEvSub.hidden=!ev.sub;elEvent.hidden=false;}else elEvent.hidden=true;
+    var onShab=config.shabbatMode&&isShabbat(now),shEl=document.getElementById("shabbat");
+    if(shEl){
+      if(onShab){ shEl.hidden=false;
+        var sc=document.getElementById("shClock");if(sc)sc.textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());
+        var sd=document.getElementById("shDate");if(sd){var hh=hebrewDate(now);if(hh)sd.textContent=hh;}
+        if(!shActive){shActive=true;showShPhoto(0);if(!shTimer)shTimer=setInterval(nextShPhoto,22000);}
+      } else { if(shActive){shActive=false;if(shTimer){clearInterval(shTimer);shTimer=null;}} shEl.hidden=true; }
+    }
+    var csEl=document.getElementById("chabadStory");
+    if(csEl){
+      var _evs=storyCards(now);
+      var cd=_evs.length?_evs[Math.floor(now.getTime()/90000)%_evs.length]:null;
+      var showStory=cd&&!onShab&&(Math.floor(now.getTime()/1000)%90)<15;
+      if(showStory){
+        if(csEl.hidden){
+          document.getElementById("csEyebrow").textContent=(cd.hy?"📖 היום יום · ":"📅 היום בדברי ימי חב״ד · ")+hebrewDate(now);
+          document.getElementById("csTitle").textContent=cd.t;
+          document.getElementById("csStory").textContent=cd.s;csEl.classList.toggle("hy",!!cd.hy);
+          var csp=document.getElementById("csPhoto"),cspw=document.getElementById("csPhotoWrap");
+          if(cd.p){csEl.classList.add("has-photo");csp.onload=function(){cspw.hidden=false;};csp.onerror=function(){cspw.hidden=true;csEl.classList.remove("has-photo");};csp.src=cd.p;}
+          else{cspw.hidden=true;csEl.classList.remove("has-photo");}
+        }
+        csEl.hidden=false;
+      } else csEl.hidden=true;
+    }
+    var omEl=document.getElementById("omer");if(omEl){var _om=omerDay(now);if(_om&&!onShab){omEl.textContent="🌾 "+omerNusach(_om);omEl.hidden=false;}else omEl.hidden=true;}
+    var hyyP=document.getElementById("hyyPanel");if(hyyP){var _hyc=(config.hyyMode==="always"&&!onShab)?hayomYomFor(now):null;if(_hyc){document.getElementById("hyyPanelDate").textContent=hebrewDate(now);document.getElementById("hyyPanelText").textContent=_hyc.s;hyyP.hidden=false;}else hyyP.hidden=true;}
+    var h=now.getHours()+now.getMinutes()/60,loD=parseHM(loForDim()),dim=false;
+    if(config.nightDim&&loD&&!onShab){var loH=loD.h+loD.m/60;dim=(h>=loH)||(h<DIM_END_H);}
+    elDisplay.classList.toggle("dimmed",dim);applyBrightness();
+    var scEl=document.getElementById("screenOff");if(scEl)scEl.classList.toggle("on",screenOffNow(now));
+    syncMedia(now);
+    var mm=now.getMinutes();if(mm!==lastDriftMin){lastDriftMin=mm;driftI=(driftI+1)%driftPos.length;var p=driftPos[driftI];elDisplay.style.transform="translate("+p[0]+"px,"+p[1]+"px)";}
+    if(now.getHours()===4&&now.getMinutes()===0&&now.toDateString()!==startDay)location.reload();
+  }
+  /* ===== מדיה: תמונות וסרטונים (שכבה מלאת-מסך, בודד או בסבב) ===== */
+  var mediaIdx=0,mediaTimer=null,mediaActive=false,mediaCurKey="";
+  function saveMedia(){mediaU=nowSync();saveCache();renderAdminMedia();if(store&&store.saveMedia){var snap={u:mediaU,list:mediaList.slice()};writeChain=writeChain.then(function(){return store.saveMedia(snap);}).catch(function(){});}}
+  function mediaEligible(now){var onShab=config.shabbatMode&&isShabbat(now);return config.mediaMode&&config.mediaMode!=="off"&&mediaList.length>0&&!onShab&&!screenOffNow(now);}
+  function mediaStateKey(){return config.mediaMode+"|"+(config.mediaDwell||8)+"|"+mediaList.map(function(m){return m.id;}).join(",");}
+  function clearMediaTimer(){if(mediaTimer){clearTimeout(mediaTimer);mediaTimer=null;}}
+  function stopMedia(){clearMediaTimer();mediaActive=false;mediaCurKey="";var st=$("mediaStage");if(st)st.innerHTML="";var ms=$("mediaShow");if(ms)ms.classList.remove("on");}
+  function startMedia(){var ms=$("mediaShow");if(!ms)return;mediaActive=true;ms.classList.add("on");mediaIdx=0;showMediaItem();}
+  function mediaAdvance(){if(!mediaList.length){stopMedia();return;}mediaIdx=(mediaIdx+1)%mediaList.length;showMediaItem();}
+  function showMediaItem(){
+    var st=$("mediaStage");if(!st)return;
+    if(!mediaList.length){stopMedia();return;}
+    if(mediaIdx>=mediaList.length)mediaIdx=0;
+    var it=mediaList[mediaIdx],single=(config.mediaMode==="single");
+    st.innerHTML="";clearMediaTimer();
+    if(it.type==="youtube"){
+      var fr=document.createElement("iframe");
+      var sp="autoplay=1&mute=1&controls=0&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3"+(single?("&loop=1&playlist="+encodeURIComponent(it.url)):"");
+      fr.src="https://www.youtube-nocookie.com/embed/"+encodeURIComponent(it.url)+"?"+sp;
+      fr.setAttribute("allow","autoplay; encrypted-media; picture-in-picture");fr.setAttribute("frameborder","0");fr.allowFullscreen=true;
+      fr.style.cssText="position:absolute;inset:0;width:100%;height:100%;border:0";
+      st.appendChild(fr);
+      if(!single){var ys=Math.max(10,config.mediaVideoSecs||60);mediaTimer=setTimeout(mediaAdvance,ys*1000);}
+    }else if(it.type==="video"){
+      var v=document.createElement("video");v.src=it.url;v.autoplay=true;v.playsInline=true;v.setAttribute("playsinline","");v.controls=false;v.preload="auto";v.loop=single;
+      v.onended=function(){if(!single)mediaAdvance();};
+      v.onerror=function(){mediaTimer=setTimeout(mediaAdvance,2000);};
+      st.appendChild(v);
+      var p=v.play();if(p&&p.catch)p.catch(function(){v.muted=true;v.play().catch(function(){mediaTimer=setTimeout(mediaAdvance,2000);});});
+    }else{
+      var img=document.createElement("img");img.alt="";img.onerror=function(){mediaTimer=setTimeout(mediaAdvance,2000);};img.src=it.url;st.appendChild(img);
+      if(!single){var secs=Math.max(3,config.mediaDwell||8);mediaTimer=setTimeout(mediaAdvance,secs*1000);}
+    }
+  }
+  function syncMedia(now){
+    if(!mediaEligible(now)){if(mediaActive)stopMedia();return;}
+    var key=mediaStateKey();
+    if(!mediaActive||key!==mediaCurKey){mediaCurKey=key;if(mediaActive){clearMediaTimer();}startMedia();}
+    var mc=$("mediaClock");if(mc)mc.textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());
+  }
+  function updateMediaUI(){var mm=config.mediaMode||"off";var mc=$("mediaModeChips");if(mc)Array.prototype.forEach.call(mc.children,function(b){b.classList.toggle("on",b.getAttribute("data-mm")===mm);});var dv=config.mediaDwell||8;var dc=$("mediaDwellChips");if(dc)Array.prototype.forEach.call(dc.children,function(b){b.classList.toggle("on",(+b.getAttribute("data-dw"))===dv);});var dvl=$("mediaDwellVal");if(dvl)dvl.textContent=dv;}
+  function renderAdminMedia(){
+    var box=$("adminMedia");if(!box)return;updateMediaUI();box.innerHTML="";
+    if(!mediaList.length){box.innerHTML='<div style="opacity:.6;font-size:13px;padding:8px 2px">אין מדיה עדיין — העלה תמונות או סרטונים למעלה.</div>';return;}
+    function mkBtn(t,fn,col){var b=document.createElement("button");b.textContent=t;b.className="ghost";b.style.cssText="flex:none;padding:5px 9px;font-size:14px"+(col?";color:"+col:"");b.addEventListener("click",fn);return b;}
+    mediaList.forEach(function(it,i){
+      var row=document.createElement("div");row.style.cssText="display:flex;align-items:center;gap:9px;padding:8px 2px;border-top:1px solid var(--c-sep)";
+      var th=document.createElement("div");th.style.cssText="flex:none;width:56px;height:40px;border-radius:7px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;font-size:20px";
+      if(it.type==="image"){var im=document.createElement("img");im.src=it.url;im.style.cssText="width:100%;height:100%;object-fit:cover";im.onerror=function(){th.textContent="🖼️";};th.appendChild(im);}else th.textContent="🎬";
+      var nm=document.createElement("div");nm.style.cssText="flex:1;min-width:0;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap";nm.textContent=(i+1)+". "+(it.name||(it.type==="video"?"סרטון":"תמונה"));
+      row.appendChild(th);row.appendChild(nm);
+      row.appendChild(mkBtn("▲",function(){moveMedia(i,-1);}));
+      row.appendChild(mkBtn("▼",function(){moveMedia(i,1);}));
+      row.appendChild(mkBtn("🗑",function(){removeMedia(i);},"#e5484d"));
+      box.appendChild(row);
+    });
+  }
+  function moveMedia(i,d){var j=i+d;if(j<0||j>=mediaList.length)return;var t=mediaList[i];mediaList[i]=mediaList[j];mediaList[j]=t;saveMedia();toast("הסדר עודכן ✓");}
+  function removeMedia(i){var it=mediaList[i];if(!it)return;if(!confirm("למחוק את \""+(it.name||"הקובץ")+"\"?"))return;mediaList.splice(i,1);saveMedia();toast("נמחק ✓");}
+  function cloudinaryOn(){return !!(window.MEDIA_UPLOAD&&MEDIA_UPLOAD.cloud&&MEDIA_UPLOAD.preset);}
+  function compressBlob(file,cb){
+    try{var img=new Image();var url=URL.createObjectURL(file);
+      img.onload=function(){URL.revokeObjectURL(url);var max=1600,w=img.width,h=img.height,sc=Math.min(1,max/Math.max(w,h));var cw=Math.round(w*sc),ch=Math.round(h*sc);var cv=document.createElement("canvas");cv.width=cw;cv.height=ch;try{cv.getContext("2d").drawImage(img,0,0,cw,ch);}catch(e){cb(file);return;}cv.toBlob(function(b){cb(b&&b.size<file.size?b:file);},"image/jpeg",0.72);};
+      img.onerror=function(){URL.revokeObjectURL(url);cb(file);};img.src=url;
+    }catch(e){cb(file);}
+  }
+  function blobToDataURL(blob,cb,err){try{var fr=new FileReader();fr.onload=function(){cb(fr.result);};fr.onerror=function(){(err||function(){})();};fr.readAsDataURL(blob);}catch(e){(err||function(){})();}}
+  function cloudUpload(file,onProg,onDone,onErr){
+    try{
+      var xhr=new XMLHttpRequest();
+      xhr.open("POST","https://api.cloudinary.com/v1_1/"+MEDIA_UPLOAD.cloud+"/auto/upload");
+      if(xhr.upload)xhr.upload.onprogress=function(e){if(e.lengthComputable&&onProg)onProg(Math.round(e.loaded/e.total*100));};
+      xhr.onload=function(){try{var r=JSON.parse(xhr.responseText);if(r&&r.secure_url)onDone(r.secure_url,r.resource_type);else onErr(r&&r.error&&r.error.message);}catch(e){onErr();}};
+      xhr.onerror=function(){onErr();};
+      var fd=new FormData();fd.append("file",file);fd.append("upload_preset",MEDIA_UPLOAD.preset);
+      xhr.send(fd);
+    }catch(e){onErr();}
+  }
+  function uploadMedia(files){
+    if(!files||!files.length)return;
+    var arr=Array.prototype.slice.call(files),total=arr.length,done=0,prog=$("mediaProgress");
+    var hasVid=arr.some(function(f){return /^video\//.test(f.type);});
+    if(hasVid&&!cloudinaryOn()){alert("כדי להעלות סרטונים מהגלריה צריך חיבור חינמי לאחסון (Cloudinary — בלי תשלום). ראה את הוראות ההפעלה.");}
+    if(prog){prog.hidden=false;prog.textContent="מעלה 0/"+total+"…";}
+    function fin(){if(prog){prog.textContent="הועלו "+done+" מתוך "+total+" ✓";setTimeout(function(){prog.hidden=true;},2800);}}
+    function setP(i,pct){if(prog)prog.textContent="מעלה "+(i+1)+"/"+total+" — "+pct+"%";}
+    function add(f,type,url){mediaList.push({id:"m"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),type:type,url:url,name:(f&&f.name)||"",createdAt:nowSync()});done++;saveMedia();}
+    function next(i){
+      if(i>=arr.length){fin();return;}
+      var f=arr[i],isImg=/^image\//.test(f.type),isVid=/^video\//.test(f.type);
+      if(!isImg&&!isVid){next(i+1);return;}
+      if(cloudinaryOn()){
+        function up(blob){cloudUpload(blob||f,function(p){setP(i,p);},function(url,rt){add(f,rt==="video"?"video":"image",url);next(i+1);},function(msg){if(prog)prog.textContent="שגיאה: "+(msg||"העלאה נכשלה");setTimeout(function(){next(i+1);},1400);});}
+        if(isImg)compressBlob(f,up);else up(f);
+      }else{
+        if(isImg)compressBlob(f,function(blob){blobToDataURL(blob||f,function(d){add(f,"image",d);next(i+1);},function(){next(i+1);});});
+        else next(i+1); // סרטון ללא Cloudinary — מדולג
+      }
+    }
+    next(0);
+  }
+  function renderMessages(){var list=activeMessages();if(!list.length){elMsgs.hidden=true;elMsgsList.innerHTML="";return;}elMsgsList.innerHTML="";list.forEach(function(m){var li=document.createElement("li");li.textContent=m.text;elMsgsList.appendChild(li);});elMsgs.hidden=false;}
+
+  var toastT;function toast(msg){var t=$("toast");if(!t)return;t.textContent=msg||"נשמר ✓";t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove("show");},1400);}
+  function buildThemeGrid(){var g=$("themeGrid");if(!g)return;g.innerHTML="";THEMES.forEach(function(t){var b=document.createElement("button");b.className="theme-opt";b.setAttribute("data-theme",t.k);var sw=document.createElement("div");sw.className="theme-sw";sw.style.background=t.bg;sw.style.color=t.fg;sw.textContent="12:45";var nm=document.createElement("span");nm.className="theme-name";nm.textContent=t.n;b.appendChild(sw);b.appendChild(nm);b.addEventListener("click",function(){config.displayTheme=t.k;config.themeRotate=0;applyTheme();saveConfig().then(function(){toast("העיצוב עודכן ✓");});});g.appendChild(b);});}
+
+  function brightnessVal(){var b=config.brightness;return (b==null||isNaN(b))?100:Math.max(20,Math.min(100,b));}
+  function applyBrightness(){document.documentElement.style.setProperty("--disp-bright",(brightnessVal()/100).toFixed(3));}
+  function updateBrightUI(){var v=brightnessVal();var r=$("brightRange");if(r){if(document.activeElement!==r)r.value=v;r.style.setProperty("--fill",((v-20)/80*100).toFixed(1)+"%");}var bv=$("brightVal");if(bv)bv.textContent=v+"%";var bc=$("brightChips");if(bc)Array.prototype.forEach.call(bc.children,function(b){b.classList.toggle("on",(+b.getAttribute("data-br"))===v);});applyBrightness();}
+  function setupConsole(){
+    $("openDisplay").setAttribute("href",location.pathname);
+    $("copyLink").addEventListener("click",function(){var url=location.origin+location.pathname;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){toast("הקישור הועתק ✓");},function(){$("copyHint").textContent=url;});}else $("copyHint").textContent=url;});
+    buildThemeGrid();
+    Array.prototype.forEach.call(document.querySelectorAll("[data-rot]"),function(b){b.addEventListener("click",function(){config.themeRotate=+b.getAttribute("data-rot");applyTheme();saveConfig().then(function(){toast(config.themeRotate?"מעבר רקעים הופעל ✓":"מעבר רקעים כבוי");});});});
+    renderUpcoming();
+    var loTime=$("loTime");
+    loTime.addEventListener("change",function(){if(!parseHM(loTime.value))return;config.lightsOutOverride=loTime.value;config.lightsOutOverrideDate=todayKey();saveConfig().then(function(){toast();});});
+    Array.prototype.forEach.call(document.querySelectorAll("[data-lo]"),function(b){b.addEventListener("click",function(){loTime.value=b.getAttribute("data-lo");loTime.dispatchEvent(new Event("change"));});});
+    $("loReset").addEventListener("click",function(){config.lightsOutOverride="";config.lightsOutOverrideDate="";loTime.value=config.lightsOutDefault;saveConfig().then(function(){toast();});});
+    $("loEnabled").addEventListener("change",function(){config.lightsOutEnabled=$("loEnabled").checked;saveConfig().then(function(){toast();});});
+    var pdTime=$("pdTime");
+    pdTime.addEventListener("change",function(){if(!parseHM(pdTime.value))return;config.phoneDepositTime=pdTime.value;saveConfig().then(function(){toast();});});
+    $("pdEnabled").addEventListener("change",function(){config.phoneDepositEnabled=$("pdEnabled").checked;saveConfig().then(function(){toast();});});
+    $("pdEveningEnabled").addEventListener("change",function(){config.phoneEveningEnabled=$("pdEveningEnabled").checked;saveConfig().then(function(){toast();});});
+    function bumpKs(d){config.ksOffsetMin=Math.max(-30,Math.min(30,(config.ksOffsetMin||0)+d));refreshKs();saveConfig().then(function(){toast();});}
+    $("ksMinus").addEventListener("click",function(){bumpKs(-1);});$("ksPlus").addEventListener("click",function(){bumpKs(1);});
+    $("ksShow").addEventListener("change",function(){config.ksShow=$("ksShow").checked;saveConfig().then(function(){toast();});});
+    $("shabbatMode").addEventListener("change",function(){config.shabbatMode=$("shabbatMode").checked;saveConfig().then(function(){toast();});});
+    Array.prototype.forEach.call(document.querySelectorAll("#hyyChips [data-hyy]"),function(b){b.addEventListener("click",function(){config.hyyMode=b.getAttribute("data-hyy");syncInputs();saveConfig().then(function(){toast("היום יום: "+({off:"כבוי",rotate:"בסבב",always:"קבוע"}[config.hyyMode]||""));});});});
+    $("nightDim").addEventListener("change",function(){config.nightDim=$("nightDim").checked;saveConfig().then(function(){toast();});});
+    $("scEnabled").addEventListener("change",function(){config.screenOffEnabled=$("scEnabled").checked;saveConfig().then(function(){toast(config.screenOffEnabled?"כיבוי לילה הופעל ✓":"כיבוי לילה כבוי");});});
+    $("scStart").addEventListener("change",function(){if(!parseHM($("scStart").value))return;config.screenOffStart=$("scStart").value;saveConfig().then(function(){toast();});});
+    $("scEnd").addEventListener("change",function(){if(!parseHM($("scEnd").value))return;config.screenOffEnd=$("scEnd").value;saveConfig().then(function(){toast();});});
+    Array.prototype.forEach.call(document.querySelectorAll("#mediaModeChips [data-mm]"),function(b){b.addEventListener("click",function(){config.mediaMode=b.getAttribute("data-mm");updateMediaUI();saveConfig().then(function(){toast("מדיה: "+({off:"כבוי",single:"בודד",rotate:"סבב"}[config.mediaMode]||""));});});});
+    Array.prototype.forEach.call(document.querySelectorAll("#mediaDwellChips [data-dw]"),function(b){b.addEventListener("click",function(){config.mediaDwell=+b.getAttribute("data-dw");updateMediaUI();saveConfig().then(function(){toast();});});});
+    $("mediaFile").addEventListener("change",function(){uploadMedia(this.files);this.value="";});
+    renderAdminMedia();
+    var brR=$("brightRange"),brSaveT;
+    function brSet(v){v=Math.max(20,Math.min(100,v));config.brightness=v;updateBrightUI();clearTimeout(brSaveT);brSaveT=setTimeout(function(){saveConfig().then(function(){toast("בהירות: "+v+"%");});},400);}
+    if(brR)brR.addEventListener("input",function(){brSet(+brR.value);});
+    Array.prototype.forEach.call(document.querySelectorAll("#brightChips [data-br]"),function(b){b.addEventListener("click",function(){brSet(+b.getAttribute("data-br"));});});
+    var newMsg=$("newMsg"),newExp=$("newMsgExp");
+    function add(){var t=(newMsg.value||"").trim();if(!t)return;var doc={id:"m"+Date.now(),text:t,createdAt:Date.now(),expiresAt:0};if(newExp.value){var d=new Date(newExp.value+"T23:59:59");if(!isNaN(d.getTime()))doc.expiresAt=d.getTime();}messages.push(doc);newMsg.value="";newExp.value="";saveMsgs();toast("ההודעה נוספה ✓");}
+    $("addMsg").addEventListener("click",add);newMsg.addEventListener("keydown",function(e){if(e.key==="Enter")add();});
+    syncInputs();setInterval(updatePreview,1000);updatePreview();
+  }
+  function refreshKs(){var ks=sofZmanKS(new Date());if(ks)$("ksFinal").textContent=fmtHM(ks);$("ksOffVal").textContent=(config.ksOffsetMin>0?"+":"")+(config.ksOffsetMin||0);}
+  function syncInputs(){
+    if(mode!=="manage"||$("panel").hidden)return;
+    var loTime=$("loTime");if(document.activeElement!==loTime)loTime.value=effectiveLightsOut()||config.lightsOutDefault;
+    $("loEnabled").checked=!!config.lightsOutEnabled;
+    var pdTime=$("pdTime");if(document.activeElement!==pdTime)pdTime.value=config.phoneDepositTime;
+    $("pdEnabled").checked=!!config.phoneDepositEnabled;$("pdEveningEnabled").checked=!!config.phoneEveningEnabled;$("ksShow").checked=!!config.ksShow;$("shabbatMode").checked=!!config.shabbatMode;$("nightDim").checked=!!config.nightDim;$("scEnabled").checked=!!config.screenOffEnabled;var _scs=$("scStart");if(_scs&&document.activeElement!==_scs)_scs.value=config.screenOffStart||"01:00";var _sce=$("scEnd");if(_sce&&document.activeElement!==_sce)_sce.value=config.screenOffEnd||"06:00";updateMediaUI();var _hm=config.hyyMode||"rotate";var _hc=$("hyyChips");if(_hc)Array.prototype.forEach.call(_hc.children,function(b){b.classList.toggle("on",b.getAttribute("data-hyy")===_hm);});
+    $("loDefault").textContent=config.lightsOutDefault;applyTheme();refreshKs();renderAdminMessages();updateBrightUI();
+  }
+  function renderAdminMessages(){
+    var list=$("adminMsgs");if(!list)return;list.innerHTML="";
+    if(!messages.length){var e=document.createElement("div");e.className="c-empty";e.textContent="אין הודעות כרגע.";list.appendChild(e);return;}
+    messages.forEach(function(m){
+      var row=document.createElement("div");row.className="c-row";var it=document.createElement("div");it.className="msgitem";
+      var mt=document.createElement("div");mt.className="mt";var txt=document.createElement("div");txt.className="txt";txt.textContent=m.text;mt.appendChild(txt);
+      if(m.expiresAt){var ex=document.createElement("div");var dd=new Date(m.expiresAt),expired=Date.now()>m.expiresAt;ex.className="ex"+(expired?"":" soon");ex.textContent=(expired?"פג · ":"עד ")+dd.getDate()+"/"+(dd.getMonth()+1);mt.appendChild(ex);}
+      var edit=document.createElement("button");edit.className="editb";edit.textContent="✎";
+      edit.addEventListener("click",function(){txt.contentEditable="true";txt.focus();function done(){txt.contentEditable="false";txt.removeEventListener("blur",done);var t=(txt.textContent||"").trim();if(t&&t!==m.text){m.text=t;saveMsgs();}else txt.textContent=m.text;}txt.addEventListener("blur",done);txt.addEventListener("keydown",function(k){if(k.key==="Enter"){k.preventDefault();txt.blur();}});});
+      var del=document.createElement("button");del.className="trash";del.textContent="🗑";del.addEventListener("click",function(){messages=messages.filter(function(x){return x.id!==m.id;});saveMsgs();});
+      it.appendChild(mt);row.appendChild(it);row.appendChild(edit);row.appendChild(del);list.appendChild(row);
+    });
+  }
+  function updatePreview(){
+    if($("panel").hidden)return;var now=new Date();
+    $("pvClock").textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());
+    if(fDow)$("pvDow").textContent=fDow.format(now);var hd=hebrewDate(now);if(hd)$("pvHdate").textContent=hd;
+    var ev=computeEvent(now),pe=$("pvEvent");
+    if(ev){pe.textContent=ev.icon+" "+(ev.label?ev.label+" ":"")+ev.value+(ev.sub?" "+ev.sub:"");pe.hidden=false;}else pe.hidden=true;
+    var msgs=activeMessages();$("pvMsgs").textContent=msgs.length?("📋 "+msgs.map(function(m){return m.text;}).join(" · ")):"";
+  }
+
+  var writeChain=Promise.resolve();
+  function saveConfig(){config.updatedAt=nowSync();saveCache();if(store){var snap=Object.assign({},config);writeChain=writeChain.then(function(){return store.saveConfig(snap);}).catch(function(){});}return writeChain;}
+  function saveMsgs(){msgsU=nowSync();sortMsgs();saveCache();renderMessages();renderAdminMessages();if(store&&store.saveMsgs){var snap={u:msgsU,list:messages.slice()};writeChain=writeChain.then(function(){return store.saveMsgs(snap);}).catch(function(){});}}
+
+  function fsElement(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
+  function reqFs(el){var f=el.requestFullscreen||el.webkitRequestFullscreen;if(!f)return;try{var p=f.call(el);if(p&&p.catch)p.catch(function(){});}catch(e){}}
+  function exitFs(){var f=document.exitFullscreen||document.webkitExitFullscreen;if(!f)return;try{f.call(document);}catch(e){}}
+  function setupDisplay(){
+    var disp=$("display"),fsBtn=$("fsBtn"),fsLabel=$("fsLabel"),fsIco=$("fsIco"),el=document.documentElement;
+    var scEl2=$("screenOff");if(scEl2)scEl2.addEventListener("click",function(){wakeUntil=nowSync()+120000;scEl2.classList.remove("on");});
+    if(el.requestFullscreen||el.webkitRequestFullscreen){fsBtn.hidden=false;
+      fsBtn.addEventListener("click",function(){if(fsElement())exitFs();else reqFs(el);});
+      function upd(){var on=!!fsElement();fsLabel.textContent=on?"יציאה ממסך מלא":"מסך מלא";fsIco.textContent=on?"✕":"⛶";}
+      document.addEventListener("fullscreenchange",upd);document.addEventListener("webkitfullscreenchange",upd);upd();
+      setTimeout(function(){if(!fsElement())reqFs(el);},800);
+      var once=function(){if(!fsElement())reqFs(el);document.removeEventListener("pointerdown",once);document.removeEventListener("keydown",once);};
+      document.addEventListener("pointerdown",once);document.addEventListener("keydown",once);
+    }
+    var idleT;function activity(){disp.classList.remove("ui-idle");clearTimeout(idleT);idleT=setTimeout(function(){disp.classList.add("ui-idle");},4000);}
+    ["mousemove","mousedown","touchstart","keydown"].forEach(function(ev){document.addEventListener(ev,activity,{passive:true});});activity();
+  }
+
+  function showMode(){
+    var r=document.documentElement;r.dir="rtl";r.lang="he";
+    if(mode==="manage")document.body.classList.add("mode-manage");
+    applyTheme();
+    if(mode==="manage"){$("display").hidden=true;$("manage").hidden=false;setupConsole();}
+    else{$("manage").hidden=true;$("display").hidden=false;setupDisplay();}
+    document.addEventListener("keydown",function(e){
+      var tag=(e.target&&e.target.tagName)||"";
+      if(e.key==="Escape"&&mode==="manage"){location.hash="";}
+      else if((e.key==="n"||e.key==="N"||e.key==="נ")&&mode==="display"&&!/^(input|textarea)$/i.test(tag)){location.hash="#manage";}
+    });
+  }
+  function setStatus(txt,off){if(mode!=="manage")return;var s=$("syncStatus"),gs=$("gateStatus");if(s){s.textContent=txt;s.className="c-status"+(off?" off":"");}if(off&&gs){gs.hidden=false;gs.textContent=txt;}}
+
+  function initStore(){
+    if(!window.firebase||!firebaseConfig.databaseURL||String(firebaseConfig.databaseURL).indexOf("PASTE")>-1){setStatus("⚠ Firebase עדיין לא הוגדר (ערוך את firebaseConfig בקובץ).",true);return;}
+    if(String(firebaseConfig.apiKey||"").indexOf("PASTE")>-1)delete firebaseConfig.apiKey;
+    try{firebase.initializeApp(firebaseConfig);}catch(e){}
+    var rtdb;try{rtdb=firebase.database();}catch(e){setStatus("⚠ שגיאת חיבור ל-Firebase.",true);return;}
+    var base=rtdb.ref("board");
+    store={
+      saveConfig:function(o){return base.child("config").set(o);},
+      saveMsgs:function(o){return base.child("msgs").set(o);},
+      saveMedia:function(o){return base.child("media").set(o);}
+    };
+    rtdb.ref(".info/serverTimeOffset").on("value",function(s){var off=s.val();if(typeof off==="number"){serverSkew=off;try{localStorage.setItem("board_skew",String(Math.round(off)));}catch(e){}}});
+    rtdb.ref(".info/connected").on("value",function(s){setStatus(s.val()?"מחובר ומסנכרן ✓":"מתחבר…",!s.val());});
+    base.child("config").on("value",function(s){var r=s.val();if(r&&(r.updatedAt||0)>=(config.updatedAt||0)){config=Object.assign({},DEFAULTS,r);saveCache();}else if(r&&store){writeChain=writeChain.then(function(){return store.saveConfig(Object.assign({},config));}).catch(function(){});}applyTheme();syncInputs();});
+    base.child("msgs").on("value",function(s){var r=s.val();
+      if(r&&typeof r==="object"){
+        if((r.u||0)>=(msgsU||0)){msgsU=r.u||0;messages=(r.list||[]).slice();sortMsgs();saveCache();}
+        else if(store){var snap={u:msgsU,list:messages.slice()};writeChain=writeChain.then(function(){return store.saveMsgs(snap);}).catch(function(){});}
+        renderMessages();renderAdminMessages();
+      } else {
+        base.child("messages").once("value",function(os){var v=os.val()||{};var list=Object.keys(v).map(function(k){var m=v[k]||{};return{id:k,text:m.text||"",createdAt:m.createdAt||0,expiresAt:m.expiresAt||0};});list.sort(function(a,b){return (a.createdAt||0)-(b.createdAt||0);});messages=list;msgsU=nowSync();saveCache();if(store){store.saveMsgs({u:msgsU,list:messages.slice()});base.child("messages").remove();}renderMessages();renderAdminMessages();});
+      }
+    });
+    base.child("media").on("value",function(s){var r=s.val();
+      if(r&&typeof r==="object"){
+        if((r.u||0)>=(mediaU||0)){mediaU=r.u||0;mediaList=(r.list||[]).slice();saveCache();}
+        else if(store){var snap={u:mediaU,list:mediaList.slice()};writeChain=writeChain.then(function(){return store.saveMedia(snap);}).catch(function(){});}
+        renderAdminMedia();
+      }
+    });
+    if(mode==="display"){
+      var st=base.child("status/display");
+      rtdb.ref(".info/connected").on("value",function(s){if(s.val()){st.onDisconnect().set({online:false,ts:firebase.database.ServerValue.TIMESTAMP});st.set({online:true,ts:firebase.database.ServerValue.TIMESTAMP});}});
+      setInterval(function(){st.update({online:true,ts:firebase.database.ServerValue.TIMESTAMP});},20000);
+    }else{
+      base.child("status/display").on("value",function(s){lastScreen=s.val();renderScreenStatus();});
+      setInterval(renderScreenStatus,5000);
+    }
+  }
+
+  loadCache();showMode();renderClock();setInterval(renderClock,250);initStore();
+  window.addEventListener("hashchange",function(){location.reload();});
+})();
+</script>
+</body>
+</html>

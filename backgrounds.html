@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>כל סוגי המסכים · לוח הקומה</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Bellefair&family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;600;800;900&family=Rubik:wght@400;600;800&display=swap">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#070c1a;color:#eef2fb;font-family:"Heebo",-apple-system,"Segoe UI",sans-serif;padding:26px 16px 70px;-webkit-font-smoothing:antialiased;}
+  h1{text-align:center;font-family:"Frank Ruhl Libre",serif;font-weight:900;font-size:1.8rem;color:#e7c072;margin-bottom:4px;}
+  .sub{text-align:center;color:#93a0c1;margin-bottom:8px;font-size:.95rem;}
+  .toolbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0 24px;}
+  .toolbar button{background:#141f3d;color:#cdd5ea;border:1px solid #26324f;border-radius:999px;padding:7px 16px;font-size:.9rem;font-family:inherit;cursor:pointer;}
+  .toolbar button.on{background:#e7c072;color:#06122e;border-color:#e7c072;font-weight:700;}
+  .grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;}
+  .item{display:flex;flex-direction:column;gap:8px;}
+  .card{aspect-ratio:16/10;border-radius:16px;overflow:hidden;position:relative;background:var(--d-bg);color:var(--d-text);font-family:var(--d-font);border:1px solid rgba(255,255,255,.06);box-shadow:0 10px 30px rgba(0,0,0,.35);
+        --d-bg:radial-gradient(130% 100% at 50% -20%,#17244d 0%,rgba(23,36,77,0) 52%),radial-gradient(80% 60% at 100% 115%,#0f1c3e 0%,rgba(15,28,62,0) 60%),radial-gradient(70% 60% at 0% 115%,#0e1836 0%,rgba(14,24,54,0) 60%),#070c1a;    --d-text:#eef2fb;--d-muted:#93a0c1;--d-accent:#e7c072;--d-accent2:#8fb2ff;--d-clock:#eef2fb;--d-glow:rgba(91,141,239,.30);--d-secbar:linear-gradient(90deg,#e7c072,#5b8def);--d-card-bg:rgba(22,33,60,.55);--d-card-border:#26324f;--d-event-color:#a5adff;--d-line:#26324f;--d-font:"Heebo",-apple-system,"Segoe UI",Arial,sans-serif;--d-font-disp:"Frank Ruhl Libre",Georgia,serif;
+  }
+  .mini{position:absolute;inset:0;padding:14px 15px;display:flex;flex-direction:column;}
+  .m-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .m-dow{font-family:var(--d-font-disp);color:var(--d-accent);font-weight:700;font-size:.92rem;line-height:1;}
+  .m-hd{color:var(--d-muted);font-size:.62rem;margin-top:3px;}
+  .m-bsd{font-family:var(--d-font-disp);color:var(--d-accent2);font-size:.6rem;opacity:.9;}
+  .m-clock{flex:1;display:flex;align-items:center;justify-content:center;font-family:var(--d-font-disp);color:var(--d-clock);font-weight:900;font-size:3rem;line-height:1;direction:ltr;text-shadow:0 4px 30px var(--d-glow);}
+  .m-bar{height:3px;border-radius:3px;background:var(--d-secbar);margin:0 0 8px;opacity:.95;}
+  .m-ev{align-self:center;background:var(--d-card-bg);border:1px solid var(--d-card-border);color:var(--d-event-color);border-radius:999px;padding:4px 12px;font-size:.62rem;font-weight:700;margin-bottom:7px;}
+  .m-msg{background:var(--d-card-bg);border:1px solid var(--d-card-border);border-radius:8px;padding:5px 9px;font-size:.6rem;color:var(--d-text);text-align:center;}
+  .label{text-align:center;font-size:.9rem;color:#cdd5ea;font-weight:600;}
+  .card[data-theme-name="apple"]{--d-bg:#eceef3;--d-text:#1c1c1e;--d-muted:#8e8e93;--d-accent:#0a84ff;--d-accent2:#0a84ff;--d-clock:#1c1c1e;--d-glow:transparent;--d-secbar:linear-gradient(90deg,#0a84ff,#30d158);--d-card-bg:#fff;--d-card-border:#e2e4ea;--d-event-color:#0a84ff;--d-line:#d6d8e0;--d-font:"Assistant","Heebo",sans-serif;--d-font-disp:"Assistant","Heebo",sans-serif;}
+  .card[data-theme-name="gold"]{--d-bg:radial-gradient(circle at 50% 0%,#17120a,#0a0806);--d-text:#e8d9a8;--d-muted:#b89a52;--d-accent:#d4af37;--d-accent2:#e9cf7e;--d-clock:#eacf7e;--d-glow:rgba(212,175,55,.3);--d-secbar:linear-gradient(90deg,#d4af37,#8a6a2f);--d-card-bg:rgba(212,175,55,.06);--d-card-border:rgba(212,175,55,.35);--d-event-color:#d4af37;--d-line:rgba(212,175,55,.3);--d-font:"Heebo",sans-serif;--d-font-disp:"Bellefair","Frank Ruhl Libre",serif;}
+  .card[data-theme-name="emerald"]{--d-bg:linear-gradient(160deg,#134a37,#0a2a20);--d-text:#f1e7cf;--d-muted:#b6c6ad;--d-accent:#dcbd6c;--d-accent2:#e6cb7c;--d-clock:#f6eeda;--d-glow:rgba(220,189,108,.25);--d-secbar:linear-gradient(90deg,#dcbd6c,#8fae8a);--d-card-bg:rgba(220,189,108,.08);--d-card-border:rgba(220,189,108,.35);--d-event-color:#e6cb7c;--d-line:rgba(220,189,108,.3);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  .card[data-theme-name="sunrise"]{--d-bg:linear-gradient(135deg,#ff9a5a 0%,#ff6a88 48%,#ffd07a 100%);--d-text:#fff;--d-muted:rgba(255,255,255,.92);--d-accent:#fff;--d-accent2:#fff;--d-clock:#fff;--d-glow:rgba(150,40,70,.3);--d-secbar:rgba(255,255,255,.85);--d-card-bg:rgba(255,255,255,.2);--d-card-border:rgba(255,255,255,.45);--d-event-color:#fff;--d-line:rgba(255,255,255,.4);--d-font:"Rubik",sans-serif;--d-font-disp:"Rubik",sans-serif;}
+  .card[data-theme-name="contrast"]{--d-bg:#000;--d-text:#fff;--d-muted:#ffe100;--d-accent:#ffe100;--d-accent2:#ffe100;--d-clock:#ffe100;--d-glow:transparent;--d-secbar:#ffe100;--d-card-bg:#111;--d-card-border:#333;--d-event-color:#ffe100;--d-line:#333;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  .card[data-theme-name="contrast"] .event{background:#ffe100;border-color:#ffe100;}
+  .card[data-theme-name="contrast"] .event .event-value{color:#000;}
+  .card[data-theme-name="contrast"] .event .event-label,.card[data-theme-name="contrast"] .event .event-sub{color:#222;}
+  .card[data-theme-name="glass"]{--d-bg:radial-gradient(42% 52% at 18% 18%,rgba(130,80,255,.6),transparent 70%),radial-gradient(42% 52% at 86% 22%,rgba(0,200,255,.55),transparent 70%),radial-gradient(55% 62% at 62% 95%,rgba(255,80,160,.55),transparent 70%),#0a0a16;--d-text:#fff;--d-muted:rgba(255,255,255,.8);--d-accent:#d7c3ff;--d-accent2:#8fd3ff;--d-clock:#fff;--d-glow:rgba(150,120,255,.35);--d-secbar:linear-gradient(90deg,#b69cff,#7ad0ff);--d-card-bg:rgba(255,255,255,.1);--d-card-border:rgba(255,255,255,.22);--d-event-color:#e7dbff;--d-line:rgba(255,255,255,.25);--d-font:"Assistant","Heebo",sans-serif;--d-font-disp:"Assistant","Heebo",sans-serif;}
+  .card[data-theme-name="glass"] .event,.card[data-theme-name="glass"] .msgs,.card[data-theme-name="glass"] .zman,.card[data-theme-name="glass"] .bsd-chip{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+  .card[data-theme-name="neon"]{--d-bg:radial-gradient(circle at 50% 42%,#13131f,#05050a);--d-text:#e6f7ff;--d-muted:#8aa0b2;--d-accent:#2ee6ff;--d-accent2:#ff5ec4;--d-clock:#2ee6ff;--d-glow:rgba(46,230,255,.5);--d-secbar:linear-gradient(90deg,#2ee6ff,#ff5ec4);--d-card-bg:rgba(255,46,160,.06);--d-card-border:rgba(255,46,160,.4);--d-event-color:#ff5ec4;--d-line:#1b2b36;--d-font:"Rubik","Heebo",sans-serif;--d-font-disp:"Rubik","Heebo",sans-serif;}
+  .card[data-theme-name="neon"] .clock{text-shadow:0 0 .28em rgba(46,230,255,.9),0 0 .6em rgba(46,230,255,.5);}
+  .card[data-theme-name="royal"]{--d-bg:linear-gradient(160deg,#14408f,#0d2a63);--d-text:#eaf1ff;--d-muted:#b9cdf0;--d-accent:#ecc978;--d-accent2:#f0d79c;--d-clock:#fff;--d-glow:rgba(236,201,120,.25);--d-secbar:linear-gradient(90deg,#ecc978,#8fb2ff);--d-card-bg:rgba(255,255,255,.08);--d-card-border:rgba(236,201,120,.4);--d-event-color:#ecc978;--d-line:rgba(255,255,255,.2);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  .card[data-theme-name="blueprint"]{--d-bg:repeating-linear-gradient(0deg,transparent 0 38px,rgba(120,180,255,.08) 38px 39px),repeating-linear-gradient(90deg,transparent 0 38px,rgba(120,180,255,.08) 38px 39px),#0a2744;--d-text:#dff0ff;--d-muted:#8fb6d8;--d-accent:#7fd0ff;--d-accent2:#7fd0ff;--d-clock:#eaf6ff;--d-glow:rgba(127,208,255,.25);--d-secbar:#7fd0ff;--d-card-bg:rgba(10,39,68,.5);--d-card-border:rgba(127,208,255,.45);--d-event-color:#7fd0ff;--d-line:rgba(127,208,255,.3);--d-font:"Heebo",monospace;--d-font-disp:"Heebo",sans-serif;}
+  .card[data-theme-name="parchment"]{--d-bg:radial-gradient(90% 120% at 50% 0%,#f6ecd2,#ecdcb8);--d-text:#43301b;--d-muted:#8a6a2f;--d-accent:#7d2436;--d-accent2:#a9812f;--d-clock:#3a2914;--d-glow:transparent;--d-secbar:linear-gradient(90deg,#a9812f,#7d2436);--d-card-bg:rgba(125,36,54,.07);--d-card-border:rgba(125,36,54,.3);--d-event-color:#7d2436;--d-line:rgba(125,36,54,.25);--d-font:"Frank Ruhl Libre",serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  .card[data-theme-name="minimal"]{--d-bg:#050505;--d-text:#fff;--d-muted:#8a8a8a;--d-accent:#f5a623;--d-accent2:#f5a623;--d-clock:#fff;--d-glow:transparent;--d-secbar:#f5a623;--d-card-bg:#121212;--d-card-border:#262626;--d-event-color:#f5a623;--d-line:#262626;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  .card[data-theme-name="wine"]{--d-bg:linear-gradient(160deg,#3a0e1a,#150406);--d-text:#f3e3e6;--d-muted:#c89aa0;--d-accent:#e7c072;--d-accent2:#f0d79c;--d-clock:#f6e8ea;--d-glow:rgba(231,192,114,.22);--d-secbar:linear-gradient(90deg,#e7c072,#9a3b4a);--d-card-bg:rgba(231,192,114,.07);--d-card-border:rgba(231,192,114,.3);--d-event-color:#e7c072;--d-line:rgba(231,192,114,.25);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  .card[data-theme-name="ocean"]{--d-bg:linear-gradient(160deg,#07323a,#041a20);--d-text:#e3f6f7;--d-muted:#8fc0c4;--d-accent:#4fe0d0;--d-accent2:#7fe8ff;--d-clock:#eafcff;--d-glow:rgba(79,224,208,.28);--d-secbar:linear-gradient(90deg,#4fe0d0,#7fb0ff);--d-card-bg:rgba(79,224,208,.08);--d-card-border:rgba(79,224,208,.32);--d-event-color:#7fe8ff;--d-line:rgba(79,224,208,.28);--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  .card[data-theme-name="purple"]{--d-bg:radial-gradient(circle at 50% 0%,#241041,#120726);--d-text:#efe7fb;--d-muted:#b7a6d6;--d-accent:#e7c072;--d-accent2:#c3a6ff;--d-clock:#f4eeff;--d-glow:rgba(195,166,255,.3);--d-secbar:linear-gradient(90deg,#e7c072,#9a6cff);--d-card-bg:rgba(255,255,255,.06);--d-card-border:rgba(195,166,255,.35);--d-event-color:#c3a6ff;--d-line:rgba(195,166,255,.3);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  .card[data-theme-name="charcoal"]{--d-bg:radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013);--d-text:#eceef2;--d-muted:#9aa0ab;--d-accent:#6aa0ff;--d-accent2:#9ab6ff;--d-clock:#f2f4f8;--d-glow:rgba(106,160,255,.22);--d-secbar:linear-gradient(90deg,#6aa0ff,#aab2bd);--d-card-bg:rgba(255,255,255,.05);--d-card-border:#2b303a;--d-event-color:#9ab6ff;--d-line:#2b303a;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  .card[data-theme-name="cream"]{--d-bg:#f3ecdd;--d-text:#3a2f1e;--d-muted:#8a7a5c;--d-accent:#915e2a;--d-accent2:#2f6d4a;--d-clock:#2e2516;--d-glow:transparent;--d-secbar:linear-gradient(90deg,#915e2a,#2f6d4a);--d-card-bg:#fff8ec;--d-card-border:#e3d8c0;--d-event-color:#915e2a;--d-line:#e3d8c0;--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  .card[data-theme-name="bronze"]{--d-bg:radial-gradient(circle at 50% 0%,#241a10,#120c06);--d-text:#f0e4cf;--d-muted:#bda886;--d-accent:#cf9a4e;--d-accent2:#e8c98a;--d-clock:#f6ecd6;--d-glow:rgba(207,154,78,.25);--d-secbar:linear-gradient(90deg,#cf9a4e,#8a6a3a);--d-card-bg:rgba(207,154,78,.08);--d-card-border:rgba(207,154,78,.32);--d-event-color:#e8c98a;--d-line:rgba(207,154,78,.28);--d-font:"Heebo",sans-serif;--d-font-disp:"Bellefair","Frank Ruhl Libre",serif;}
+</style>
+</head>
+<body>
+  <h1>כל סוגי המסכים</h1>
+  <p class="sub" id="sub">—</p>
+  <div class="toolbar">
+    <button data-f="all" class="on">הכל</button>
+    <button data-f="named">מעוצבים</button>
+    <button data-f="dark">כהים</button>
+    <button data-f="light">בהירים</button>
+  </div>
+  <div class="grid" id="grid"></div>
+<script>
+  var THEMES=[{k:"night",n:"לילה כחול",bg:"linear-gradient(135deg,#17244d,#0a0f1e)",fg:"#e7c072"},{k:"apple",n:"אפל בהיר",bg:"#eceef3",fg:"#0a84ff"},{k:"sunrise",n:"זריחה",bg:"linear-gradient(135deg,#ff9a5a,#ff6a88)",fg:"#fff"},{k:"emerald",n:"אזמרגד",bg:"linear-gradient(160deg,#134a37,#0a2a20)",fg:"#dcbd6c"},{k:"gold",n:"זהב",bg:"radial-gradient(circle at 50% 0%,#17120a,#0a0806)",fg:"#d4af37"},{k:"contrast",n:"ניגודיות",bg:"#000",fg:"#ffe100"},{k:"glass",n:"זכוכית",bg:"linear-gradient(135deg,#7a50ff,#00c8ff)",fg:"#fff"},{k:"neon",n:"ניאון",bg:"radial-gradient(circle,#13131f,#05050a)",fg:"#2ee6ff"},{k:"royal",n:"כחול חב״ד",bg:"linear-gradient(160deg,#14408f,#0d2a63)",fg:"#ecc978"},{k:"blueprint",n:"שרטוט",bg:"#0a2744",fg:"#7fd0ff"},{k:"parchment",n:"קלף",bg:"linear-gradient(135deg,#f6ecd2,#ecdcb8)",fg:"#7d2436"},{k:"minimal",n:"מינימל",bg:"#050505",fg:"#f5a623"},{k:"wine",n:"בורדו",bg:"linear-gradient(160deg,#3a0e1a,#150406)",fg:"#e7c072"},{k:"ocean",n:"ים",bg:"linear-gradient(160deg,#07323a,#041a20)",fg:"#4fe0d0"},{k:"purple",n:"סגול מלכותי",bg:"radial-gradient(circle at 50% 0%,#241041,#120726)",fg:"#c3a6ff"},{k:"charcoal",n:"פחם",bg:"radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013)",fg:"#6aa0ff"},{k:"cream",n:"קרם",bg:"#f3ecdd",fg:"#915e2a"},{k:"bronze",n:"ברונזה",bg:"radial-gradient(circle at 50% 0%,#241a10,#120c06)",fg:"#cf9a4e"}];
+  var NAMED_COUNT=THEMES.length;
+  var GENMAP={};
+  /* GEN-THEMES-START (shared with gallery כל-הרקעים.html) */
+  function hslc(h,s,l){h=((h%360)+360)%360;return "hsl("+h+","+s+"%,"+l+"%)";}
+  function hsla(h,s,l,a){h=((h%360)+360)%360;return "hsla("+h+","+s+"%,"+l+"%,"+a+")";}
+  function hueName(h){h=((h%360)+360)%360;var n=[[14,"אדום"],[32,"כתום"],[48,"ענבר"],[65,"זהב"],[85,"ליים"],[140,"ירוק"],[165,"טורקיז"],[190,"תכלת"],[215,"כחול"],[245,"כחול עז"],[272,"אינדיגו"],[300,"סגול"],[325,"ורוד"],[345,"מג׳נטה"],[360,"אדום"]];for(var i=0;i<n.length;i++)if(h<=n[i][0])return n[i][1];return "צבע";}
+  var SERIF='"Frank Ruhl Libre",serif',MODERN='"Rubik","Heebo",sans-serif',SANS='"Heebo",sans-serif';
+  var HUES10=[215,255,290,325,10,40,100,150,180,235];
+  var GENSTYLES=[
+   {sn:"זוהר",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(42% 55% at 18% 20%,"+hsla(h,85,60,.55)+",transparent 70%),radial-gradient(45% 55% at 85% 22%,"+hsla(h+140,80,55,.5)+",transparent 72%),radial-gradient(62% 66% at 55% 110%,"+hsla(h+280,85,62,.55)+",transparent 68%),#070a16","--d-text":"#f3f5ff","--d-muted":hsla(h,25,85,.85),"--d-accent":hslc(h+140,85,82),"--d-accent2":hslc(h+280,85,82),"--d-clock":"#ffffff","--d-glow":hsla(h,85,65,.4),"--d-secbar":"linear-gradient(90deg,"+hslc(h+140,85,75)+","+hslc(h+280,85,78)+")","--d-card-bg":"rgba(255,255,255,.08)","--d-card-border":"rgba(255,255,255,.2)","--d-event-color":hslc(h+280,85,85),"--d-line":"rgba(255,255,255,.16)","--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"שקיעה",pal:HUES10,f:function(h){return {"--d-bg":"linear-gradient(145deg,"+hslc(h,92,64)+" 0%,"+hslc(h+22,88,58)+" 46%,"+hslc(h+46,92,66)+" 100%)","--d-text":"#ffffff","--d-muted":"rgba(255,255,255,.9)","--d-accent":"#ffffff","--d-accent2":"#fff4e6","--d-clock":"#ffffff","--d-glow":hsla(h,60,40,.4),"--d-secbar":"rgba(255,255,255,.9)","--d-card-bg":"rgba(255,255,255,.18)","--d-card-border":"rgba(255,255,255,.4)","--d-event-color":"#ffffff","--d-line":"rgba(255,255,255,.35)","--d-font":MODERN,"--d-font-disp":MODERN};}},
+   {sn:"רשת צבע",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(42% 52% at 0% 0%,"+hsla(h,70,45,.6)+",transparent 60%),radial-gradient(46% 56% at 100% 0%,"+hsla(h+80,65,45,.55)+",transparent 60%),radial-gradient(46% 56% at 0% 100%,"+hsla(h+180,65,42,.55)+",transparent 60%),radial-gradient(52% 56% at 100% 100%,"+hsla(h+260,70,45,.6)+",transparent 60%),#0a0c14","--d-text":"#eef1fb","--d-muted":"rgba(255,255,255,.78)","--d-accent":hslc(h+80,75,80),"--d-accent2":hslc(h+260,75,80),"--d-clock":"#ffffff","--d-glow":hsla(h+80,70,60,.3),"--d-secbar":"linear-gradient(90deg,"+hslc(h,75,65)+","+hslc(h+260,75,70)+")","--d-card-bg":"rgba(255,255,255,.07)","--d-card-border":"rgba(255,255,255,.2)","--d-event-color":hslc(h+80,75,82),"--d-line":"rgba(255,255,255,.16)","--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"ניאון",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(circle at 50% 38%,"+hslc(h,30,12)+","+hslc(h,45,5)+")","--d-text":hslc(h,30,92),"--d-muted":hslc(h,22,66),"--d-accent":hslc(h,95,62),"--d-accent2":hslc(h+40,95,66),"--d-clock":hslc(h,95,72),"--d-glow":hsla(h,95,60,.55),"--d-secbar":"linear-gradient(90deg,"+hslc(h,95,60)+","+hslc(h+40,95,64)+")","--d-card-bg":hsla(h,80,50,.08),"--d-card-border":hsla(h,90,55,.45),"--d-event-color":hslc(h+40,95,70),"--d-line":hsla(h,60,50,.25),"--d-font":MODERN,"--d-font-disp":MODERN};}},
+   {sn:"עומק",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(120% 90% at 50% -10%,"+hsla(h,55,28,.9)+",transparent 55%),linear-gradient(160deg,"+hslc(h,50,12)+","+hslc(h,62,5)+")","--d-text":hslc(h,20,92),"--d-muted":hslc(h,18,66),"--d-accent":hslc(h+35,78,70),"--d-accent2":hslc(h,55,60),"--d-clock":"#f4f1ea","--d-glow":hsla(h+35,70,55,.25),"--d-secbar":"linear-gradient(90deg,"+hslc(h+35,78,64)+","+hslc(h,55,52)+")","--d-card-bg":hsla(h,45,55,.08),"--d-card-border":hsla(h,50,55,.3),"--d-event-color":hslc(h+35,78,74),"--d-line":hsla(h,40,50,.25),"--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"שרטוט",pal:HUES10,f:function(h){return {"--d-bg":"repeating-linear-gradient(0deg,transparent 0 37px,"+hsla(h,60,60,.09)+" 37px 38px),repeating-linear-gradient(90deg,transparent 0 37px,"+hsla(h,60,60,.09)+" 37px 38px),radial-gradient(120% 100% at 50% 0%,"+hslc(h,45,16)+","+hslc(h,58,8)+")","--d-text":hslc(h,22,92),"--d-muted":hslc(h,18,64),"--d-accent":hslc(h,80,74),"--d-accent2":hslc(h,70,66),"--d-clock":hslc(h,25,96),"--d-glow":hsla(h,70,55,.22),"--d-secbar":"linear-gradient(90deg,"+hslc(h,80,66)+","+hslc(h,60,58)+")","--d-card-bg":hsla(h,50,40,.4),"--d-card-border":hsla(h,70,60,.4),"--d-event-color":hslc(h,80,76),"--d-line":hsla(h,60,55,.28),"--d-font":SANS,"--d-font-disp":SANS};}},
+   {sn:"נקודות",pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient("+hsla(h,70,65,.16)+" 1.6px,transparent 1.7px) 0 0/22px 22px,linear-gradient(160deg,"+hslc(h,45,14)+","+hslc(h,58,7)+")","--d-text":hslc(h,20,93),"--d-muted":hslc(h,16,64),"--d-accent":hslc(h+30,80,74),"--d-accent2":hslc(h,70,68),"--d-clock":"#ffffff","--d-glow":hsla(h,70,55,.25),"--d-secbar":"linear-gradient(90deg,"+hslc(h+30,80,66)+","+hslc(h,65,60)+")","--d-card-bg":hsla(h,45,50,.08),"--d-card-border":hsla(h,55,55,.32),"--d-event-color":hslc(h+30,80,76),"--d-line":hsla(h,45,50,.24),"--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"מניפה",pal:HUES10,f:function(h){return {"--d-bg":"conic-gradient(from 210deg at 50% 118%,"+hslc(h,55,18)+","+hslc(h+40,55,12)+","+hslc(h+320,55,16)+","+hslc(h,55,18)+")","--d-text":hslc(h,22,93),"--d-muted":hslc(h,18,66),"--d-accent":hslc(h+40,80,76),"--d-accent2":hslc(h+320,75,76),"--d-clock":"#ffffff","--d-glow":hsla(h+40,70,58,.26),"--d-secbar":"linear-gradient(90deg,"+hslc(h+40,80,66)+","+hslc(h+320,75,68)+")","--d-card-bg":"rgba(255,255,255,.06)","--d-card-border":"rgba(255,255,255,.2)","--d-event-color":hslc(h+320,75,80),"--d-line":"rgba(255,255,255,.16)","--d-font":SANS,"--d-font-disp":SERIF};}},
+   {sn:"דו-גוון",pal:HUES10,f:function(h){return {"--d-bg":"linear-gradient(125deg,"+hslc(h,72,44)+" 0%,"+hslc(h,72,42)+" 42%,"+hslc(h+210,66,34)+" 100%)","--d-text":"#ffffff","--d-muted":"rgba(255,255,255,.85)","--d-accent":"#ffffff","--d-accent2":"#ffffff","--d-clock":"#ffffff","--d-glow":hsla(h,60,35,.35),"--d-secbar":"rgba(255,255,255,.85)","--d-card-bg":"rgba(255,255,255,.14)","--d-card-border":"rgba(255,255,255,.35)","--d-event-color":"#ffffff","--d-line":"rgba(255,255,255,.3)","--d-font":MODERN,"--d-font-disp":MODERN};}},
+   {sn:"פסטל",light:true,pal:HUES10,f:function(h){return {"--d-bg":"radial-gradient(46% 56% at 15% 20%,"+hsla(h,80,86,.85)+",transparent 60%),radial-gradient(46% 56% at 86% 24%,"+hsla(h+90,80,86,.8)+",transparent 60%),radial-gradient(56% 60% at 55% 102%,"+hsla(h+200,80,88,.85)+",transparent 60%),#f6f7fb","--d-text":hslc(h,30,22),"--d-muted":hslc(h,18,46),"--d-accent":hslc(h+200,60,42),"--d-accent2":hslc(h+90,55,42),"--d-clock":hslc(h,30,18),"--d-glow":"transparent","--d-secbar":"linear-gradient(90deg,"+hslc(h+200,60,52)+","+hslc(h+90,55,52)+")","--d-card-bg":"rgba(255,255,255,.7)","--d-card-border":hslc(h,25,85),"--d-event-color":hslc(h+200,60,42),"--d-line":hslc(h,25,86),"--d-font":SANS,"--d-font-disp":SERIF};}}
+  ];
+  (function(){var gi=0;GENSTYLES.forEach(function(st){st.pal.forEach(function(h){var k="g"+gi;gi++;var v=st.f(h);GENMAP[k]=v;THEMES.push({k:k,n:st.sn+" · "+hueName(h),bg:v["--d-bg"],fg:v["--d-accent"]});});});})();
+  /* GEN-THEMES-END */
+  // which generated keys are light (by style)
+  var LIGHT_NAMED={apple:1,sunrise:1,glass:1,parchment:1,cream:1};
+  var LIGHT_GEN={};
+  (function(){var gi=0;GENSTYLES.forEach(function(st){st.pal.forEach(function(){if(st.light)LIGHT_GEN["g"+gi]=1;gi++;});});})();
+  document.getElementById('sub').textContent=THEMES.length+' רקעים — '+NAMED_COUNT+' מעוצבים לבחירה + '+(THEMES.length-NAMED_COUNT)+' אוטומטיים · כך ייראה המסך בכל אחד';
+
+  var grid=document.getElementById('grid');
+  function isLight(t){return !!(GENMAP[t.k]?LIGHT_GEN[t.k]:LIGHT_NAMED[t.k]);}
+  function miniHTML(){return '<div class="mini"><div class="m-top"><div><div class="m-dow">יום רביעי</div><div class="m-hd">י״ז בחשוון תשפ״ז</div></div><div class="m-bsd">בס״ד</div></div><div class="m-clock">21:45</div><div class="m-bar"></div><div class="m-ev">כיבוי אורות · בעוד 15 דק׳</div><div class="m-msg">ברוכים הבאים לקומה</div></div>';}
+  function render(filter){
+    grid.innerHTML='';
+    THEMES.forEach(function(t,idx){
+      var gen=!!GENMAP[t.k];
+      if(filter==='named'&&gen)return;
+      if(filter==='dark'&&isLight(t))return;
+      if(filter==='light'&&!isLight(t))return;
+      var item=document.createElement('div');item.className='item';
+      var card=document.createElement('div');card.className='card';
+      if(gen){var v=GENMAP[t.k];for(var key in v)card.style.setProperty(key,v[key]);}
+      else card.setAttribute('data-theme-name',t.k);
+      card.innerHTML=miniHTML();
+      var lab=document.createElement('div');lab.className='label';lab.textContent=t.n;
+      item.appendChild(card);item.appendChild(lab);grid.appendChild(item);
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.toolbar button'),function(b){
+    b.addEventListener('click',function(){
+      Array.prototype.forEach.call(document.querySelectorAll('.toolbar button'),function(x){x.classList.remove('on');});
+      b.classList.add('on');render(b.getAttribute('data-f'));
+    });
+  });
+  render('all');
+</script>
+</body>
+</html>
