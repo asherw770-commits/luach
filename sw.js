@@ -1,6 +1,6 @@
 /* לוח הקומה — Service Worker: מאפשר ללוח לעבוד גם בלי אינטרנט (תצוגה, תאריכים, זמנים, היום יום).
    השעון/התאריך/הזמנים/היום יום מחושבים במכשיר, וכל נתוני היום-יום נמצאים ב-hayomyom.js — הכל נשמר במטמון. */
-var CACHE = "luach-v6";
+var CACHE = "luach-v7";
 var CORE = [
   "./",
   "index.html",
@@ -31,18 +31,18 @@ self.addEventListener("fetch", function(e){
   // מדיה שהועלתה ל-Cloudinary — לשמור במטמון כדי שתוצג גם בלי אינטרנט
   var isMedia = (url.hostname.indexOf("res.cloudinary.com") >= 0);
   if(!(isApp || isFont || isFbSdk || isMedia)) return; // שאר הדברים — רשת כרגיל
-  if(isApp){
-    // קבצי האפליקציה: רשת-תחילה (עדכון מיידי כשיש אינטרנט), ונפילה למטמון כשאין אינטרנט
+  if(isApp || isMedia){
+    // קבצי האפליקציה + מדיה מ-Cloudinary: רשת-תחילה (תמיד טרי כשיש אינטרנט, נפילה למטמון כשאין) — שלא ייתקע על מטמון שבור
     e.respondWith(
       fetch(req).then(function(res){
-        if(res && res.status === 200){ var copy = res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy).catch(function(){}); }); }
+        if(res && (res.status === 200 || res.type === "opaque")){ var copy = res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy).catch(function(){}); }); }
         return res;
       }).catch(function(){
-        return caches.match(req).then(function(m){ return m || caches.match("index.html"); });
+        return caches.match(req).then(function(m){ return m || (isApp ? caches.match("index.html") : m); });
       })
     );
   } else {
-    // גופנים + SDK + מדיה מ-Storage: מטמון-תחילה (כמעט לא משתנים)
+    // גופנים + SDK: מטמון-תחילה (כמעט לא משתנים)
     e.respondWith(
       caches.match(req).then(function(cached){
         return cached || fetch(req).then(function(res){
