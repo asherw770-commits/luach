@@ -528,13 +528,14 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
   }
   function listUpcoming(n){var out=[],base=new Date();base.setHours(12,0,0,0);for(var i=0;i<400&&out.length<n;i++){var d=new Date(base);d.setDate(d.getDate()+i);var evs=dayEvents(d);for(var j=0;j<evs.length&&out.length<n;j++)out.push({days:i,date:hebrewDate(d),cd:evs[j]});}return out;}
   function renderUpcoming(){var box=document.getElementById("upcoming");if(!box)return;var up=listUpcoming(6);if(!up.length){box.innerHTML='<div class="c-empty">אין אירועים קרובים ברשימה.</div>';return;}var f=up[0],when=f.days===0?"היום":("בעוד "+f.days+" ימים");var html='<div class="up-card'+(f.cd.p?" has-photo":"")+'">';if(f.cd.p)html+='<img class="up-photo" src="'+f.cd.p+'" alt="" onerror="this.style.display=\'none\'">';html+='<div class="up-body"><div class="up-when">הקרוב · '+when+' · '+f.date+'</div><div class="up-title">'+f.cd.t+'</div><div class="up-story">'+f.cd.s+'</div></div></div>';for(var i=1;i<up.length;i++){var w=up[i].days===0?"היום":("בעוד "+up[i].days+" ימים");html+='<div class="up-row"><span class="up-rtitle">'+up[i].cd.t+'</span><span class="up-rwhen">'+w+'</span></div>';}box.innerHTML=html;}
+  /* תמונות הרבי — מתארחות בתוך ה-GitHub של הלוח (עוברות סינון אינטרנט, בניגוד לשרת חיצוני) */
   var SHABBAT_PHOTOS=[
-    "https://static.wixstatic.com/media/622c32_44af8d12a54f42659865e916effce207~mv2_d_3519_2371_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
-    "https://static.wixstatic.com/media/622c32_b667863f2f6c4a1faf9301b5f5e6d56a~mv2_d_3497_2359_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
-    "https://static.wixstatic.com/media/622c32_86f3263cf1e94e93bed4299ee950dc67~mv2_d_3510_2348_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
-    "https://static.wixstatic.com/media/622c32_7166479057e74a7f9fc65ccc34e4cd46~mv2_d_2700_1817_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
-    "https://static.wixstatic.com/media/622c32_ad8dc175ae1849fd9db182397768c3c1~mv2_d_3088_2048_s_2.jpg/v1/fit/w_1600,h_1200,q_90/img.jpg",
-    "https://static.wixstatic.com/media/622c32_4cff3ae86fba487a91aa803164cb66dd~mv2_d_2095_1590_s_2.png/v1/fit/w_1600,h_1200,q_90/img.png"
+    "photos/rebbe-1.jpg",
+    "photos/rebbe-2.jpg",
+    "photos/rebbe-3.jpg",
+    "photos/rebbe-4.jpg",
+    "photos/rebbe-5.jpg",
+    "photos/rebbe-6.jpg"
   ];
   var shActive=false,shTimer=null,shIdx=0;
   /* תמונות הרבי (RebbeDrive) לפאנל היומי — אותן תמונות איכותיות של מסך שבת */
