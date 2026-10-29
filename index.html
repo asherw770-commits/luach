@@ -36,7 +36,8 @@
   .display.dimmed{filter:brightness(calc(var(--disp-bright,1)*.42)) saturate(.9);}
   .screenoff{position:absolute;inset:0;background:#000;z-index:60;display:none;cursor:pointer;}
   .screenoff.on{display:block;}
-  .rebbe-panel{flex:none;width:min(42vmin,520px);aspect-ratio:3/2;border-radius:16px;overflow:hidden;border:3px solid var(--d-card-border);box-shadow:0 14px 48px rgba(0,0,0,.55);background:#05070f;}
+  .rebbe-panel{flex:none;width:min(62vmin,780px);max-height:56vh;aspect-ratio:3/2;border-radius:16px;overflow:hidden;border:3px solid var(--d-card-border);box-shadow:0 16px 54px rgba(0,0,0,.6);background:#05070f;}
+  .display.rebbe-panel-on>.clock-wrap{justify-content:flex-start;}
   .rebbe-panel img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;}
   .rebbe-bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#05070f;}
   .rebbe-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;}
@@ -633,6 +634,7 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     if(_pEl){if(_rbm==="panel"&&_rbu){if(_pImg.getAttribute("data-u")!==_rbu){_pImg.src=_rbu;_pImg.setAttribute("data-u",_rbu);}_pEl.hidden=false;}else _pEl.hidden=true;}
     if(_bEl){if(_rbm==="background"&&_rbu){if(_bImg.getAttribute("data-u")!==_rbu){_bImg.src=_rbu;_bImg.setAttribute("data-u",_rbu);}_bEl.hidden=false;}else _bEl.hidden=true;}
     elDisplay.classList.toggle("rebbe-bg-on",_rbm==="background"&&!!_rbu);
+    elDisplay.classList.toggle("rebbe-panel-on",_rbm==="panel"&&!!_rbu);
     var h=now.getHours()+now.getMinutes()/60,loD=parseHM(loForDim()),dim=false;
     if(config.nightDim&&loD&&!onShab){var loH=loD.h+loD.m/60;dim=(h>=loH)||(h<DIM_END_H);}
     elDisplay.classList.toggle("dimmed",dim);applyBrightness();
