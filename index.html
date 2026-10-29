@@ -253,6 +253,13 @@
         <div id="mediaProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
         <div id="adminMedia"></div>
       </div></div>
+      <div class="c-section"><div class="c-hdr">📹 סרטון יומי מתוזמן</div><div class="c-group">
+        <div class="c-row"><span class="lbl">הפעלה<small>מתנגן אוטומטית פעם ביום, ואז חוזר ללוח</small></span><label class="sw"><input type="checkbox" id="dailyEnabled"><span class="track"></span><span class="knob"></span></label></div>
+        <div class="c-row"><span class="lbl">שעת ניגון<small>30 דק׳ לפני כיבוי אורות (זז עם השעה)</small></span><span class="val"><b id="dailyTimeShow">—</b></span></div>
+        <div class="addwrap"><label class="c-btn" for="dailyFile" style="cursor:pointer;text-align:center;display:block">⬆️ העלאת סרטון היום (עד 7 דק׳)</label><input id="dailyFile" type="file" accept="video/*" hidden></div>
+        <div id="dailyProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
+        <div id="dailyCurrent"></div>
+      </div></div>
       <div class="c-section"><div class="c-hdr">🌙 כיבוי אורות</div><div class="c-group">
         <div class="c-row"><span class="lbl">הלילה<small>ברירת מחדל <b id="loDefault">22:00</b> · מתאפס מחר</small></span><input id="loTime" type="time"></div>
         <div class="chips"><button data-lo="22:00">22:00</button><button data-lo="22:15">22:15</button><button data-lo="22:40">22:40</button><button data-lo="23:15">23:15</button><button id="loReset" class="ghost">↺ ברירת מחדל</button></div>
@@ -327,11 +334,11 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
 <script>
 (function(){
   "use strict";
-  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60,dailyVidEnabled:false,dailyVidTime:"20:00",dailyVidUrl:"",dailyVidName:""};
+  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60,dailyVidEnabled:false,dailyVidOffsetMin:30,dailyVidUrl:"",dailyVidName:""};
   var THEMES=[{k:"night",n:"לילה כחול",bg:"linear-gradient(135deg,#17244d,#0a0f1e)",fg:"#e7c072"},{k:"apple",n:"אפל בהיר",bg:"#eceef3",fg:"#0a84ff"},{k:"sunrise",n:"זריחה",bg:"linear-gradient(135deg,#ff9a5a,#ff6a88)",fg:"#fff"},{k:"emerald",n:"אזמרגד",bg:"linear-gradient(160deg,#134a37,#0a2a20)",fg:"#dcbd6c"},{k:"gold",n:"זהב",bg:"radial-gradient(circle at 50% 0%,#17120a,#0a0806)",fg:"#d4af37"},{k:"contrast",n:"ניגודיות",bg:"#000",fg:"#ffe100"},{k:"glass",n:"זכוכית",bg:"linear-gradient(135deg,#7a50ff,#00c8ff)",fg:"#fff"},{k:"neon",n:"ניאון",bg:"radial-gradient(circle,#13131f,#05050a)",fg:"#2ee6ff"},{k:"royal",n:"כחול חב״ד",bg:"linear-gradient(160deg,#14408f,#0d2a63)",fg:"#ecc978"},{k:"blueprint",n:"שרטוט",bg:"#0a2744",fg:"#7fd0ff"},{k:"parchment",n:"קלף",bg:"linear-gradient(135deg,#f6ecd2,#ecdcb8)",fg:"#7d2436"},{k:"minimal",n:"מינימל",bg:"#050505",fg:"#f5a623"},{k:"wine",n:"בורדו",bg:"linear-gradient(160deg,#3a0e1a,#150406)",fg:"#e7c072"},{k:"ocean",n:"ים",bg:"linear-gradient(160deg,#07323a,#041a20)",fg:"#4fe0d0"},{k:"purple",n:"סגול מלכותי",bg:"radial-gradient(circle at 50% 0%,#241041,#120726)",fg:"#c3a6ff"},{k:"charcoal",n:"פחם",bg:"radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013)",fg:"#6aa0ff"},{k:"cream",n:"קרם",bg:"#f3ecdd",fg:"#915e2a"},{k:"bronze",n:"ברונזה",bg:"radial-gradient(circle at 50% 0%,#241a10,#120c06)",fg:"#cf9a4e"}];
   var PHONE_LEAD_MIN=10,LO_INFO_FROM_H=21,LO_LEAD_MIN=15,GOODNIGHT_MIN=20,LAT=32.0807,LON=34.8338,DIM_END_H=6.5;
   var config=Object.assign({},DEFAULTS),messages=[],store=null;
-  var mediaList=[],mediaU=0;
+  var mediaList=[],mediaU=0,dailyPlaying=false,dailyPlayedKey=null;
   var mode=(location.hash==="#admin"||location.hash==="#manage")?"manage":"display";
   var isPreview=/[?&]preview=1/.test(location.search); // רץ כ-iframe בתוך התצוגה המקדימה
   var startDay=(new Date()).toDateString();
@@ -507,7 +514,7 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
   function activeMessages(){var now=Date.now();return messages.filter(function(m){return !m.expiresAt||now<=m.expiresAt;});}
   var lastScreen=null,msgsU=0,serverSkew=0;
   function nowSync(){return Date.now()+serverSkew;}
-  function loadCache(){try{var sk=localStorage.getItem("board_skew");if(sk!=null)serverSkew=parseInt(sk,10)||0;var c=localStorage.getItem("board_config");if(c)config=Object.assign({},DEFAULTS,JSON.parse(c));var mm=localStorage.getItem("board_msgs");if(mm){var o=JSON.parse(mm);if(o){msgsU=o.u||0;if(o.list&&o.list.length)messages=o.list;}}else{var m=localStorage.getItem("board_messages");if(m){var arr=JSON.parse(m);if(arr&&arr.length)messages=arr;}}var md=localStorage.getItem("board_media");if(md){var mo=JSON.parse(md);if(mo){mediaU=mo.u||0;if(mo.list&&mo.list.length)mediaList=mo.list;}}}catch(e){}}
+  function loadCache(){try{var sk=localStorage.getItem("board_skew");if(sk!=null)serverSkew=parseInt(sk,10)||0;var c=localStorage.getItem("board_config");if(c)config=Object.assign({},DEFAULTS,JSON.parse(c));var mm=localStorage.getItem("board_msgs");if(mm){var o=JSON.parse(mm);if(o){msgsU=o.u||0;if(o.list&&o.list.length)messages=o.list;}}else{var m=localStorage.getItem("board_messages");if(m){var arr=JSON.parse(m);if(arr&&arr.length)messages=arr;}}var md=localStorage.getItem("board_media");if(md){var mo=JSON.parse(md);if(mo){mediaU=mo.u||0;if(mo.list&&mo.list.length)mediaList=mo.list;}}var dp=localStorage.getItem("board_dailyvid_played");if(dp)dailyPlayedKey=dp;}catch(e){}}
   function saveCache(){try{localStorage.setItem("board_config",JSON.stringify(config));localStorage.setItem("board_msgs",JSON.stringify({u:msgsU,list:messages}));localStorage.setItem("board_media",JSON.stringify({u:mediaU,list:mediaList}));}catch(e){}}
   function sortMsgs(){messages.sort(function(a,b){return (a.createdAt||0)-(b.createdAt||0);});}
   function fmtClock(ts){try{var d=new Date(ts);return d.getHours()+":"+pad2(d.getMinutes());}catch(e){return"";}}
@@ -601,7 +608,8 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
     if(config.nightDim&&loD&&!onShab){var loH=loD.h+loD.m/60;dim=(h>=loH)||(h<DIM_END_H);}
     elDisplay.classList.toggle("dimmed",dim);applyBrightness();
     var scEl=document.getElementById("screenOff");if(scEl)scEl.classList.toggle("on",screenOffNow(now));
-    syncMedia(now);
+    if(maybeDaily(now)){var _dmc=document.getElementById("mediaClock");if(_dmc)_dmc.textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());}
+    else syncMedia(now);
     var mm=now.getMinutes();if(mm!==lastDriftMin){lastDriftMin=mm;driftI=(driftI+1)%driftPos.length;var p=driftPos[driftI];elDisplay.style.transform="translate("+p[0]+"px,"+p[1]+"px)";}
     if(now.getHours()===4&&now.getMinutes()===0&&now.toDateString()!==startDay)location.reload();
   }
@@ -645,6 +653,30 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
     if(!mediaActive||key!==mediaCurKey){mediaCurKey=key;if(mediaActive){clearMediaTimer();}startMedia();}
     var mc=$("mediaClock");if(mc)mc.textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());
   }
+  /* ===== סרטון יומי מתוזמן (30 דק' לפני כיבוי אורות) ===== */
+  function dailyVidMinute(){var t=parseHM(loForDim());if(!t)return null;var off=(config.dailyVidOffsetMin==null?30:config.dailyVidOffsetMin);var tot=t.h*60+t.m-off;while(tot<0)tot+=1440;return tot%1440;}
+  function dailyVidTimeStr(){var m=dailyVidMinute();return m==null?"":pad2(Math.floor(m/60))+":"+pad2(m%60);}
+  function maybeDaily(now){
+    if(!(config.dailyVidEnabled&&config.dailyVidUrl))return false;
+    if(config.shabbatMode&&isShabbat(now))return false;
+    if(screenOffNow(now))return false;
+    if(dailyPlaying)return true;
+    var startM=dailyVidMinute();if(startM==null)return false;
+    var curM=now.getHours()*60+now.getMinutes(),tkey=todayKey();
+    if(dailyPlayedKey===tkey)return false;
+    if(curM>=startM&&curM<startM+4){startDaily(tkey);return true;}
+    return false;
+  }
+  function startDaily(tkey){
+    var ms=$("mediaShow"),st=$("mediaStage");if(!ms||!st)return;
+    dailyPlaying=true;if(mediaActive)stopMedia();
+    ms.classList.add("on");st.innerHTML="";clearMediaTimer();
+    var v=document.createElement("video");v.src=config.dailyVidUrl;v.autoplay=true;v.playsInline=true;v.setAttribute("playsinline","");v.controls=false;v.preload="auto";
+    v.onended=function(){endDaily(tkey);};v.onerror=function(){endDaily(tkey);};
+    st.appendChild(v);
+    var p=v.play();if(p&&p.catch)p.catch(function(){v.muted=true;v.play().catch(function(){endDaily(tkey);});});
+  }
+  function endDaily(tkey){dailyPlaying=false;if(tkey){dailyPlayedKey=tkey;try{localStorage.setItem("board_dailyvid_played",tkey);}catch(e){}}var ms=$("mediaShow"),st=$("mediaStage");if(st)st.innerHTML="";if(ms)ms.classList.remove("on");mediaCurKey="";}
   function updateMediaUI(){var mm=config.mediaMode||"off";var mc=$("mediaModeChips");if(mc)Array.prototype.forEach.call(mc.children,function(b){b.classList.toggle("on",b.getAttribute("data-mm")===mm);});var dv=config.mediaDwell||8;var dc=$("mediaDwellChips");if(dc)Array.prototype.forEach.call(dc.children,function(b){b.classList.toggle("on",(+b.getAttribute("data-dw"))===dv);});var dvl=$("mediaDwellVal");if(dvl)dvl.textContent=dv;}
   function renderAdminMedia(){
     var box=$("adminMedia");if(!box)return;updateMediaUI();box.innerHTML="";
@@ -661,6 +693,24 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
       row.appendChild(mkBtn("🗑",function(){removeMedia(i);},"#e5484d"));
       box.appendChild(row);
     });
+  }
+  function renderDailyUI(){
+    var ts=$("dailyTimeShow");if(ts)ts.textContent=dailyVidTimeStr()||"—";
+    var box=$("dailyCurrent");if(!box)return;box.innerHTML="";
+    if(config.dailyVidUrl){
+      var nm=document.createElement("div");nm.style.cssText="font-size:13px;padding:6px 2px";nm.textContent="🎬 "+(config.dailyVidName||"סרטון היום");box.appendChild(nm);
+      var v=document.createElement("video");v.src=config.dailyVidUrl;v.controls=true;v.preload="metadata";v.style.cssText="width:100%;max-height:170px;border-radius:10px;background:#000";box.appendChild(v);
+      var rm=document.createElement("button");rm.className="ghost";rm.textContent="🗑 הסר סרטון";rm.style.cssText="margin-top:6px;color:#e5484d";rm.addEventListener("click",function(){if(!confirm("להסיר את הסרטון היומי?"))return;config.dailyVidUrl="";config.dailyVidName="";saveConfig().then(function(){toast("הוסר ✓");});renderDailyUI();});box.appendChild(rm);
+    }else box.innerHTML='<div style="opacity:.6;font-size:13px;padding:6px 2px">עדיין לא הועלה סרטון. העלה את סרטון היום למעלה.</div>';
+  }
+  function uploadDaily(file){
+    if(!file)return;
+    if(!/^video\//.test(file.type)){alert("יש לבחור קובץ וידאו.");return;}
+    if(!cloudinaryOn()){alert("צריך לחבר את Cloudinary (חינם) כדי להעלות סרטונים. ראה את הוראות ההפעלה.");return;}
+    var prog=$("dailyProgress");if(prog){prog.hidden=false;prog.textContent="מעלה 0%…";}
+    cloudUpload(file,function(p){if(prog)prog.textContent="מעלה "+p+"%…";},
+      function(url){config.dailyVidUrl=url;config.dailyVidName=file.name||"";dailyPlayedKey=null;try{localStorage.removeItem("board_dailyvid_played");}catch(e){}saveConfig().then(function(){toast("הסרטון היומי עודכן ✓");});if(prog){prog.textContent="הועלה ✓";setTimeout(function(){prog.hidden=true;},2200);}renderDailyUI();},
+      function(msg){if(prog)prog.textContent="שגיאה: "+(msg||"העלאה נכשלה");});
   }
   function moveMedia(i,d){var j=i+d;if(j<0||j>=mediaList.length)return;var t=mediaList[i];mediaList[i]=mediaList[j];mediaList[j]=t;saveMedia();toast("הסדר עודכן ✓");}
   function removeMedia(i){var it=mediaList[i];if(!it)return;if(!confirm("למחוק את \""+(it.name||"הקובץ")+"\"?"))return;mediaList.splice(i,1);saveMedia();toast("נמחק ✓");}
@@ -741,7 +791,9 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
     Array.prototype.forEach.call(document.querySelectorAll("#mediaModeChips [data-mm]"),function(b){b.addEventListener("click",function(){config.mediaMode=b.getAttribute("data-mm");updateMediaUI();saveConfig().then(function(){toast("מדיה: "+({off:"כבוי",single:"בודד",rotate:"סבב"}[config.mediaMode]||""));});});});
     Array.prototype.forEach.call(document.querySelectorAll("#mediaDwellChips [data-dw]"),function(b){b.addEventListener("click",function(){config.mediaDwell=+b.getAttribute("data-dw");updateMediaUI();saveConfig().then(function(){toast();});});});
     $("mediaFile").addEventListener("change",function(){uploadMedia(this.files);this.value="";});
-    renderAdminMedia();
+    $("dailyEnabled").addEventListener("change",function(){config.dailyVidEnabled=$("dailyEnabled").checked;saveConfig().then(function(){toast(config.dailyVidEnabled?"סרטון יומי הופעל ✓":"סרטון יומי כבוי");});});
+    $("dailyFile").addEventListener("change",function(){uploadDaily(this.files&&this.files[0]);this.value="";});
+    renderAdminMedia();renderDailyUI();
     var brR=$("brightRange"),brSaveT;
     function brSet(v){v=Math.max(20,Math.min(100,v));config.brightness=v;updateBrightUI();clearTimeout(brSaveT);brSaveT=setTimeout(function(){saveConfig().then(function(){toast("בהירות: "+v+"%");});},400);}
     if(brR)brR.addEventListener("input",function(){brSet(+brR.value);});
@@ -757,7 +809,7 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
     var loTime=$("loTime");if(document.activeElement!==loTime)loTime.value=effectiveLightsOut()||config.lightsOutDefault;
     $("loEnabled").checked=!!config.lightsOutEnabled;
     var pdTime=$("pdTime");if(document.activeElement!==pdTime)pdTime.value=config.phoneDepositTime;
-    $("pdEnabled").checked=!!config.phoneDepositEnabled;$("pdEveningEnabled").checked=!!config.phoneEveningEnabled;$("ksShow").checked=!!config.ksShow;$("shabbatMode").checked=!!config.shabbatMode;$("nightDim").checked=!!config.nightDim;$("scEnabled").checked=!!config.screenOffEnabled;var _scs=$("scStart");if(_scs&&document.activeElement!==_scs)_scs.value=config.screenOffStart||"01:00";var _sce=$("scEnd");if(_sce&&document.activeElement!==_sce)_sce.value=config.screenOffEnd||"06:00";updateMediaUI();var _hm=config.hyyMode||"rotate";var _hc=$("hyyChips");if(_hc)Array.prototype.forEach.call(_hc.children,function(b){b.classList.toggle("on",b.getAttribute("data-hyy")===_hm);});
+    $("pdEnabled").checked=!!config.phoneDepositEnabled;$("pdEveningEnabled").checked=!!config.phoneEveningEnabled;$("ksShow").checked=!!config.ksShow;$("shabbatMode").checked=!!config.shabbatMode;$("nightDim").checked=!!config.nightDim;$("scEnabled").checked=!!config.screenOffEnabled;var _scs=$("scStart");if(_scs&&document.activeElement!==_scs)_scs.value=config.screenOffStart||"01:00";var _sce=$("scEnd");if(_sce&&document.activeElement!==_sce)_sce.value=config.screenOffEnd||"06:00";updateMediaUI();var _de=$("dailyEnabled");if(_de)_de.checked=!!config.dailyVidEnabled;renderDailyUI();var _hm=config.hyyMode||"rotate";var _hc=$("hyyChips");if(_hc)Array.prototype.forEach.call(_hc.children,function(b){b.classList.toggle("on",b.getAttribute("data-hyy")===_hm);});
     $("loDefault").textContent=config.lightsOutDefault;applyTheme();refreshKs();renderAdminMessages();updateBrightUI();
   }
   function renderAdminMessages(){
