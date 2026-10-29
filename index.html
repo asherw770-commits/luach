@@ -178,7 +178,8 @@
   .c-empty{padding:16px;color:var(--c-muted);text-align:center;font-size:.95rem;}
   .saved-toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;padding:10px 20px;border-radius:999px;font-size:.95rem;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none;z-index:40;}
   .saved-toast.show{opacity:1;}
-  .m-preview{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;container-type:inline-size;background:var(--d-bg);color:var(--d-text);box-shadow:0 8px 26px rgba(0,0,0,.18);filter:brightness(var(--disp-bright,1));transition:filter .3s ease;}
+  .m-preview{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 8px 26px rgba(0,0,0,.18);}
+  .pv-frame{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none;background:var(--d-bg);}
   .pv-in{position:absolute;inset:0;display:flex;flex-direction:column;padding:4cqw;gap:2cqw;}
   .pv-top{display:flex;justify-content:space-between;align-items:flex-start;}
   .pv-dow{font-family:var(--d-font-disp);font-weight:700;font-size:4cqw;color:var(--d-text);}
@@ -236,10 +237,7 @@
     <a id="backToDisplay" href="./" class="c-btn secondary" style="width:auto;padding:7px 15px;text-decoration:none;display:inline-block;margin:0 0 6px;">← חזרה לתצוגת המסך</a>
     <div id="panel">
       <div class="c-section"><div class="c-hdr">👁️ תצוגה מקדימה חיה</div>
-        <div class="m-preview" id="preview"><div class="pv-in">
-          <div class="pv-top"><div><div class="pv-dow" id="pvDow">—</div><div class="pv-hdate" id="pvHdate">—</div></div><div class="pv-bsd">בס״ד</div></div>
-          <div class="pv-clock" id="pvClock">--:--</div><div class="pv-event" id="pvEvent" hidden></div><div class="pv-msgs" id="pvMsgs"></div>
-        </div></div>
+        <div class="m-preview" id="preview"><iframe class="pv-frame" id="previewFrame" title="תצוגה מקדימה חיה של המסך" src="./?preview=1" scrolling="no" tabindex="-1"></iframe></div>
       </div>
       <div class="c-section"><div class="c-hdr">📨 הודעות למסך</div><div class="c-group">
         <div class="addwrap"><div class="addrow"><input id="newMsg" class="c-input" placeholder="הודעה חדשה…" maxlength="140"><button id="addMsg" class="c-btn">הוסף</button></div>
@@ -325,16 +323,17 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
 </script>
 
 <script src="hayomyom.js"></script>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+<script>if("serviceWorker" in navigator&&!/[?&]preview=1/.test(location.search)){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
 <script>
 (function(){
   "use strict";
-  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60};
+  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60,dailyVidEnabled:false,dailyVidTime:"20:00",dailyVidUrl:"",dailyVidName:""};
   var THEMES=[{k:"night",n:"לילה כחול",bg:"linear-gradient(135deg,#17244d,#0a0f1e)",fg:"#e7c072"},{k:"apple",n:"אפל בהיר",bg:"#eceef3",fg:"#0a84ff"},{k:"sunrise",n:"זריחה",bg:"linear-gradient(135deg,#ff9a5a,#ff6a88)",fg:"#fff"},{k:"emerald",n:"אזמרגד",bg:"linear-gradient(160deg,#134a37,#0a2a20)",fg:"#dcbd6c"},{k:"gold",n:"זהב",bg:"radial-gradient(circle at 50% 0%,#17120a,#0a0806)",fg:"#d4af37"},{k:"contrast",n:"ניגודיות",bg:"#000",fg:"#ffe100"},{k:"glass",n:"זכוכית",bg:"linear-gradient(135deg,#7a50ff,#00c8ff)",fg:"#fff"},{k:"neon",n:"ניאון",bg:"radial-gradient(circle,#13131f,#05050a)",fg:"#2ee6ff"},{k:"royal",n:"כחול חב״ד",bg:"linear-gradient(160deg,#14408f,#0d2a63)",fg:"#ecc978"},{k:"blueprint",n:"שרטוט",bg:"#0a2744",fg:"#7fd0ff"},{k:"parchment",n:"קלף",bg:"linear-gradient(135deg,#f6ecd2,#ecdcb8)",fg:"#7d2436"},{k:"minimal",n:"מינימל",bg:"#050505",fg:"#f5a623"},{k:"wine",n:"בורדו",bg:"linear-gradient(160deg,#3a0e1a,#150406)",fg:"#e7c072"},{k:"ocean",n:"ים",bg:"linear-gradient(160deg,#07323a,#041a20)",fg:"#4fe0d0"},{k:"purple",n:"סגול מלכותי",bg:"radial-gradient(circle at 50% 0%,#241041,#120726)",fg:"#c3a6ff"},{k:"charcoal",n:"פחם",bg:"radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013)",fg:"#6aa0ff"},{k:"cream",n:"קרם",bg:"#f3ecdd",fg:"#915e2a"},{k:"bronze",n:"ברונזה",bg:"radial-gradient(circle at 50% 0%,#241a10,#120c06)",fg:"#cf9a4e"}];
   var PHONE_LEAD_MIN=10,LO_INFO_FROM_H=21,LO_LEAD_MIN=15,GOODNIGHT_MIN=20,LAT=32.0807,LON=34.8338,DIM_END_H=6.5;
   var config=Object.assign({},DEFAULTS),messages=[],store=null;
   var mediaList=[],mediaU=0;
   var mode=(location.hash==="#admin"||location.hash==="#manage")?"manage":"display";
+  var isPreview=/[?&]preview=1/.test(location.search); // רץ כ-iframe בתוך התצוגה המקדימה
   var startDay=(new Date()).toDateString();
 
   function $(id){return document.getElementById(id);}
@@ -775,12 +774,9 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
     });
   }
   function updatePreview(){
-    if($("panel").hidden)return;var now=new Date();
-    $("pvClock").textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());
-    if(fDow)$("pvDow").textContent=fDow.format(now);var hd=hebrewDate(now);if(hd)$("pvHdate").textContent=hd;
-    var ev=computeEvent(now),pe=$("pvEvent");
-    if(ev){pe.textContent=ev.icon+" "+(ev.label?ev.label+" ":"")+ev.value+(ev.sub?" "+ev.sub:"");pe.hidden=false;}else pe.hidden=true;
-    var msgs=activeMessages();$("pvMsgs").textContent=msgs.length?("📋 "+msgs.map(function(m){return m.text;}).join(" · ")):"";
+    if($("panel").hidden)return;
+    var box=$("preview"),fr=$("previewFrame");
+    if(box&&fr){var w=box.clientWidth;if(w>0)fr.style.transform="scale("+(w/1280)+")";}
   }
 
   var writeChain=Promise.resolve();
@@ -793,7 +789,7 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
   function setupDisplay(){
     var disp=$("display"),fsBtn=$("fsBtn"),fsLabel=$("fsLabel"),fsIco=$("fsIco"),el=document.documentElement;
     var scEl2=$("screenOff");if(scEl2)scEl2.addEventListener("click",function(){wakeUntil=nowSync()+120000;scEl2.classList.remove("on");});
-    if(el.requestFullscreen||el.webkitRequestFullscreen){fsBtn.hidden=false;
+    if(!isPreview&&(el.requestFullscreen||el.webkitRequestFullscreen)){fsBtn.hidden=false;
       fsBtn.addEventListener("click",function(){if(fsElement())exitFs();else reqFs(el);});
       function upd(){var on=!!fsElement();fsLabel.textContent=on?"יציאה ממסך מלא":"מסך מלא";fsIco.textContent=on?"✕":"⛶";}
       document.addEventListener("fullscreenchange",upd);document.addEventListener("webkitfullscreenchange",upd);upd();
@@ -849,7 +845,7 @@ var MEDIA_UPLOAD = { cloud: "", preset: "" };
         renderAdminMedia();
       }
     });
-    if(mode==="display"){
+    if(mode==="display"&&!isPreview){
       var st=base.child("status/display");
       rtdb.ref(".info/connected").on("value",function(s){if(s.val()){st.onDisconnect().set({online:false,ts:firebase.database.ServerValue.TIMESTAMP});st.set({online:true,ts:firebase.database.ServerValue.TIMESTAMP});}});
       setInterval(function(){st.update({online:true,ts:firebase.database.ServerValue.TIMESTAMP});},20000);
