@@ -33,8 +33,8 @@
   button{font-family:inherit;}
 
   .display{position:relative;height:100%;display:flex;flex-direction:column;padding:clamp(20px,3.4vmin,52px);gap:clamp(12px,2.2vmin,28px);transition:filter 2s ease,transform 3s ease-in-out;filter:brightness(var(--disp-bright,1));}
-  #display,#display *{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;}
-  #display img,#display video{pointer-events:none;-webkit-user-drag:none;user-drag:none;}
+  #display,#display *{-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+  #display img,#display video{-webkit-user-select:none;user-select:none;-webkit-user-drag:none;user-drag:none;}
   .display.dimmed{filter:brightness(calc(var(--disp-bright,1)*.42)) saturate(.9);}
   .screenoff{position:absolute;inset:0;background:#000;z-index:60;display:none;cursor:pointer;}
   .screenoff.on{display:block;}
@@ -562,10 +562,10 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     var nowMs=now.getTime();
     if(config.phoneDepositEnabled){var pt=parseHM(config.phoneDepositTime);if(pt){var pT=atToday(now,pt.h,pt.m).getTime(),pLead=pT-PHONE_LEAD_MIN*60000;
       if(nowMs>=pLead&&nowMs<pT)return{cls:"ev-amber",icon:"📱",label:"הפקדת טלפונים בעוד",value:msToMMSS(pT-nowMs),sub:"עד "+config.phoneDepositTime,urgent:true};
-      if(nowMs>=pT&&nowMs<pT+2*60000)return{cls:"ev-amber",icon:"📱",label:"",value:"הגיע זמן ההפקדה",sub:"",urgent:true};}}
+      if(nowMs>=pT&&nowMs<pT+2*60000)return{cls:"ev-amber",icon:"📱",label:"",value:"הגיע זמן הפקדת הטלפונים",sub:"",urgent:true};}}
     if(config.phoneEveningEnabled){var loe=effectiveLightsOut();if(loe){var lteo=parseHM(loe);if(lteo){var eT=atToday(now,lteo.h,lteo.m).getTime()-10*60000,eLead=eT-PHONE_LEAD_MIN*60000;
       if(nowMs>=eLead&&nowMs<eT)return{cls:"ev-amber",icon:"📱",label:"הפקדת טלפונים בעוד",value:msToMMSS(eT-nowMs),sub:"עד "+fmtHM(new Date(eT)),urgent:true};
-      if(nowMs>=eT&&nowMs<eT+2*60000)return{cls:"ev-amber",icon:"📱",label:"",value:"הגיע זמן הפקדת הערב",sub:"",urgent:true};}}}
+      if(nowMs>=eT&&nowMs<eT+2*60000)return{cls:"ev-amber",icon:"📱",label:"",value:"הגיע זמן הפקדת הטלפונים",sub:"",urgent:true};}}}
     var lo=effectiveLightsOut();if(lo){var lt=parseHM(lo);if(lt){var lT=atToday(now,lt.h,lt.m).getTime(),lInfo=atToday(now,LO_INFO_FROM_H,0).getTime(),lLead=lT-LO_LEAD_MIN*60000;
       if(nowMs>=lLead&&nowMs<lT)return{cls:"ev-indigo",icon:"🌙",label:"כיבוי אורות בעוד",value:msToMMSS(lT-nowMs),sub:"בשעה "+lo,urgent:true};
       if(nowMs>=lInfo&&nowMs<lLead)return{cls:"ev-indigo",icon:"🌙",label:"כיבוי אורות",value:"בשעה "+lo,sub:"",urgent:false};
