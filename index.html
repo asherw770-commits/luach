@@ -358,7 +358,10 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
 </script>
 
 <script src="hayomyom.js"></script>
-<script>if("serviceWorker" in navigator&&!/[?&]preview=1/.test(location.search)){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
+<script>if("serviceWorker" in navigator&&!/[?&]preview=1/.test(location.search)){window.addEventListener("load",function(){
+  navigator.serviceWorker.register("sw.js").then(function(reg){try{reg.update();}catch(e){}setInterval(function(){try{reg.update();}catch(e){}},1800000);}).catch(function(){});
+  var _reloaded=false;navigator.serviceWorker.addEventListener("controllerchange",function(){if(_reloaded)return;_reloaded=true;location.reload();});
+});}</script>
 <script>
 (function(){
   "use strict";
