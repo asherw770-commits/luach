@@ -43,7 +43,13 @@
   .rebbe-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;}
   .rebbe-bg-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,7,15,.58),rgba(5,7,15,.22) 30%,rgba(5,7,15,.32) 60%,rgba(5,7,15,.82));}
   .display.rebbe-bg-on>.disp-top,.display.rebbe-bg-on>.clock-wrap,.display.rebbe-bg-on>.omer,.display.rebbe-bg-on>.event,.display.rebbe-bg-on>.msgs,.display.rebbe-bg-on>.hyy-panel{position:relative;z-index:1;}
-  .display.rebbe-bg-on>.clock-wrap{transform:translateX(var(--clk-x,0));transition:transform .4s ease;}
+  .display.rebbe-bg-on>.clock-wrap{transform:translate(var(--clk-x,0),var(--clk-y,0));transition:transform .25s ease;}
+  .joy{position:relative;width:min(62vw,210px);height:min(62vw,210px);max-width:210px;max-height:210px;margin:8px auto 2px;border-radius:20px;background:var(--c-fill);border:1px solid var(--c-sep);touch-action:none;user-select:none;}
+  .joy::before,.joy::after{content:"";position:absolute;background:var(--c-sep);}
+  .joy::before{left:50%;top:10%;bottom:10%;width:2px;transform:translateX(-50%);}
+  .joy::after{top:50%;left:10%;right:10%;height:2px;transform:translateY(-50%);}
+  .joy-knob{position:absolute;width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.45);left:50%;top:50%;transform:translate(-50%,-50%);cursor:grab;touch-action:none;display:flex;align-items:center;justify-content:center;color:#2b6cf0;font-size:20px;}
+  .joy-knob::after{content:"✥";}
   .mediashow{position:absolute;inset:0;z-index:13;background:#000;display:none;overflow:hidden;}
   .mediashow.on{display:block;}
   .mediashow .m-stage{position:absolute;inset:0;}
@@ -276,9 +282,9 @@
       <div class="c-section"><div class="c-hdr">🖼️ תמונת הרבי היומית</div><div class="c-group">
         <div class="c-row"><span class="lbl">תצוגה<small>תמונת הרבי מתחלפת כל יום (RebbeDrive)</small></span></div>
         <div class="chips" id="rebbeChips"><button data-rm="off">כבוי</button><button data-rm="panel">מעל השעון</button><button data-rm="background">רקע מלא</button></div>
-        <div class="c-row"><span class="lbl">מיקום השעון<small>ברקע מלא — הזז שלא יסתיר את פני הרבי</small></span></div>
-        <div class="brightrow"><span class="bico sm">◀</span><input type="range" id="clockShiftRange" min="-35" max="35" step="1" value="0" class="brange"><span class="bico lg">▶</span></div>
-        <div class="chips" id="clockShiftChips"><button data-cx="-25">שמאל</button><button data-cx="0">מרכז</button><button data-cx="25">ימין</button></div>
+        <div class="c-row"><span class="lbl">מיקום השעון<small>ברקע מלא — גרור את הג׳ויסטיק שהשעון לא יסתיר פנים</small></span></div>
+        <div class="joy" id="clockJoy"><div class="joy-knob" id="clockJoyKnob"></div></div>
+        <div class="chips" id="clockJoyChips"><button id="clockJoyCenter">◎ מרכז</button></div>
       </div></div>
       <div class="c-section"><div class="c-hdr">🌙 כיבוי אורות</div><div class="c-group">
         <div class="c-row"><span class="lbl">הלילה<small>ברירת מחדל <b id="loDefault">22:00</b> · מתאפס מחר</small></span><input id="loTime" type="time"></div>
@@ -354,7 +360,7 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
 <script>
 (function(){
   "use strict";
-  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60,dailyVidEnabled:false,dailyVidOffsetMin:30,dailyVidUrl:"",dailyVidName:"",displayOff:false,rebbeMode:"off",clockShiftX:0};
+  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60,dailyVidEnabled:false,dailyVidOffsetMin:30,dailyVidUrl:"",dailyVidName:"",displayOff:false,rebbeMode:"off",clockShiftX:0,clockShiftY:0};
   var THEMES=[{k:"night",n:"לילה כחול",bg:"linear-gradient(135deg,#17244d,#0a0f1e)",fg:"#e7c072"},{k:"apple",n:"אפל בהיר",bg:"#eceef3",fg:"#0a84ff"},{k:"sunrise",n:"זריחה",bg:"linear-gradient(135deg,#ff9a5a,#ff6a88)",fg:"#fff"},{k:"emerald",n:"אזמרגד",bg:"linear-gradient(160deg,#134a37,#0a2a20)",fg:"#dcbd6c"},{k:"gold",n:"זהב",bg:"radial-gradient(circle at 50% 0%,#17120a,#0a0806)",fg:"#d4af37"},{k:"contrast",n:"ניגודיות",bg:"#000",fg:"#ffe100"},{k:"glass",n:"זכוכית",bg:"linear-gradient(135deg,#7a50ff,#00c8ff)",fg:"#fff"},{k:"neon",n:"ניאון",bg:"radial-gradient(circle,#13131f,#05050a)",fg:"#2ee6ff"},{k:"royal",n:"כחול חב״ד",bg:"linear-gradient(160deg,#14408f,#0d2a63)",fg:"#ecc978"},{k:"blueprint",n:"שרטוט",bg:"#0a2744",fg:"#7fd0ff"},{k:"parchment",n:"קלף",bg:"linear-gradient(135deg,#f6ecd2,#ecdcb8)",fg:"#7d2436"},{k:"minimal",n:"מינימל",bg:"#050505",fg:"#f5a623"},{k:"wine",n:"בורדו",bg:"linear-gradient(160deg,#3a0e1a,#150406)",fg:"#e7c072"},{k:"ocean",n:"ים",bg:"linear-gradient(160deg,#07323a,#041a20)",fg:"#4fe0d0"},{k:"purple",n:"סגול מלכותי",bg:"radial-gradient(circle at 50% 0%,#241041,#120726)",fg:"#c3a6ff"},{k:"charcoal",n:"פחם",bg:"radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013)",fg:"#6aa0ff"},{k:"cream",n:"קרם",bg:"#f3ecdd",fg:"#915e2a"},{k:"bronze",n:"ברונזה",bg:"radial-gradient(circle at 50% 0%,#241a10,#120c06)",fg:"#cf9a4e"}];
   var PHONE_LEAD_MIN=10,LO_INFO_FROM_H=21,LO_LEAD_MIN=15,GOODNIGHT_MIN=20,LAT=32.0807,LON=34.8338,DIM_END_H=6.5;
   var config=Object.assign({},DEFAULTS),messages=[],store=null;
@@ -639,7 +645,7 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     if(_bEl){if(_rbm==="background"&&_rbu){if(_bImg.getAttribute("data-u")!==_rbu){_bImg.src=_rbu;_bImg.setAttribute("data-u",_rbu);}_bEl.hidden=false;}else _bEl.hidden=true;}
     elDisplay.classList.toggle("rebbe-bg-on",_rbm==="background"&&!!_rbu);
     elDisplay.classList.toggle("rebbe-panel-on",_rbm==="panel"&&!!_rbu);
-    elDisplay.style.setProperty("--clk-x",(+config.clockShiftX||0)+"vw");
+    elDisplay.style.setProperty("--clk-x",(+config.clockShiftX||0)+"vw");elDisplay.style.setProperty("--clk-y",(+config.clockShiftY||0)+"vh");
     var h=now.getHours()+now.getMinutes()/60,loD=parseHM(loForDim()),dim=false;
     if(config.nightDim&&loD&&!onShab){var loH=loD.h+loD.m/60;dim=(h>=loH)||(h<DIM_END_H);}
     elDisplay.classList.toggle("dimmed",dim);applyBrightness();
@@ -832,9 +838,20 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     $("dailyFile").addEventListener("change",function(){uploadDaily(this.files&&this.files[0]);this.value="";});
     $("displayOff").addEventListener("change",function(){config.displayOff=$("displayOff").checked;saveConfig().then(function(){toast(config.displayOff?"המסך כובה ⏻":"המסך הודלק ✓");});});
     Array.prototype.forEach.call(document.querySelectorAll("#rebbeChips [data-rm]"),function(b){b.addEventListener("click",function(){config.rebbeMode=b.getAttribute("data-rm");updateRebbeUI();saveConfig().then(function(){toast("תמונת הרבי: "+({off:"כבוי",panel:"מעל השעון",background:"רקע מלא"}[config.rebbeMode]||""));});});});
-    var clkSaveT;function clkSet(v){v=Math.max(-35,Math.min(35,Math.round(v)));config.clockShiftX=v;var r=$("clockShiftRange");if(r&&document.activeElement!==r)r.value=v;var cc=$("clockShiftChips");if(cc)Array.prototype.forEach.call(cc.children,function(b){b.classList.toggle("on",(+b.getAttribute("data-cx"))===v);});clearTimeout(clkSaveT);clkSaveT=setTimeout(function(){saveConfig();},350);}
-    $("clockShiftRange").addEventListener("input",function(){clkSet(+this.value);});
-    Array.prototype.forEach.call(document.querySelectorAll("#clockShiftChips [data-cx]"),function(b){b.addEventListener("click",function(){clkSet(+b.getAttribute("data-cx"));saveConfig().then(function(){toast("מיקום השעון עודכן ✓");});});});
+    (function(){
+      var joy=$("clockJoy"),knob=$("clockJoyKnob");if(!joy||!knob)return;
+      var MAXX=32,MAXY=24,joyT,down=false;
+      function place(nx,ny){var w=joy.clientWidth,h=joy.clientHeight,r=Math.min(w,h)/2-23;knob.style.left=(w/2+nx*r)+"px";knob.style.top=(h/2+ny*r)+"px";}
+      function fromCfg(){var nx=Math.max(-1,Math.min(1,(+config.clockShiftX||0)/MAXX)),ny=Math.max(-1,Math.min(1,(+config.clockShiftY||0)/MAXY));place(nx,ny);}
+      window._joyFromCfg=fromCfg;
+      function ev(e){var rect=joy.getBoundingClientRect(),r=Math.min(rect.width,rect.height)/2-23;var nx=Math.max(-1,Math.min(1,(e.clientX-(rect.left+rect.width/2))/r)),ny=Math.max(-1,Math.min(1,(e.clientY-(rect.top+rect.height/2))/r));place(nx,ny);config.clockShiftX=Math.round(nx*MAXX);config.clockShiftY=Math.round(ny*MAXY);clearTimeout(joyT);joyT=setTimeout(function(){saveConfig();},250);}
+      joy.addEventListener("pointerdown",function(e){down=true;try{joy.setPointerCapture(e.pointerId);}catch(x){}ev(e);e.preventDefault();});
+      joy.addEventListener("pointermove",function(e){if(down)ev(e);});
+      joy.addEventListener("pointerup",function(){down=false;});
+      joy.addEventListener("pointercancel",function(){down=false;});
+      $("clockJoyCenter").addEventListener("click",function(){config.clockShiftX=0;config.clockShiftY=0;fromCfg();saveConfig().then(function(){toast("השעון מורכז ✓");});});
+      setTimeout(fromCfg,60);
+    })();
     renderAdminMedia();renderDailyUI();
     var brR=$("brightRange"),brSaveT;
     function brSet(v){v=Math.max(20,Math.min(100,v));config.brightness=v;updateBrightUI();clearTimeout(brSaveT);brSaveT=setTimeout(function(){saveConfig().then(function(){toast("בהירות: "+v+"%");});},400);}
@@ -851,7 +868,7 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     var loTime=$("loTime");if(document.activeElement!==loTime)loTime.value=effectiveLightsOut()||config.lightsOutDefault;
     $("loEnabled").checked=!!config.lightsOutEnabled;
     var pdTime=$("pdTime");if(document.activeElement!==pdTime)pdTime.value=config.phoneDepositTime;
-    $("pdEnabled").checked=!!config.phoneDepositEnabled;$("pdEveningEnabled").checked=!!config.phoneEveningEnabled;$("ksShow").checked=!!config.ksShow;$("shabbatMode").checked=!!config.shabbatMode;$("nightDim").checked=!!config.nightDim;$("scEnabled").checked=!!config.screenOffEnabled;var _scs=$("scStart");if(_scs&&document.activeElement!==_scs)_scs.value=config.screenOffStart||"01:00";var _sce=$("scEnd");if(_sce&&document.activeElement!==_sce)_sce.value=config.screenOffEnd||"06:00";updateMediaUI();var _de=$("dailyEnabled");if(_de)_de.checked=!!config.dailyVidEnabled;var _do=$("displayOff");if(_do)_do.checked=!!config.displayOff;updateRebbeUI();var _cs=$("clockShiftRange");if(_cs&&document.activeElement!==_cs)_cs.value=(+config.clockShiftX||0);var _cc=$("clockShiftChips");if(_cc)Array.prototype.forEach.call(_cc.children,function(b){b.classList.toggle("on",(+b.getAttribute("data-cx"))===(+config.clockShiftX||0));});renderDailyUI();var _hm=config.hyyMode||"rotate";var _hc=$("hyyChips");if(_hc)Array.prototype.forEach.call(_hc.children,function(b){b.classList.toggle("on",b.getAttribute("data-hyy")===_hm);});
+    $("pdEnabled").checked=!!config.phoneDepositEnabled;$("pdEveningEnabled").checked=!!config.phoneEveningEnabled;$("ksShow").checked=!!config.ksShow;$("shabbatMode").checked=!!config.shabbatMode;$("nightDim").checked=!!config.nightDim;$("scEnabled").checked=!!config.screenOffEnabled;var _scs=$("scStart");if(_scs&&document.activeElement!==_scs)_scs.value=config.screenOffStart||"01:00";var _sce=$("scEnd");if(_sce&&document.activeElement!==_sce)_sce.value=config.screenOffEnd||"06:00";updateMediaUI();var _de=$("dailyEnabled");if(_de)_de.checked=!!config.dailyVidEnabled;var _do=$("displayOff");if(_do)_do.checked=!!config.displayOff;updateRebbeUI();if(window._joyFromCfg)window._joyFromCfg();renderDailyUI();var _hm=config.hyyMode||"rotate";var _hc=$("hyyChips");if(_hc)Array.prototype.forEach.call(_hc.children,function(b){b.classList.toggle("on",b.getAttribute("data-hyy")===_hm);});
     $("loDefault").textContent=config.lightsOutDefault;applyTheme();refreshKs();renderAdminMessages();updateBrightUI();
   }
   function renderAdminMessages(){
