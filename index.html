@@ -23,8 +23,8 @@
   :root[data-theme-name="emerald"]{--d-bg:linear-gradient(160deg,#134a37,#0a2a20);--d-text:#f1e7cf;--d-muted:#b6c6ad;--d-accent:#dcbd6c;--d-accent2:#e6cb7c;--d-clock:#f6eeda;--d-glow:rgba(220,189,108,.25);--d-secbar:linear-gradient(90deg,#dcbd6c,#8fae8a);--d-card-bg:rgba(220,189,108,.08);--d-card-border:rgba(220,189,108,.35);--d-event-color:#e6cb7c;--d-line:rgba(220,189,108,.3);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
   :root[data-theme-name="sunrise"]{--d-bg:linear-gradient(135deg,#ff9a5a 0%,#ff6a88 48%,#ffd07a 100%);--d-text:#fff;--d-muted:rgba(255,255,255,.92);--d-accent:#fff;--d-accent2:#fff;--d-clock:#fff;--d-glow:rgba(150,40,70,.3);--d-secbar:rgba(255,255,255,.85);--d-card-bg:rgba(255,255,255,.2);--d-card-border:rgba(255,255,255,.45);--d-event-color:#fff;--d-line:rgba(255,255,255,.4);--d-font:"Rubik",sans-serif;--d-font-disp:"Rubik",sans-serif;}
   :root[data-theme-name="contrast"]{--d-bg:#000;--d-text:#fff;--d-muted:#ffe100;--d-accent:#ffe100;--d-accent2:#ffe100;--d-clock:#ffe100;--d-glow:transparent;--d-secbar:#ffe100;--d-card-bg:#111;--d-card-border:#333;--d-event-color:#ffe100;--d-line:#333;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
-  :root{--c-bg:#f2f2f7;--c-group:#fff;--c-text:#1c1c1e;--c-muted:#8a8a8e;--c-sep:#e5e5ea;--c-accent:#0a84ff;--c-green:#34c759;--c-red:#ff3b30;--c-fill:#78788033;--c-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Assistant","Heebo","Segoe UI",sans-serif;}
-  @media (prefers-color-scheme:dark){:root{--c-bg:#000;--c-group:#1c1c1e;--c-text:#fff;--c-muted:#8d8d93;--c-sep:#38383a;--c-fill:#7878805c;}}
+  :root{--c-bg:#f2f2f7;--c-bg2:#efeff4;--c-group:#fff;--c-group2:#f5f5f7;--c-text:#1c1c1e;--c-muted:#8a8a8e;--c-faint:#c3c3c7;--c-sep:rgba(60,60,67,.13);--c-accent:#007aff;--c-green:#34c759;--c-red:#ff3b30;--c-orange:#ff9500;--c-fill:rgba(118,118,128,.12);--c-fill2:rgba(118,118,128,.2);--c-bar:rgba(249,249,251,.8);--c-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);--c-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Assistant","Heebo","Segoe UI",sans-serif;}
+  @media (prefers-color-scheme:dark){:root{--c-bg:#000;--c-bg2:#0b0b0d;--c-group:#1c1c1e;--c-group2:#2c2c2e;--c-text:#fff;--c-muted:#98989f;--c-faint:#48484a;--c-sep:rgba(84,84,88,.55);--c-accent:#0a84ff;--c-fill:rgba(118,118,128,.24);--c-fill2:rgba(118,118,128,.32);--c-bar:rgba(22,22,24,.8);--c-shadow:none;}}
   *{box-sizing:border-box;} [hidden]{display:none!important;}
   html,body{height:100%;} body{margin:0;-webkit-font-smoothing:antialiased;}
   html{background:var(--d-bg);} body:not(.mode-manage){overflow:hidden;}
@@ -129,81 +129,120 @@
   .fsbtn{position:fixed;z-index:6;left:18px;bottom:18px;display:flex;align-items:center;gap:.5em;background:var(--d-card-bg);border:1px solid var(--d-line);color:var(--d-text);border-radius:999px;padding:10px 18px;font-size:1rem;font-weight:600;cursor:pointer;transition:opacity .45s ease;}
   .display.ui-idle{cursor:none;} .display.ui-idle .fsbtn{opacity:0;pointer-events:none;}
 
-  .m-wrap{max-width:540px;margin:0 auto;padding:16px 16px 56px;}
-  .m-title{font-size:2.05rem;font-weight:800;letter-spacing:-.02em;margin:14px 2px 2px;}
-  .m-subtitle{color:var(--c-muted);font-size:.95rem;margin:0 2px 18px;}
-  .c-gate{background:var(--c-group);border-radius:16px;padding:20px;margin-top:30px;display:flex;flex-direction:column;gap:14px;}
-  .c-gate h2{margin:0;font-size:1.25rem;font-weight:700;text-align:center;}
-  .c-input{width:100%;background:var(--c-fill);border:none;color:var(--c-text);border-radius:11px;padding:13px 14px;font-size:1.1rem;font-family:inherit;}
-  .c-input::placeholder{color:var(--c-muted);}
-  .c-btn{background:var(--c-accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:inherit;width:100%;}
-  .c-btn.secondary{background:var(--c-fill);color:var(--c-accent);}
-  .c-err{color:var(--c-red);font-size:.9rem;text-align:center;}
-  .c-status{text-align:center;font-size:.82rem;color:var(--c-muted);margin-top:4px;}
-  .c-status.off{color:#ff9f0a;}
-  .c-section{margin-top:26px;}
-  .c-hdr{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--c-muted);margin:0 14px 7px;}
-  .c-group{background:var(--c-group);border-radius:16px;overflow:hidden;}
-  .c-row{display:flex;align-items:center;gap:12px;padding:13px 16px;min-height:52px;position:relative;}
+  /* ===== מערכת ניהול — עיצוב בסגנון Apple (iOS / HIG) ===== */
+  .m-wrap{max-width:600px;margin:0 auto;padding:max(8px,env(safe-area-inset-top)) 16px calc(82px + env(safe-area-inset-bottom));}
+  .mg-back{display:inline-flex;align-items:center;gap:3px;color:var(--c-accent);font-size:1rem;font-weight:600;text-decoration:none;margin:2px 0;padding:6px 2px;background:none;border:none;font-family:inherit;cursor:pointer;}
+  .m-title{font-size:2.15rem;font-weight:800;letter-spacing:-.025em;margin:6px 2px 1px;}
+  .m-subtitle{color:var(--c-muted);font-size:.98rem;margin:0 2px 14px;}
+
+  .hero{background:linear-gradient(135deg,var(--c-accent),#5e5ce6);color:#fff;border-radius:20px;padding:18px 20px;box-shadow:0 12px 30px -10px rgba(0,80,220,.55);margin-bottom:4px;}
+  .hero-row{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+  .hero-k{font-size:.95rem;font-weight:600;opacity:.9;margin-bottom:3px;}
+  .hero-status{font-size:1.5rem;font-weight:800;letter-spacing:-.015em;}
+  .hero-ico{font-size:2.5rem;line-height:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,.28));}
+
+  .tabpage{display:none;}
+  .tabpage.on{display:block;animation:fadeup .34s cubic-bezier(.2,.7,.3,1);}
+  @keyframes fadeup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:none;}}
+
+  .c-section{margin-top:24px;}
+  .tabpage > .c-section:first-child{margin-top:8px;}
+  .c-hdr{display:flex;align-items:center;gap:9px;margin:0 6px 9px;font-size:1.05rem;font-weight:700;letter-spacing:-.01em;color:var(--c-text);}
+  .c-hdr .hi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:15px;flex:none;}
+  .c-group{background:var(--c-group);border-radius:16px;overflow:hidden;box-shadow:var(--c-shadow);}
+  .c-row{display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:52px;position:relative;}
   .c-row + .c-row::before{content:"";position:absolute;top:0;inset-inline-start:16px;inset-inline-end:0;height:1px;background:var(--c-sep);}
-  .c-row .lbl{flex:1;font-size:1.04rem;}
-  .c-row .lbl small{display:block;color:var(--c-muted);font-size:.82rem;margin-top:1px;}
+  .c-row .lbl{flex:1;font-size:1.04rem;line-height:1.3;}
+  .c-row .lbl small{display:block;color:var(--c-muted);font-size:.82rem;margin-top:2px;line-height:1.32;}
+  .c-row .lbl small b{color:var(--c-text);font-weight:600;}
   .c-row .val{color:var(--c-muted);font-variant-numeric:tabular-nums;font-size:1.02rem;}
-  .c-row input[type="time"],.c-row input[type="date"]{background:var(--c-fill);border:none;color:var(--c-text);border-radius:9px;padding:8px 10px;font-size:1.02rem;font-family:inherit;font-variant-numeric:tabular-nums;}
-  .c-row.tap{cursor:pointer;} .chev{color:var(--c-muted);font-size:1.1rem;}
+  .c-row .val b{color:var(--c-text);font-weight:700;}
+  .c-row input[type="time"],.c-row input[type="date"]{background:var(--c-fill);border:none;color:var(--c-text);border-radius:9px;padding:8px 11px;font-size:1.02rem;font-family:inherit;font-variant-numeric:tabular-nums;}
+  .c-row.tap{cursor:pointer;} .c-row.tap:active{background:var(--c-fill);}
+  .chev{color:var(--c-faint);font-size:1.1rem;flex:none;}
+  .c-note{font-size:12px;color:var(--c-muted);padding:10px 16px 2px;line-height:1.45;}
+
   .sw{position:relative;width:51px;height:31px;flex:none;}
   .sw input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:2;}
-  .sw .track{position:absolute;inset:0;background:var(--c-fill);border-radius:999px;transition:background .2s;}
-  .sw .knob{position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s;}
+  .sw .track{position:absolute;inset:0;background:var(--c-fill2);border-radius:999px;transition:background .25s;}
+  .sw .knob{position:absolute;top:2px;inset-inline-start:2px;width:27px;height:27px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s;}
   .sw input:checked ~ .track{background:var(--c-green);}
   html[dir="rtl"] .sw input:checked ~ .knob{transform:translateX(20px);}
+
   .stepper{display:flex;align-items:center;background:var(--c-fill);border-radius:9px;overflow:hidden;}
-  .stepper button{width:42px;height:38px;border:none;background:transparent;color:var(--c-accent);font-size:1.4rem;font-weight:600;cursor:pointer;}
+  .stepper button{width:42px;height:38px;border:none;background:transparent;color:var(--c-accent);font-size:1.4rem;font-weight:500;cursor:pointer;}
+  .stepper button:active{background:var(--c-fill2);}
   .stepper .sval{min-width:3.4ch;text-align:center;font-weight:700;font-variant-numeric:tabular-nums;}
+
   .chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;}
-  .chips button{background:var(--c-fill);color:var(--c-accent);border:none;border-radius:999px;padding:8px 15px;font-size:.98rem;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums;font-family:inherit;}
+  .chips button{background:var(--c-fill);color:var(--c-accent);border:none;border-radius:999px;padding:9px 16px;font-size:.98rem;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums;font-family:inherit;transition:background .15s,color .15s,transform .1s;}
+  .chips button:active{transform:scale(.93);}
   .chips button.ghost{color:var(--c-muted);}
-  .themes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px;max-height:400px;overflow-y:auto;}
   .chips button.on{background:var(--c-accent);color:#fff;}
-  .brightrow{display:flex;align-items:center;gap:12px;padding:6px 18px 14px;}
-  .brightrow .bico{font-size:1.1rem;flex:none;}.brightrow .bico.sm{font-size:.85rem;opacity:.7;}.brightrow .bico.lg{font-size:1.35rem;}
-  .brange{flex:1;-webkit-appearance:none;appearance:none;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--c-accent) 0%,var(--c-accent) var(--fill,100%),var(--c-fill) var(--fill,100%));outline:none;}
-  .brange::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer;border:none;}
-  .brange::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer;border:none;}
-  .up-card{display:flex;gap:14px;align-items:flex-start;background:radial-gradient(130% 100% at 50% -20%,#17244d,rgba(23,36,77,0) 55%),#0a0f1e;border:1px solid #26324f;border-radius:14px;padding:14px;margin-bottom:12px;}
-  .up-photo{width:84px;height:110px;object-fit:cover;border-radius:10px;flex:none;border:1px solid #2a3654;}
-  .up-body{flex:1;min-width:0;}
-  .up-when{color:#8fb2ff;font-size:.8rem;margin-bottom:3px;}
-  .up-title{color:#e7c072;font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:1.25rem;line-height:1.15;margin-bottom:5px;}
-  .up-story{color:#cdd5ea;font-size:.92rem;line-height:1.45;}
-  .up-row{display:flex;justify-content:space-between;gap:10px;padding:10px 2px;border-top:1px solid var(--c-sep);font-size:.95rem;}
-  .up-rtitle{color:var(--c-text);} .up-rwhen{color:var(--c-muted);white-space:nowrap;}
+
+  .themes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px;}
   .theme-opt{border:none;background:transparent;cursor:pointer;padding:0;font-family:inherit;}
-  .theme-sw{height:58px;border-radius:12px;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;font-size:1rem;}
-  .theme-opt.active .theme-sw{border-color:var(--c-accent);}
+  .theme-sw{height:56px;border-radius:13px;border:2.5px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;font-size:1rem;box-shadow:0 2px 8px rgba(0,0,0,.14);}
+  .theme-opt:active .theme-sw{transform:scale(.95);}
+  .theme-opt.active .theme-sw{border-color:var(--c-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--c-accent) 26%,transparent);}
   .theme-opt.active .theme-name{color:var(--c-accent);font-weight:700;}
-  .theme-name{display:block;text-align:center;font-size:.82rem;color:var(--c-muted);margin-top:5px;}
+  .theme-name{display:block;text-align:center;font-size:.82rem;color:var(--c-muted);margin-top:6px;}
+
+  .brightrow{display:flex;align-items:center;gap:12px;padding:6px 18px 16px;}
+  .bico{font-size:1.1rem;flex:none;}.bico.sm{font-size:.85rem;opacity:.7;}.bico.lg{font-size:1.35rem;}
+  .brange{flex:1;-webkit-appearance:none;appearance:none;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--c-accent) 0%,var(--c-accent) var(--fill,100%),var(--c-fill2) var(--fill,100%));outline:none;}
+  .brange::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.35);cursor:pointer;border:none;}
+  .brange::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.35);cursor:pointer;border:none;}
+
   .addwrap{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
-  .addrow{display:flex;gap:8px;} .addrow .c-input{flex:1;} .addrow .c-btn{width:auto;padding-inline:18px;background:var(--c-green);}
-  .exprow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--c-muted);}
+  .addrow{display:flex;gap:8px;} .addrow .c-input{flex:1;} .addrow .c-btn{width:auto;padding-inline:20px;background:var(--c-green);}
+  .c-input{width:100%;background:var(--c-fill);border:none;color:var(--c-text);border-radius:11px;padding:13px 14px;font-size:1.05rem;font-family:inherit;}
+  .c-input::placeholder{color:var(--c-muted);}
+  .c-btn{background:var(--c-accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:inherit;width:100%;transition:transform .1s,opacity .15s;}
+  .c-btn:active{transform:scale(.98);opacity:.92;}
+  .c-btn.secondary{background:var(--c-fill);color:var(--c-accent);}
+  .exprow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.9rem;color:var(--c-muted);}
+  .exprow input[type="date"]{background:var(--c-fill);border:none;color:var(--c-text);border-radius:9px;padding:7px 10px;font-family:inherit;}
+
   .msgitem{display:flex;align-items:center;gap:10px;flex:1;}
-  .msgitem .mt{flex:1;min-width:0;} .msgitem .mt .txt{font-size:1.02rem;word-break:break-word;}
-  .msgitem .mt .ex{font-size:.76rem;color:var(--c-muted);margin-top:1px;} .msgitem .mt .ex.soon{color:#ff9f0a;}
+  .msgitem .mt{flex:1;min-width:0;} .msgitem .mt .txt{font-size:1.02rem;word-break:break-word;line-height:1.3;}
+  .msgitem .mt .ex{font-size:.76rem;color:var(--c-muted);margin-top:2px;} .msgitem .mt .ex.soon{color:var(--c-orange);}
   .trash{border:none;background:transparent;color:var(--c-red);font-size:1.15rem;cursor:pointer;flex:none;padding:6px;}
   .editb{border:none;background:transparent;color:var(--c-accent);font-size:1.05rem;cursor:pointer;flex:none;padding:6px;}
-  .c-empty{padding:16px;color:var(--c-muted);text-align:center;font-size:.95rem;}
-  .saved-toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;padding:10px 20px;border-radius:999px;font-size:.95rem;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none;z-index:40;}
-  .saved-toast.show{opacity:1;}
-  .m-preview{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 8px 26px rgba(0,0,0,.18);}
+  .c-empty{padding:18px 16px;color:var(--c-muted);text-align:center;font-size:.95rem;}
+
+  .up-card{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(135deg,#17244d,#0a0f1e);border:1px solid #26324f;border-radius:14px;padding:14px;margin:4px 0 12px;}
+  .up-card:not(.has-photo){display:block;}
+  .up-photo{width:84px;height:110px;object-fit:cover;border-radius:10px;flex:none;border:1px solid #2a3654;}
+  .up-body{flex:1;min-width:0;}
+  .up-when{color:#8fb2ff;font-size:.8rem;margin-bottom:4px;}
+  .up-title{color:#e7c072;font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:1.25rem;line-height:1.15;margin-bottom:6px;}
+  .up-story{color:#cdd5ea;font-size:.92rem;line-height:1.5;}
+  .up-row{display:flex;justify-content:space-between;gap:10px;padding:11px 2px;border-top:1px solid var(--c-sep);font-size:.95rem;}
+  .up-rtitle{color:var(--c-text);} .up-rwhen{color:var(--c-muted);white-space:nowrap;}
+
+  .m-preview{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 10px 30px rgba(0,0,0,.24);border:1px solid var(--c-sep);}
   .pv-frame{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none;background:var(--d-bg);}
-  .pv-in{position:absolute;inset:0;display:flex;flex-direction:column;padding:4cqw;gap:2cqw;}
-  .pv-top{display:flex;justify-content:space-between;align-items:flex-start;}
-  .pv-dow{font-family:var(--d-font-disp);font-weight:700;font-size:4cqw;color:var(--d-text);}
-  .pv-hdate{font-family:var(--d-font-disp);color:var(--d-accent);font-size:2.8cqw;}
-  .pv-bsd{color:var(--d-accent);font-size:2.3cqw;letter-spacing:.08em;}
-  .pv-clock{flex:1;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19cqw;font-variant-numeric:tabular-nums;direction:ltr;color:var(--d-clock);font-family:var(--d-font);}
-  .pv-event{display:flex;align-items:center;gap:1.6cqw;background:var(--d-card-bg);border:1px solid var(--d-card-border);border-radius:2.4cqw;padding:1.8cqw 2.4cqw;font-size:3.2cqw;font-weight:700;color:var(--d-event-color);font-variant-numeric:tabular-nums;}
-  .pv-msgs{font-size:2.6cqw;color:var(--d-text);opacity:.85;line-height:1.3;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+
+  .c-status{text-align:center;font-size:.82rem;color:var(--c-muted);margin:16px 0 2px;}
+  .c-status.off{color:var(--c-orange);}
+
+  .about{text-align:center;padding:24px 16px 4px;color:var(--c-muted);}
+  .about .ab-ico{width:64px;height:64px;border-radius:15px;margin:0 auto 10px;display:block;box-shadow:0 6px 18px rgba(0,0,0,.2);}
+  .about .ab-name{font-size:1.12rem;font-weight:700;color:var(--c-text);}
+  .about .ab-ver{font-size:.9rem;margin-top:2px;}
+  .about .ab-mail{display:inline-block;margin-top:5px;color:var(--c-accent);text-decoration:none;font-weight:600;direction:ltr;}
+  .about .ab-copy{font-size:.78rem;margin-top:10px;opacity:.85;line-height:1.5;}
+
+  .saved-toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(10px);background:rgba(0,0,0,.85);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;padding:11px 22px;border-radius:999px;font-size:.95rem;font-weight:600;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:70;}
+  .saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;background:var(--c-bar);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);border-top:1px solid var(--c-sep);padding-bottom:env(safe-area-inset-bottom);}
+  .tabbar button{flex:1;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0 6px;color:var(--c-muted);font-size:10.5px;font-weight:600;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .tabbar button .ti{font-size:21px;line-height:1;transition:transform .15s;}
+  .tabbar button.on{color:var(--c-accent);}
+  .tabbar button.on .ti{transform:translateY(-1px) scale(1.06);}
+  body:not(.mode-manage) .tabbar{display:none;}
   @media (prefers-reduced-motion:reduce){.clock .colon,.event.pulse{animation:none;}.display{transition:filter 2s ease;}}
 </style>
 </head>
@@ -250,90 +289,137 @@
 
 <main id="manage" hidden>
   <div class="m-wrap">
+    <a id="backToDisplay" href="./" class="mg-back">‹ חזרה לתצוגת המסך</a>
     <div class="m-title">לוח הקומה</div>
     <div class="m-subtitle">מערכת ניהול · שליטה מלאה במסך</div>
-    <a id="backToDisplay" href="./" class="c-btn secondary" style="width:auto;padding:7px 15px;text-decoration:none;display:inline-block;margin:0 0 6px;">← חזרה לתצוגת המסך</a>
     <div id="panel">
-      <div class="c-section"><div class="c-hdr">👁️ תצוגה מקדימה חיה</div>
-        <div class="m-preview" id="preview"><iframe class="pv-frame" id="previewFrame" title="תצוגה מקדימה חיה של המסך" src="./?preview=1" scrolling="no" tabindex="-1"></iframe></div>
+
+      <!-- ===== בית ===== -->
+      <div class="tabpage on" data-page="home">
+        <div class="hero"><div class="hero-row">
+          <div><div class="hero-k">שלום 👋</div><div class="hero-status">לוח הקומה פעיל</div></div>
+          <div class="hero-ico">📺</div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,59,48,.16)">⏻</span><span>הפעלת המסך</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">כיבוי המסך<small>המסך נהיה שחור — כאילו כבוי — עד שתדליק שוב</small></span><label class="sw"><input type="checkbox" id="displayOff"><span class="track"></span><span class="knob"></span></label></div>
+          <div class="c-row"><span class="lbl">סטטוס המסך<small>האם הטלוויזיה מחוברת כעת</small></span><span class="val" id="screenStatus">בודק…</span></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(0,122,255,.16)">👁️</span><span>תצוגה מקדימה חיה</span></div>
+          <div class="m-preview" id="preview"><iframe class="pv-frame" id="previewFrame" title="תצוגה מקדימה חיה של המסך" src="./?preview=1" scrolling="no" tabindex="-1"></iframe></div>
+        </div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(142,142,147,.2)">🖥️</span><span>פתיחה וקישורים</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">פתיחת תצוגת המסך<small>פתח את הלוח בטלוויזיה</small></span><a class="c-btn secondary" id="openDisplay" href="./" style="width:auto;padding:8px 16px;text-decoration:none;">פתח ↗</a></div>
+          <div class="c-row tap" id="copyLink"><span class="lbl">העתקת קישור המסך<small id="copyHint">לפתיחה בטלוויזיה</small></span><span class="chev">⧉</span></div>
+        </div></div>
       </div>
-      <div class="c-section"><div class="c-hdr">⏻ הפעלת המסך</div><div class="c-group">
-        <div class="c-row"><span class="lbl">כיבוי המסך<small>המסך נהיה שחור — כאילו כבוי — עד שתדליק שוב</small></span><label class="sw"><input type="checkbox" id="displayOff"><span class="track"></span><span class="knob"></span></label></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">📨 הודעות למסך</div><div class="c-group">
-        <div class="addwrap"><div class="addrow"><input id="newMsg" class="c-input" placeholder="הודעה חדשה…" maxlength="140"><button id="addMsg" class="c-btn">הוסף</button></div>
-          <div class="exprow"><span>להסרה אוטומטית עד תאריך</span><input id="newMsgExp" type="date"></div></div>
-        <div id="adminMsgs"></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">🎬 תמונות וסרטונים</div><div class="c-group">
-        <div class="c-row"><span class="lbl">אופן התצוגה<small>איך המדיה מוצגת על המסך</small></span></div>
-        <div class="chips" id="mediaModeChips"><button data-mm="off">כבוי</button><button data-mm="single">בודד</button><button data-mm="rotate">סבב (אחד אחרי השני)</button></div>
-        <div class="c-row"><span class="lbl">משך כל תמונה<small>בסבב בלבד</small></span><span class="val"><b id="mediaDwellVal">8</b> ש׳</span></div>
-        <div class="chips" id="mediaDwellChips"><button data-dw="5">5 ש׳</button><button data-dw="8">8 ש׳</button><button data-dw="12">12 ש׳</button><button data-dw="20">20 ש׳</button></div>
-        <div class="addwrap"><label class="c-btn" for="mediaFile" style="cursor:pointer;text-align:center;display:block">⬆️ העלאה מהגלריה (תמונות / סרטונים)</label><input id="mediaFile" type="file" accept="image/*,video/*" multiple hidden></div>
-        <div id="mediaProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
-        <div id="adminMedia"></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">📹 סרטון יומי מתוזמן</div><div class="c-group">
-        <div class="c-row"><span class="lbl">הפעלה<small>מתנגן אוטומטית פעם ביום, ואז חוזר ללוח</small></span><label class="sw"><input type="checkbox" id="dailyEnabled"><span class="track"></span><span class="knob"></span></label></div>
-        <div class="c-row"><span class="lbl">שעת ניגון<small>30 דק׳ לפני כיבוי אורות (זז עם השעה)</small></span><span class="val"><b id="dailyTimeShow">—</b></span></div>
-        <div class="addwrap"><label class="c-btn" for="dailyFile" style="cursor:pointer;text-align:center;display:block">⬆️ העלאת סרטון היום (עד 7 דק׳)</label><input id="dailyFile" type="file" accept="video/*" hidden></div>
-        <div id="dailyProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
-        <div id="dailyCurrent"></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">🖼️ תמונת הרבי היומית</div><div class="c-group">
-        <div class="c-row"><span class="lbl">תצוגה<small>תמונת הרבי מתחלפת כל יום (RebbeDrive)</small></span></div>
-        <div class="chips" id="rebbeChips"><button data-rm="off">כבוי</button><button data-rm="panel">מעל השעון</button><button data-rm="background">רקע מלא</button></div>
-        <div class="c-row"><span class="lbl">מיקום השעון<small>ברקע מלא — גרור את הג׳ויסטיק שהשעון לא יסתיר פנים</small></span></div>
-        <div class="joy" id="clockJoy"><div class="joy-knob" id="clockJoyKnob"></div></div>
-        <div class="chips" id="clockJoyChips"><button id="clockJoyCenter">◎ מרכז</button></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">🌙 כיבוי אורות</div><div class="c-group">
-        <div class="c-row"><span class="lbl">הלילה<small>ברירת מחדל <b id="loDefault">22:00</b> · מתאפס מחר</small></span><input id="loTime" type="time"></div>
-        <div class="chips"><button data-lo="22:00">22:00</button><button data-lo="22:15">22:15</button><button data-lo="22:40">22:40</button><button data-lo="23:15">23:15</button><button id="loReset" class="ghost">↺ ברירת מחדל</button></div>
-        <div class="c-row"><span class="lbl">להציג במסך</span><label class="sw"><input type="checkbox" id="loEnabled"><span class="track"></span><span class="knob"></span></label></div>
-        <div class="c-row"><span class="lbl">עמעום לילה<small>המסך מחשיך אחרי כיבוי אורות</small></span><label class="sw"><input type="checkbox" id="nightDim"><span class="track"></span><span class="knob"></span></label></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">☀️ בהירות המסך</div><div class="c-group">
-        <div class="c-row"><span class="lbl">עוצמת בהירות<small>בהירות התצוגה בטלוויזיה</small></span><span class="val"><b id="brightVal">100%</b></span></div>
-        <div class="brightrow"><span class="bico sm">🌙</span><input type="range" id="brightRange" min="20" max="100" step="5" value="100" class="brange"><span class="bico lg">☀️</span></div>
-        <div class="chips" id="brightChips"><button data-br="100">100%</button><button data-br="75">75%</button><button data-br="50">50%</button><button data-br="30">30%</button></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">🌑 כיבוי מסך בלילה</div><div class="c-group">
-        <div class="c-row"><span class="lbl">כיבוי אוטומטי<small>המסך נהיה שחור בשעות הלילה — מגן על הטלוויזיה</small></span><label class="sw"><input type="checkbox" id="scEnabled"><span class="track"></span><span class="knob"></span></label></div>
-        <div class="c-row"><span class="lbl">כיבוי בשעה</span><input id="scStart" type="time"></div>
-        <div class="c-row"><span class="lbl">חזרה בשעה</span><input id="scEnd" type="time"></div>
-        <div class="c-note" style="font-size:12px;opacity:.7;padding:2px 2px 0">הקשה על המסך השחור מציגה את הלוח ל-2 דקות.</div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">📱 הפקדת טלפונים</div><div class="c-group">
-        <div class="c-row"><span class="lbl">שעת יעד<small>סוף ההפקדה</small></span><input id="pdTime" type="time"></div>
-        <div class="c-row"><span class="lbl">להציג ספירה לאחור</span><label class="sw"><input type="checkbox" id="pdEnabled"><span class="track"></span><span class="knob"></span></label></div>
-        <div class="c-row"><span class="lbl">הפקדת ערב<small>תמיד 10 דק׳ לפני כיבוי אורות</small></span><label class="sw"><input type="checkbox" id="pdEveningEnabled"><span class="track"></span><span class="knob"></span></label></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">🕗 סוף זמן ק״ש</div><div class="c-group">
-        <div class="c-row"><span class="lbl">מחושב להיום (בעל התניא)<small>כיול להתאמה ללוח כולל חב״ד</small></span><span class="val"><b id="ksFinal">—</b></span></div>
-        <div class="c-row"><span class="lbl">כיול בדקות</span><div class="stepper"><button id="ksMinus">−</button><span class="sval" id="ksOffVal">0</span><button id="ksPlus">+</button></div></div>
-        <div class="c-row"><span class="lbl">להציג סוף זמן ק״ש</span><label class="sw"><input type="checkbox" id="ksShow"><span class="track"></span><span class="knob"></span></label></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">🕯️ מצב שבת</div><div class="c-group">
-        <div class="c-row"><span class="lbl">מצב שבת אוטומטי<small>מסתיר ספירות ומציג "שבת שלום"</small></span><label class="sw"><input type="checkbox" id="shabbatMode"><span class="track"></span><span class="knob"></span></label></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">📖 היום יום</div><div class="c-group">
-        <div class="c-row"><span class="lbl">הצגת "היום יום"<small>כבוי · בסבב (מתחלף) · קבוע (תמיד בתחתית)</small></span></div>
-        <div class="chips" id="hyyChips"><button data-hyy="off">כבוי</button><button data-hyy="rotate">בסבב</button><button data-hyy="always">קבוע</button></div>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">🎨 עיצוב המסך</div><div class="c-group"><div class="themes" id="themeGrid"></div><div class="c-row"><span class="lbl">מעבר אוטומטי בין רקעים<small>מחליף רקע לפי זמן</small></span></div><div class="chips" id="rotateChips"><button data-rot="0">כבוי</button><button data-rot="30">30 דק׳</button><button data-rot="60">שעה</button><button data-rot="360">6 שעות</button><button data-rot="1440">יום</button></div></div></div>
-      <div class="c-section"><div class="c-hdr">🖥️ המסך וקישורים</div><div class="c-group">
-        <div class="c-row"><span class="lbl">סטטוס המסך<small>האם הטלוויזיה מחוברת כעת</small></span><span class="val" id="screenStatus">בודק…</span></div>
-        <div class="c-row"><span class="lbl">פתיחת תצוגת המסך</span><a class="c-btn secondary" id="openDisplay" href="./" style="width:auto;padding:8px 16px;text-decoration:none;">פתח ↗</a></div>
-        <div class="c-row tap" id="copyLink"><span class="lbl">העתקת קישור המסך<small id="copyHint">לפתיחה בטלוויזיה</small></span><span class="chev">⧉</span></div>
-        <a class="c-row tap" href="./backgrounds.html" target="_blank" style="text-decoration:none;color:inherit;"><span class="lbl">כל הרקעים<small>100 עיצובים · 10 סגנונות</small></span><span class="chev">↗</span></a>
-        <a class="c-row tap" href="./dates.html" target="_blank" style="text-decoration:none;color:inherit;"><span class="lbl">כל התאריכים<small>כל אירועי דברי ימי חב״ד + תמונות</small></span><span class="chev">↗</span></a>
-      </div></div>
-      <div class="c-section"><div class="c-hdr">📅 לוח אירועים חב״די</div><div class="c-group"><div id="upcoming" style="padding:14px 16px"></div></div></div>
-      <div class="c-status" id="syncStatus"></div>
+
+      <!-- ===== תוכן ===== -->
+      <div class="tabpage" data-page="content">
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(0,122,255,.16)">💬</span><span>הודעות למסך</span></div><div class="c-group">
+          <div class="addwrap"><div class="addrow"><input id="newMsg" class="c-input" placeholder="הודעה חדשה…" maxlength="140"><button id="addMsg" class="c-btn">הוסף</button></div>
+            <div class="exprow"><span>להסרה אוטומטית עד תאריך</span><input id="newMsgExp" type="date"></div></div>
+          <div id="adminMsgs"></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,45,85,.16)">🖼️</span><span>תמונות וסרטונים</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">אופן התצוגה<small>איך המדיה מוצגת על המסך</small></span></div>
+          <div class="chips" id="mediaModeChips"><button data-mm="off">כבוי</button><button data-mm="single">בודד</button><button data-mm="rotate">סבב (אחד אחרי השני)</button></div>
+          <div class="c-row"><span class="lbl">משך כל תמונה<small>בסבב בלבד</small></span><span class="val"><b id="mediaDwellVal">8</b> ש׳</span></div>
+          <div class="chips" id="mediaDwellChips"><button data-dw="5">5 ש׳</button><button data-dw="8">8 ש׳</button><button data-dw="12">12 ש׳</button><button data-dw="20">20 ש׳</button></div>
+          <div class="addwrap"><label class="c-btn" for="mediaFile" style="cursor:pointer;text-align:center;display:block">⬆️ העלאה מהגלריה (תמונות / סרטונים)</label><input id="mediaFile" type="file" accept="image/*,video/*" multiple hidden></div>
+          <div id="mediaProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
+          <div id="adminMedia"></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,69,58,.16)">📹</span><span>סרטון יומי מתוזמן</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">הפעלה<small>מתנגן אוטומטית פעם ביום, ואז חוזר ללוח</small></span><label class="sw"><input type="checkbox" id="dailyEnabled"><span class="track"></span><span class="knob"></span></label></div>
+          <div class="c-row"><span class="lbl">שעת ניגון<small>30 דק׳ לפני כיבוי אורות (זז עם השעה)</small></span><span class="val"><b id="dailyTimeShow">—</b></span></div>
+          <div class="addwrap"><label class="c-btn" for="dailyFile" style="cursor:pointer;text-align:center;display:block">⬆️ העלאת סרטון היום (עד 7 דק׳)</label><input id="dailyFile" type="file" accept="video/*" hidden></div>
+          <div id="dailyProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
+          <div id="dailyCurrent"></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(88,86,214,.16)">🕯️</span><span>תמונת הרבי היומית</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">תצוגה<small>תמונת הרבי מתחלפת כל יום</small></span></div>
+          <div class="chips" id="rebbeChips"><button data-rm="off">כבוי</button><button data-rm="panel">מעל השעון</button><button data-rm="background">רקע מלא</button></div>
+          <div class="c-row"><span class="lbl">מיקום השעון<small>ברקע מלא — גרור את הג׳ויסטיק שהשעון לא יסתיר פנים</small></span></div>
+          <div class="joy" id="clockJoy"><div class="joy-knob" id="clockJoyKnob"></div></div>
+          <div class="chips" id="clockJoyChips"><button id="clockJoyCenter">◎ מרכז</button></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(162,132,94,.2)">📖</span><span>היום יום</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">הצגת "היום יום"<small>כבוי · בסבב (מתחלף) · קבוע (תמיד בתחתית)</small></span></div>
+          <div class="chips" id="hyyChips"><button data-hyy="off">כבוי</button><button data-hyy="rotate">בסבב</button><button data-hyy="always">קבוע</button></div>
+        </div></div>
+      </div>
+
+      <!-- ===== זמנים ===== -->
+      <div class="tabpage" data-page="times">
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(88,86,214,.16)">🌙</span><span>כיבוי אורות</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">הלילה<small>ברירת מחדל <b id="loDefault">22:00</b> · מתאפס מחר</small></span><input id="loTime" type="time"></div>
+          <div class="chips"><button data-lo="22:00">22:00</button><button data-lo="22:15">22:15</button><button data-lo="22:40">22:40</button><button data-lo="23:15">23:15</button><button id="loReset" class="ghost">↺ ברירת מחדל</button></div>
+          <div class="c-row"><span class="lbl">להציג במסך</span><label class="sw"><input type="checkbox" id="loEnabled"><span class="track"></span><span class="knob"></span></label></div>
+          <div class="c-row"><span class="lbl">עמעום לילה<small>המסך מחשיך אחרי כיבוי אורות</small></span><label class="sw"><input type="checkbox" id="nightDim"><span class="track"></span><span class="knob"></span></label></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(52,199,89,.16)">📱</span><span>הפקדת טלפונים</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">שעת יעד<small>סוף ההפקדה</small></span><input id="pdTime" type="time"></div>
+          <div class="c-row"><span class="lbl">להציג ספירה לאחור</span><label class="sw"><input type="checkbox" id="pdEnabled"><span class="track"></span><span class="knob"></span></label></div>
+          <div class="c-row"><span class="lbl">הפקדת ערב<small>תמיד 10 דק׳ לפני כיבוי אורות</small></span><label class="sw"><input type="checkbox" id="pdEveningEnabled"><span class="track"></span><span class="knob"></span></label></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(48,176,199,.18)">🌅</span><span>סוף זמן ק״ש</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">מחושב להיום (בעל התניא)<small>כיול להתאמה ללוח כולל חב״ד</small></span><span class="val"><b id="ksFinal">—</b></span></div>
+          <div class="c-row"><span class="lbl">כיול בדקות</span><div class="stepper"><button id="ksMinus">−</button><span class="sval" id="ksOffVal">0</span><button id="ksPlus">+</button></div></div>
+          <div class="c-row"><span class="lbl">להציג סוף זמן ק״ש</span><label class="sw"><input type="checkbox" id="ksShow"><span class="track"></span><span class="knob"></span></label></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,149,0,.16)">🕯️</span><span>מצב שבת</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">מצב שבת אוטומטי<small>מסתיר ספירות ומציג "גוט שבת"</small></span><label class="sw"><input type="checkbox" id="shabbatMode"><span class="track"></span><span class="knob"></span></label></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(99,99,102,.2)">🌑</span><span>כיבוי מסך בלילה</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">כיבוי אוטומטי<small>המסך נהיה שחור בשעות הלילה — מגן על הטלוויזיה</small></span><label class="sw"><input type="checkbox" id="scEnabled"><span class="track"></span><span class="knob"></span></label></div>
+          <div class="c-row"><span class="lbl">כיבוי בשעה</span><input id="scStart" type="time"></div>
+          <div class="c-row"><span class="lbl">חזרה בשעה</span><input id="scEnd" type="time"></div>
+          <div class="c-note">הקשה על המסך השחור מציגה את הלוח ל-2 דקות.</div>
+        </div></div>
+      </div>
+
+      <!-- ===== עיצוב ===== -->
+      <div class="tabpage" data-page="design">
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,45,85,.16)">🎨</span><span>עיצוב המסך</span></div><div class="c-group">
+          <div class="themes" id="themeGrid"></div>
+          <div class="c-row"><span class="lbl">מעבר אוטומטי בין רקעים<small>מחליף רקע לפי זמן</small></span></div>
+          <div class="chips" id="rotateChips"><button data-rot="0">כבוי</button><button data-rot="30">30 דק׳</button><button data-rot="60">שעה</button><button data-rot="360">6 שעות</button><button data-rot="1440">יום</button></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,149,0,.16)">☀️</span><span>בהירות המסך</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">עוצמת בהירות<small>בהירות התצוגה בטלוויזיה</small></span><span class="val"><b id="brightVal">100%</b></span></div>
+          <div class="brightrow"><span class="bico sm">🌙</span><input type="range" id="brightRange" min="20" max="100" step="5" value="100" class="brange"><span class="bico lg">☀️</span></div>
+          <div class="chips" id="brightChips"><button data-br="100">100%</button><button data-br="75">75%</button><button data-br="50">50%</button><button data-br="30">30%</button></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(142,142,147,.2)">📚</span><span>ספריית עיצובים</span></div><div class="c-group">
+          <a class="c-row tap" href="./backgrounds.html" target="_blank" style="text-decoration:none;color:inherit;"><span class="lbl">כל הרקעים<small>100 עיצובים · 10 סגנונות</small></span><span class="chev">↗</span></a>
+          <a class="c-row tap" href="./dates.html" target="_blank" style="text-decoration:none;color:inherit;"><span class="lbl">כל התאריכים<small>כל אירועי דברי ימי חב״ד + תמונות</small></span><span class="chev">↗</span></a>
+        </div></div>
+      </div>
+
+      <!-- ===== מידע ===== -->
+      <div class="tabpage" data-page="info">
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,59,48,.16)">📅</span><span>לוח אירועים חב״די</span></div><div class="c-group"><div id="upcoming" style="padding:14px 16px"></div></div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(0,122,255,.16)">ℹ️</span><span>אודות</span></div>
+          <div class="about">
+            <img class="ab-ico" src="apple-touch-icon.png" alt="">
+            <div class="ab-name">לוח הקומה</div>
+            <div class="ab-ver">גרסה 2.0 · אשר וילר</div>
+            <a class="ab-mail" href="mailto:asher.w770@gmail.com?subject=%D7%9C%D7%95%D7%97%20%D7%94%D7%A7%D7%95%D7%9E%D7%94%20%E2%80%93%20%D7%A4%D7%A0%D7%99%D7%99%D7%94">asher.w770@gmail.com</a>
+            <div class="ab-copy">פותח ועוצב על ידי אשר וילר<br>© 2026 · כל הזכויות שמורות</div>
+          </div>
+        </div>
+        <div class="c-status" id="syncStatus"></div>
+      </div>
+
     </div>
   </div>
+  <nav class="tabbar">
+    <button data-tab="home"><span class="ti">🏠</span>בית</button>
+    <button data-tab="content"><span class="ti">✨</span>תוכן</button>
+    <button data-tab="times"><span class="ti">🕐</span>זמנים</button>
+    <button data-tab="design"><span class="ti">🎨</span>עיצוב</button>
+    <button data-tab="info"><span class="ti">☰</span>מידע</button>
+  </nav>
   <div class="saved-toast" id="toast">נשמר ✓</div>
 </main>
 
@@ -989,6 +1075,34 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
 
   loadCache();showMode();renderClock();setInterval(renderClock,250);initStore();
   window.addEventListener("hashchange",function(){location.reload();});
+})();
+</script>
+<script>
+/* ניווט לשוניות + משוב רטט — מערכת הניהול (בסגנון iOS) */
+(function(){
+  if(!/#(manage|admin)/.test(location.hash))return;
+  function ready(fn){if(document.readyState!=="loading")fn();else document.addEventListener("DOMContentLoaded",fn);}
+  function buzz(ms){if(navigator.vibrate){try{navigator.vibrate(ms);}catch(e){}}}
+  ready(function(){
+    var tabs=document.querySelectorAll(".tabbar button[data-tab]");
+    var pages=document.querySelectorAll(".tabpage");
+    if(!tabs.length||!pages.length)return;
+    function rescale(){try{var box=document.getElementById("preview"),fr=document.getElementById("previewFrame");if(box&&fr){var w=box.clientWidth;if(w>0)fr.style.transform="scale("+(w/1280)+")";}}catch(e){}}
+    function show(name){
+      Array.prototype.forEach.call(pages,function(p){p.classList.toggle("on",p.getAttribute("data-page")===name);});
+      Array.prototype.forEach.call(tabs,function(b){b.classList.toggle("on",b.getAttribute("data-tab")===name);});
+      try{localStorage.setItem("board_mg_tab",name);}catch(e){}
+      try{window.scrollTo(0,0);}catch(e){}
+      if(name==="home")setTimeout(rescale,40);
+      if(name==="content"&&window._joyFromCfg)setTimeout(window._joyFromCfg,50);
+    }
+    Array.prototype.forEach.call(tabs,function(b){b.addEventListener("click",function(){show(b.getAttribute("data-tab"));buzz(5);});});
+    var init="home";try{var s=localStorage.getItem("board_mg_tab");if(s)init=s;}catch(e){}
+    if(!document.querySelector('.tabpage[data-page="'+init+'"]'))init="home";
+    show(init);
+    document.addEventListener("click",function(e){var t=e.target;if(t&&t.closest&&t.closest(".chips button,.c-btn,.theme-opt,.stepper button,.c-row.tap,.trash,.editb"))buzz(5);},true);
+    document.addEventListener("change",function(e){var t=e.target;if(t&&t.closest&&t.closest(".sw"))buzz(9);},true);
+  });
 })();
 </script>
 </body>
