@@ -458,6 +458,7 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
 </script>
 
 <script src="hayomyom.js"></script>
+<script src="rebbe-photos.js"></script>
 <script>if("serviceWorker" in navigator&&!/[?&]preview=1/.test(location.search)){window.addEventListener("load",function(){
   navigator.serviceWorker.register("sw.js").then(function(reg){try{reg.update();}catch(e){}setInterval(function(){try{reg.update();}catch(e){}},1800000);}).catch(function(){});
   var _reloaded=false;navigator.serviceWorker.addEventListener("controllerchange",function(){if(_reloaded)return;_reloaded=true;location.reload();});
@@ -631,9 +632,9 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
   }
   function listUpcoming(n){var out=[],base=new Date();base.setHours(12,0,0,0);for(var i=0;i<400&&out.length<n;i++){var d=new Date(base);d.setDate(d.getDate()+i);var evs=dayEvents(d);for(var j=0;j<evs.length&&out.length<n;j++)out.push({days:i,date:hebrewDate(d),cd:evs[j]});}return out;}
   function renderUpcoming(){var box=document.getElementById("upcoming");if(!box)return;var up=listUpcoming(6);if(!up.length){box.innerHTML='<div class="c-empty">אין אירועים קרובים ברשימה.</div>';return;}var f=up[0],when=f.days===0?"היום":("בעוד "+f.days+" ימים");var html='<div class="up-card'+(f.cd.p?" has-photo":"")+'">';if(f.cd.p)html+='<img class="up-photo" src="'+f.cd.p+'" alt="" onerror="this.style.display=\'none\'">';html+='<div class="up-body"><div class="up-when">הקרוב · '+when+' · '+f.date+'</div><div class="up-title">'+f.cd.t+'</div><div class="up-story">'+f.cd.s+'</div></div></div>';for(var i=1;i<up.length;i++){var w=up[i].days===0?"היום":("בעוד "+up[i].days+" ימים");html+='<div class="up-row"><span class="up-rtitle">'+up[i].cd.t+'</span><span class="up-rwhen">'+w+'</span></div>';}box.innerHTML=html;}
-  /* תמונות הרבי — כתובת מלאה ל-GitHub של הלוח. כך הן נטענות מכל מקום (גם מקיוסק שרץ מקובץ מקומי file://, לא רק מהאתר) ועוברות את סינון האינטרנט בישיבה. בלוח ה-GitHub זה אותו נתיב בדיוק. */
+  /* תמונות הרבי — מוטבעות כ-base64 מתוך rebbe-photos.js (window.REBBE_B64): נטענות ללא שום בקשת רשת, ולכן עוברות את מסנן התוכן הכשר בישיבה בדיוק כמו תמונות שמעלים (הנחשבות base64). אם מסיבה כלשהי הקובץ לא נטען — נפילה חזרה לכתובת מלאה ל-GitHub. */
   var REBBE_IMG_BASE="https://asherw770-commits.github.io/luach/photos/";
-  var SHABBAT_PHOTOS=[
+  var SHABBAT_PHOTOS=(window.REBBE_B64&&window.REBBE_B64.length)?window.REBBE_B64.slice():[
     REBBE_IMG_BASE+"rebbe-1.jpg",
     REBBE_IMG_BASE+"rebbe-2.jpg",
     REBBE_IMG_BASE+"rebbe-3.jpg",

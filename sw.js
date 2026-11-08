@@ -1,10 +1,11 @@
 /* לוח הקומה — Service Worker: מאפשר ללוח לעבוד גם בלי אינטרנט (תצוגה, תאריכים, זמנים, היום יום).
    השעון/התאריך/הזמנים/היום יום מחושבים במכשיר, וכל נתוני היום-יום נמצאים ב-hayomyom.js — הכל נשמר במטמון. */
-var CACHE = "luach-v10";
+var CACHE = "luach-v11";
 var CORE = [
   "./",
   "index.html",
   "hayomyom.js",
+  "rebbe-photos.js",
   "manifest.webmanifest",
   "apple-touch-icon.png",
   "icon-512.png",
