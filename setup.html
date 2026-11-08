@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>התקנת לוח הקומה — הפעלה אוטומטית</title>
+<style>
+  :root{color-scheme:light dark}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"Segoe UI",Arial,sans-serif;
+       background:#0b1020;color:#eef2ff;line-height:1.6;
+       display:flex;justify-content:center;padding:24px}
+  .card{width:100%;max-width:620px}
+  h1{font-size:26px;margin:.2em 0}
+  .sub{opacity:.8;margin-bottom:22px}
+  .big{display:block;text-align:center;text-decoration:none;
+       background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;
+       font-size:22px;font-weight:700;padding:20px;border-radius:18px;
+       box-shadow:0 10px 30px rgba(59,130,246,.45);margin:18px 0}
+  .big small{display:block;font-weight:400;font-size:14px;opacity:.9;margin-top:4px}
+  .box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+       border-radius:16px;padding:16px 20px;margin:16px 0}
+  .box h2{font-size:18px;margin:.1em 0 .4em}
+  ol{margin:.3em 0;padding-inline-start:22px}
+  li{margin:.35em 0}
+  code{background:rgba(255,255,255,.12);padding:2px 7px;border-radius:7px;
+       font-size:.92em;direction:ltr;display:inline-block}
+  .files{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+  .files a{flex:1;min-width:150px;text-align:center;text-decoration:none;
+       background:rgba(255,255,255,.1);color:#cfe0ff;padding:12px;border-radius:12px;
+       border:1px solid rgba(255,255,255,.15);font-size:14px}
+  .note{font-size:14px;opacity:.85}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🖥️ התקנת לוח הקומה</h1>
+  <div class="sub">הפעלה אוטומטית במסך מלא בכל הדלקה — בלי נגיעה</div>
+
+  <a class="big" href="luach-kiosk-setup.zip" download>
+    ⬇️ הורדת קובץ ההתקנה
+    <small>luach-kiosk-setup.zip — שלושה קבצים</small>
+  </a>
+
+  <div class="box">
+    <h2>מה עושים אחרי ההורדה</h2>
+    <ol>
+      <li>ודאו ש-<b>Google Chrome</b> מותקן על המחשב.</li>
+      <li>פתחו את ה-zip ו<b>חלצו</b> את הקבצים לשולחן העבודה (Extract All).</li>
+      <li>קליק ימני על <code>install.bat</code> ← <b>הפעל כמנהל</b> (Run as administrator).</li>
+      <li>חכו שיופיע "הסתיים בהצלחה", ואז <b>כבו והדליקו</b> את המחשב.</li>
+    </ol>
+    <div class="note">המחשב ייכנס לבד למשתמש <code>luach</code> ויפתח את הלוח במסך מלא.
+    ליציאה זמנית: <code>Alt+F4</code>. לפתיחה מחדש: הקיצור <b>Open-Board</b> בשולחן העבודה.</div>
+  </div>
+
+  <div class="box">
+    <h2>שליטה מרחוק מהטלפון (AnyDesk)</h2>
+    <ol>
+      <li>הורידו AnyDesk מ-<code>anydesk.com/he</code> והתקינו (Start with Windows).</li>
+      <li>רשמו את מספר ה-9 ספרות שמוצג.</li>
+      <li>Settings ← Security ← Unlock ← סמנו <b>Unattended access</b> וקבעו סיסמה.</li>
+      <li>מהטלפון: אפליקציית AnyDesk ← מספר המחשב ← הסיסמה. הלוח ממשיך להופיע על הטלוויזיה.</li>
+    </ol>
+    <div class="note">לשינוי תוכן הלוח (הודעות/תמונות/זמנים) לא צריך AnyDesk —
+    עושים מהטלפון בדף הניהול <code>/#manage</code>.</div>
+  </div>
+
+  <div class="box">
+    <h2>אם ההורדה למעלה נחסמה — הורדה בודדת</h2>
+    <div class="files">
+      <a href="install.bat" download>install.bat</a>
+      <a href="board-kiosk.bat" download>board-kiosk.bat</a>
+      <a href="README.txt" download>README.txt</a>
+    </div>
+    <div class="note" style="margin-top:10px">הורידו את שלושתם לאותה תיקייה, ואז הפעילו את install.bat כמנהל.</div>
+  </div>
+</div>
+</body>
+</html>
