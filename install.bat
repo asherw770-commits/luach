@@ -16,13 +16,14 @@ if %errorlevel% neq 0 (
 
 set "LUSER=luach"
 set "LPASS=luach"
-set "SRC=%~dp0board-kiosk.bat"
+set "S=%~dp0"
 
-if not exist "%SRC%" (
-  echo   ** חסר הקובץ board-kiosk.bat ליד הקובץ הזה **
-  echo   ודא ששני הקבצים נמצאים באותה תיקייה.
-  pause
-  exit /b
+for %%F in (board-kiosk.bat run-hidden.vbs Open-Board.bat Stop-Board.bat) do (
+  if not exist "%S%%%F" (
+    echo   ** חסר הקובץ %%F ליד הקובץ הזה — ודא שחילצת את כל הקבצים לאותה תיקייה **
+    pause
+    exit /b
+  )
 )
 
 echo.
@@ -43,16 +44,22 @@ reg add "%WL%" /v DefaultPassword   /t REG_SZ /d %LPASS% /f >nul
 reg add "%WL%" /v DefaultDomainName /t REG_SZ /d "%COMPUTERNAME%" /f >nul
 echo   [2/5] כניסה אוטומטית — הופעלה
 
-rem 3) התקנת המפעיל
+rem 3) התקנת הקבצים ל-C:\luach
 if not exist "C:\luach" md "C:\luach"
-copy /y "%SRC%" "C:\luach\board-kiosk.bat" >nul
-echo   [3/5] המפעיל הותקן ל-C:\luach
+copy /y "%S%board-kiosk.bat" "C:\luach\board-kiosk.bat" >nul
+copy /y "%S%run-hidden.vbs"  "C:\luach\run-hidden.vbs"  >nul
+copy /y "%S%Open-Board.bat"  "C:\luach\Open-Board.bat"  >nul
+copy /y "%S%Stop-Board.bat"  "C:\luach\Stop-Board.bat"  >nul
+del "C:\luach\STOP.flag" >nul 2>&1
+echo   [3/5] הקבצים הותקנו ל-C:\luach
 
-rem 4) הפעלה אוטומטית בכל הדלקה + קיצור בשולחן העבודה
+rem 4) הפעלה אוטומטית בהדלקה (ברקע) + קיצורים בשולחן העבודה
 set "STARTUP=C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
-copy /y "%SRC%" "%STARTUP%\board-kiosk.bat" >nul
-copy /y "%SRC%" "C:\Users\Public\Desktop\Open-Board.bat" >nul
-echo   [4/5] יופעל בכל הדלקה + קיצור "Open-Board" על שולחן העבודה
+del "%STARTUP%\board-kiosk.bat" >nul 2>&1
+copy /y "%S%run-hidden.vbs" "%STARTUP%\luach-board.vbs" >nul
+copy /y "%S%Open-Board.bat" "C:\Users\Public\Desktop\Open-Board.bat" >nul
+copy /y "%S%Stop-Board.bat" "C:\Users\Public\Desktop\Stop-Board.bat" >nul
+echo   [4/5] יופעל בכל הדלקה + קיצורים Open-Board / Stop-Board בשולחן העבודה
 
 rem 5) שלא ייכבה / יישן / יכבה מסך
 powercfg /change standby-timeout-ac 0 >nul 2>&1
@@ -63,7 +70,9 @@ echo   [5/5] שינה וכיבוי מסך — בוטלו
 echo.
 echo   ====== הסתיים בהצלחה! ======
 echo.
-echo   כבה והדלק את המחשב — הוא ייכנס לבד ללוח במסך מלא.
-echo   ליציאה מהלוח לתחזוקה: Alt+F4.  לפתיחה מחדש: "Open-Board" בשולחן העבודה.
+echo   כבה והדלק את המחשב — הוא ייכנס לבד ללוח במסך מלא,
+echo   והלוח יישאר במסך מלא (אם ייסגר הוא ייפתח לבד).
+echo.
+echo   לתחזוקה: Stop-Board כדי לעצור, Open-Board כדי לפתוח שוב.
 echo.
 pause
