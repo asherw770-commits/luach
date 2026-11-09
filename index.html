@@ -857,21 +857,23 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     if(/\.(mp4|webm|ogg|m3u8|mov|m4v)(\?|#|$)/i.test(u))return{type:"video",url:u};
     return{type:"iframe",url:(/^https?:\/\//i.test(u)?u:"https://"+u)};
   }
+  var _bcHls=null;
+  function destroyHls(){if(_bcHls){try{_bcHls.destroy();}catch(e){}_bcHls=null;}}
   function attachHls(v,url){
     if(v.canPlayType&&v.canPlayType("application/vnd.apple.mpegurl")){v.src=url;return;}
-    if(window.Hls&&window.Hls.isSupported()){var h=new window.Hls();h.loadSource(url);h.attachMedia(v);return;}
+    if(window.Hls&&window.Hls.isSupported()){destroyHls();_bcHls=new window.Hls();_bcHls.loadSource(url);_bcHls.attachMedia(v);return;}
     var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js";
-    s.onload=function(){if(window.Hls&&window.Hls.isSupported()){var h=new window.Hls();h.loadSource(url);h.attachMedia(v);var p=v.play();if(p&&p.catch)p.catch(function(){});}else{v.src=url;}};
+    s.onload=function(){if(window.Hls&&window.Hls.isSupported()){destroyHls();_bcHls=new window.Hls();_bcHls.loadSource(url);_bcHls.attachMedia(v);var p=v.play();if(p&&p.catch)p.catch(function(){});}else{v.src=url;}};
     s.onerror=function(){v.src=url;};document.head.appendChild(s);
   }
   var _bcKey="";
   function syncBroadcast(now){
     var ms=$("bcShow"),st=$("bcStage");if(!ms||!st)return false;
-    var on=!!config.bcOn&&!!config.bcUrl;
-    if(!on){if(ms.classList.contains("on")){ms.classList.remove("on");st.innerHTML="";_bcKey="";}return false;}
+    var on=!!config.bcOn&&!!config.bcUrl&&!screenOffNow(now);
+    if(!on){if(ms.classList.contains("on")){ms.classList.remove("on");destroyHls();st.innerHTML="";_bcKey="";}return false;}
     if(mediaActive)stopMedia();
     var key=(config.bcType||"")+"|"+config.bcUrl;
-    if(key!==_bcKey){_bcKey=key;st.innerHTML="";var b=parseBroadcast(config.bcUrl);
+    if(key!==_bcKey){_bcKey=key;destroyHls();st.innerHTML="";var b=parseBroadcast(config.bcUrl);
       if(b&&b.type==="youtube"){
         var fr=document.createElement("iframe");
         fr.src="https://www.youtube-nocookie.com/embed/"+encodeURIComponent(b.id)+"?autoplay=1&mute=1&controls=0&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3&loop=1&playlist="+encodeURIComponent(b.id);

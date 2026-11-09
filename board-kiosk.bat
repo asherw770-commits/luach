@@ -10,16 +10,33 @@ set "CHROME="
 if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" set "CHROME=C:\Program Files\Google\Chrome\Application\chrome.exe"
 if not defined CHROME if exist "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" set "CHROME=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 
-timeout /t 6 /nobreak >nul
+rem --- המתנה שהרשת תעלה (עד ~90 שניות) כדי לא להיתקע בדף שגיאה ---
+set /a NETTRY=0
+:netwait
+if exist "%DIR%\STOP.flag" goto end
+ping -n 1 asherw770-commits.github.io >nul 2>&1 && goto netok
+set /a NETTRY+=1
+if %NETTRY% geq 30 goto netok
+timeout /t 3 /nobreak >nul
+goto netwait
+:netok
+
+timeout /t 4 /nobreak >nul
 
 :loop
 if exist "%DIR%\STOP.flag" goto end
-tasklist /fi "imagename eq chrome.exe" 2>nul | find /i "chrome.exe" >nul && goto wait
+rem ALIVE = כמה תהליכי chrome עם חלון גלוי (0 = הקיוסק נעלם/קרס, גם אם נשאר תהליך רפאים)
+set "ALIVE=1"
+for /f %%i in ('powershell -NoProfile -Command "@(Get-Process chrome -ErrorAction SilentlyContinue ^| Where-Object {$_.MainWindowHandle -ne 0}).Count"') do set "ALIVE=%%i"
+if not "%ALIVE%"=="0" goto wait
+rem אין חלון קיוסק גלוי — לנקות שאריות ולפתוח מחדש
+taskkill /f /im chrome.exe >nul 2>&1
+timeout /t 1 /nobreak >nul
 if exist "%PROFILE%\Default\Preferences" powershell -NoProfile -Command "$p='%PROFILE%\Default\Preferences'; (Get-Content -Raw $p) -replace '\"exit_type\":\"[^\"]*\"','\"exit_type\":\"Normal\"' -replace '\"exited_cleanly\":false','\"exited_cleanly\":true' | Set-Content -NoNewline $p" >nul 2>&1
 if defined CHROME start "" "%CHROME%" %FLAGS% "%URL%"
 if not defined CHROME start "" "%URL%"
 :wait
-timeout /t 8 /nobreak >nul
+timeout /t 12 /nobreak >nul
 goto loop
 
 :end

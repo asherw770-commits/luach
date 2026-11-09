@@ -37,7 +37,8 @@ del "%STARTUP%\board-kiosk.bat" >nul 2>&1
 copy /y "%S%run-hidden.vbs" "%STARTUP%\luach-board.vbs" >nul
 copy /y "%S%Open-Board.bat" "C:\Users\Public\Desktop\Open-Board.bat" >nul
 copy /y "%S%Stop-Board.bat" "C:\Users\Public\Desktop\Stop-Board.bat" >nul
-echo   [4/5] יופעל בכל הדלקה + קיצורים על שולחן העבודה
+powershell -NoProfile -Command "Get-ChildItem -Path 'C:\luach' -Recurse -File -ErrorAction SilentlyContinue | Unblock-File; Unblock-File -Path '%STARTUP%\luach-board.vbs','C:\Users\Public\Desktop\Open-Board.bat','C:\Users\Public\Desktop\Stop-Board.bat' -ErrorAction SilentlyContinue" >nul 2>&1
+echo   [4/5] יופעל בכל הדלקה + קיצורים + שוחררה חסימת אבטחה (MOTW)
 
 powercfg /change standby-timeout-ac 0 >nul 2>&1
 powercfg /change monitor-timeout-ac 0 >nul 2>&1
