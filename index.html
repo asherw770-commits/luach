@@ -68,6 +68,11 @@
   .mediashow .m-stage{position:absolute;inset:0;}
   .mediashow .m-stage img,.mediashow .m-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;}
   .mediashow .m-clock{position:absolute;top:3%;inset-inline-end:4%;z-index:2;font-weight:800;font-size:clamp(1.5rem,4.6vmin,3.4rem);color:#fff;font-variant-numeric:tabular-nums;direction:ltr;text-shadow:0 2px 14px rgba(0,0,0,.95);opacity:.9;pointer-events:none;}
+  .broadcast-show{position:absolute;inset:0;z-index:14;background:#000;display:none;overflow:hidden;}
+  .broadcast-show.on{display:block;}
+  .broadcast-show .m-stage{position:absolute;inset:0;}
+  .broadcast-show .m-stage iframe,.broadcast-show .m-stage video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:contain;background:#000;}
+  .broadcast-show .m-clock{position:absolute;top:3%;inset-inline-end:4%;z-index:2;font-weight:800;font-size:clamp(1.5rem,4.6vmin,3.4rem);color:#fff;font-variant-numeric:tabular-nums;direction:ltr;text-shadow:0 2px 14px rgba(0,0,0,.95);opacity:.85;pointer-events:none;}
   .accent-top{position:fixed;top:0;left:0;right:0;height:4px;z-index:5;background:linear-gradient(90deg,var(--d-accent) 0%,var(--d-accent2) 50%,var(--d-accent) 100%);opacity:.9;}
   .disp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
   .dow{font-family:var(--d-font-disp);font-weight:700;font-size:clamp(1.7rem,5.4vmin,3.8rem);line-height:1.02;color:var(--d-text);}
@@ -132,6 +137,14 @@
   :root[data-theme-name="charcoal"]{--d-bg:radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013);--d-text:#eceef2;--d-muted:#9aa0ab;--d-accent:#6aa0ff;--d-accent2:#9ab6ff;--d-clock:#f2f4f8;--d-glow:rgba(106,160,255,.22);--d-secbar:linear-gradient(90deg,#6aa0ff,#aab2bd);--d-card-bg:rgba(255,255,255,.05);--d-card-border:#2b303a;--d-event-color:#9ab6ff;--d-line:#2b303a;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
   :root[data-theme-name="cream"]{--d-bg:#f3ecdd;--d-text:#3a2f1e;--d-muted:#8a7a5c;--d-accent:#915e2a;--d-accent2:#2f6d4a;--d-clock:#2e2516;--d-glow:transparent;--d-secbar:linear-gradient(90deg,#915e2a,#2f6d4a);--d-card-bg:#fff8ec;--d-card-border:#e3d8c0;--d-event-color:#915e2a;--d-line:#e3d8c0;--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
   :root[data-theme-name="bronze"]{--d-bg:radial-gradient(circle at 50% 0%,#241a10,#120c06);--d-text:#f0e4cf;--d-muted:#bda886;--d-accent:#cf9a4e;--d-accent2:#e8c98a;--d-clock:#f6ecd6;--d-glow:rgba(207,154,78,.25);--d-secbar:linear-gradient(90deg,#cf9a4e,#8a6a3a);--d-card-bg:rgba(207,154,78,.08);--d-card-border:rgba(207,154,78,.32);--d-event-color:#e8c98a;--d-line:rgba(207,154,78,.28);--d-font:"Heebo",sans-serif;--d-font-disp:"Bellefair","Frank Ruhl Libre",serif;}
+  :root[data-theme-name="starry"]{--d-bg:radial-gradient(1.5px 1.5px at 18% 28%,rgba(255,255,255,.95),transparent 60%),radial-gradient(1.4px 1.4px at 68% 18%,rgba(255,255,255,.8),transparent 60%),radial-gradient(1.2px 1.2px at 42% 66%,rgba(255,255,255,.85),transparent 60%),radial-gradient(1.6px 1.6px at 83% 58%,rgba(255,255,255,.7),transparent 60%),radial-gradient(1.2px 1.2px at 55% 42%,rgba(255,255,255,.85),transparent 60%),radial-gradient(1.3px 1.3px at 12% 78%,rgba(255,255,255,.7),transparent 60%),radial-gradient(1.5px 1.5px at 90% 86%,rgba(255,255,255,.8),transparent 60%),radial-gradient(1.2px 1.2px at 32% 90%,rgba(255,255,255,.7),transparent 60%),radial-gradient(130% 100% at 50% -12%,#15244c 0%,#0a1130 55%,#05070f 100%);--d-text:#eaf0ff;--d-muted:#9fb0d0;--d-accent:#e7c072;--d-accent2:#bcd0ff;--d-clock:#f4f8ff;--d-glow:rgba(188,208,255,.28);--d-secbar:linear-gradient(90deg,#e7c072,#8fb2ff);--d-card-bg:rgba(255,255,255,.06);--d-card-border:rgba(188,208,255,.3);--d-event-color:#e7c072;--d-line:rgba(188,208,255,.25);--d-font:"Heebo",sans-serif;--d-font-disp:"Frank Ruhl Libre",serif;}
+  :root[data-theme-name="aurora"]{--d-bg:linear-gradient(120deg,#07131f 0%,#0b3b3a 26%,#12507a 50%,#2a2f6a 74%,#07131f 100%);--d-text:#eafff8;--d-muted:#a7c7bd;--d-accent:#7ff0d4;--d-accent2:#9fd0ff;--d-clock:#f2fffb;--d-glow:rgba(127,240,212,.3);--d-secbar:linear-gradient(90deg,#7ff0d4,#9fd0ff);--d-card-bg:rgba(255,255,255,.08);--d-card-border:rgba(159,208,255,.3);--d-event-color:#7ff0d4;--d-line:rgba(159,208,255,.25);--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  :root[data-theme-name="aurora"] body:not(.mode-manage){background-size:300% 300%;animation:auroraFlow 38s ease-in-out infinite;}
+  @keyframes auroraFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  :root[data-theme-name="dots"]{--d-bg:radial-gradient(circle,rgba(255,255,255,.09) 1px,transparent 1.4px) 0 0/22px 22px,linear-gradient(160deg,#1b2231 0%,#0b0f18 100%);--d-text:#e9eef6;--d-muted:#97a2b5;--d-accent:#6aa0ff;--d-accent2:#9ab6ff;--d-clock:#f3f6fb;--d-glow:rgba(106,160,255,.22);--d-secbar:linear-gradient(90deg,#6aa0ff,#aab2bd);--d-card-bg:rgba(255,255,255,.05);--d-card-border:#2b303a;--d-event-color:#9ab6ff;--d-line:#2b303a;--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  :root[data-theme-name="mesh"]{--d-bg:radial-gradient(42% 44% at 16% 20%,rgba(94,92,230,.55),transparent 70%),radial-gradient(46% 46% at 86% 16%,rgba(0,180,210,.5),transparent 70%),radial-gradient(52% 52% at 72% 92%,rgba(255,110,170,.45),transparent 72%),radial-gradient(46% 48% at 8% 88%,rgba(52,200,150,.4),transparent 72%),#0a0e1a;--d-text:#eef1ff;--d-muted:rgba(230,236,255,.75);--d-accent:#cdd6ff;--d-accent2:#8fe0d0;--d-clock:#fff;--d-glow:rgba(150,140,255,.3);--d-secbar:linear-gradient(90deg,#9db0ff,#ff9ec4);--d-card-bg:rgba(255,255,255,.1);--d-card-border:rgba(255,255,255,.22);--d-event-color:#cdd6ff;--d-line:rgba(255,255,255,.22);--d-font:"Assistant","Heebo",sans-serif;--d-font-disp:"Assistant","Heebo",sans-serif;}
+  :root[data-theme-name="waves"]{--d-bg:radial-gradient(130% 90% at 50% 125%,rgba(79,224,208,.2),transparent 58%),radial-gradient(130% 90% at 50% -25%,rgba(79,150,255,.17),transparent 58%),radial-gradient(90% 60% at 85% 60%,rgba(120,255,235,.1),transparent 60%),linear-gradient(180deg,#07323a 0%,#05202c 55%,#041a24 100%);--d-text:#e6f8f7;--d-muted:#93bfc3;--d-accent:#4fe0d0;--d-accent2:#7fe8ff;--d-clock:#eafcff;--d-glow:rgba(79,224,208,.28);--d-secbar:linear-gradient(90deg,#4fe0d0,#7fb0ff);--d-card-bg:rgba(79,224,208,.08);--d-card-border:rgba(79,224,208,.3);--d-event-color:#7fe8ff;--d-line:rgba(79,224,208,.26);--d-font:"Heebo",sans-serif;--d-font-disp:"Heebo",sans-serif;}
+  :root[data-theme-name="ember"]{--d-bg:radial-gradient(68% 52% at 50% 36%,rgba(220,120,50,.28),transparent 70%),radial-gradient(130% 100% at 50% 2%,#241610 0%,#160d07 60%,#0a0604 100%);--d-text:#f5e6d4;--d-muted:#c3a488;--d-accent:#e8a24e;--d-accent2:#f0c488;--d-clock:#faecd8;--d-glow:rgba(232,162,78,.3);--d-secbar:linear-gradient(90deg,#e8a24e,#9a5a2f);--d-card-bg:rgba(232,162,78,.08);--d-card-border:rgba(232,162,78,.3);--d-event-color:#f0c488;--d-line:rgba(232,162,78,.26);--d-font:"Heebo",sans-serif;--d-font-disp:"Bellefair","Frank Ruhl Libre",serif;}
   .msgs{background:var(--d-card-bg);border:1px solid var(--d-card-border);border-radius:clamp(14px,1.8vmin,24px);padding:clamp(16px,2.4vmin,28px) clamp(20px,3vmin,38px);}
   .msgs-title{margin:0 0 .55em;display:flex;align-items:center;gap:.45em;font-family:var(--d-font-disp);font-weight:700;color:var(--d-accent);font-size:clamp(1.2rem,3vmin,2.05rem);padding-bottom:.35em;border-bottom:1px solid var(--d-line);}
   .msgs-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5em;}
@@ -298,6 +311,7 @@
     </div>
   </div>
   <div class="mediashow" id="mediaShow"><div class="m-stage" id="mediaStage"></div><div class="m-clock" id="mediaClock"></div></div>
+  <div class="broadcast-show" id="bcShow"><div class="m-stage" id="bcStage"></div><div class="m-clock" id="bcClock"></div></div>
   <button class="fsbtn" id="fsBtn" type="button" hidden><span id="fsIco">⛶</span><span id="fsLabel">מסך מלא</span></button>
 </main>
 
@@ -349,6 +363,12 @@
           <div class="addwrap"><label class="c-btn" for="dailyFile" style="cursor:pointer;text-align:center;display:block">⬆️ העלאת סרטון היום (עד 7 דק׳)</label><input id="dailyFile" type="file" accept="video/*" hidden></div>
           <div id="dailyProgress" style="font-size:13px;opacity:.85;padding:4px 2px 0" hidden></div>
           <div id="dailyCurrent"></div>
+        </div></div>
+        <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(255,45,85,.18)">📺</span><span>שידור חי / יוטיוב</span></div><div class="c-group">
+          <div class="c-row"><span class="lbl">קישור לשידור<small>יוטיוב, שידור חי, או קישור וידאו (mp4/m3u8)</small></span></div>
+          <div class="addwrap"><div class="addrow"><input id="bcUrl" class="c-input" placeholder="הדבק כאן קישור…"><button id="bcStart" class="c-btn" style="flex:none">▶ הקרן</button></div></div>
+          <div class="c-row"><span class="lbl">מצב<small id="bcStatus">⚫ כבוי</small></span><button id="bcStop" class="c-btn sec" style="flex:none">⏹ עצור שידור</button></div>
+          <div class="c-note">אם הרשת חוסמת את המקור (למשל יוטיוב) — זה לא יוצג; צריך מקור שהסינון מתיר.</div>
         </div></div>
         <div class="c-section"><div class="c-hdr"><span class="hi" style="background:rgba(88,86,214,.16)">🕯️</span><span>תמונת הרבי היומית</span></div><div class="c-group">
           <div class="c-row"><span class="lbl">תצוגה<small>תמונת הרבי מתחלפת כל יום</small></span></div>
@@ -466,8 +486,8 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
 <script>
 (function(){
   "use strict";
-  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60,dailyVidEnabled:false,dailyVidOffsetMin:30,dailyVidUrl:"",dailyVidName:"",displayOff:false,rebbeMode:"off",clockShiftX:0,clockShiftY:0};
-  var THEMES=[{k:"night",n:"לילה כחול",bg:"linear-gradient(135deg,#17244d,#0a0f1e)",fg:"#e7c072"},{k:"apple",n:"אפל בהיר",bg:"#eceef3",fg:"#0a84ff"},{k:"sunrise",n:"זריחה",bg:"linear-gradient(135deg,#ff9a5a,#ff6a88)",fg:"#fff"},{k:"emerald",n:"אזמרגד",bg:"linear-gradient(160deg,#134a37,#0a2a20)",fg:"#dcbd6c"},{k:"gold",n:"זהב",bg:"radial-gradient(circle at 50% 0%,#17120a,#0a0806)",fg:"#d4af37"},{k:"contrast",n:"ניגודיות",bg:"#000",fg:"#ffe100"},{k:"glass",n:"זכוכית",bg:"linear-gradient(135deg,#7a50ff,#00c8ff)",fg:"#fff"},{k:"neon",n:"ניאון",bg:"radial-gradient(circle,#13131f,#05050a)",fg:"#2ee6ff"},{k:"royal",n:"כחול חב״ד",bg:"linear-gradient(160deg,#14408f,#0d2a63)",fg:"#ecc978"},{k:"blueprint",n:"שרטוט",bg:"#0a2744",fg:"#7fd0ff"},{k:"parchment",n:"קלף",bg:"linear-gradient(135deg,#f6ecd2,#ecdcb8)",fg:"#7d2436"},{k:"minimal",n:"מינימל",bg:"#050505",fg:"#f5a623"},{k:"wine",n:"בורדו",bg:"linear-gradient(160deg,#3a0e1a,#150406)",fg:"#e7c072"},{k:"ocean",n:"ים",bg:"linear-gradient(160deg,#07323a,#041a20)",fg:"#4fe0d0"},{k:"purple",n:"סגול מלכותי",bg:"radial-gradient(circle at 50% 0%,#241041,#120726)",fg:"#c3a6ff"},{k:"charcoal",n:"פחם",bg:"radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013)",fg:"#6aa0ff"},{k:"cream",n:"קרם",bg:"#f3ecdd",fg:"#915e2a"},{k:"bronze",n:"ברונזה",bg:"radial-gradient(circle at 50% 0%,#241a10,#120c06)",fg:"#cf9a4e"}];
+  var DEFAULTS={passcode:"770",phoneDepositTime:"15:15",phoneDepositEnabled:true,phoneEveningEnabled:true,lightsOutDefault:"22:00",lightsOutOverride:"",lightsOutOverrideDate:"",lightsOutEnabled:true,ksShow:true,ksOffsetMin:0,shabbatMode:true,nightDim:true,displayTheme:"night",themeRotate:0,brightness:100,hyyMode:"rotate",screenOffEnabled:true,screenOffStart:"01:00",screenOffEnd:"06:00",mediaMode:"off",mediaDwell:8,mediaVideoSecs:60,dailyVidEnabled:false,dailyVidOffsetMin:30,dailyVidUrl:"",dailyVidName:"",displayOff:false,rebbeMode:"off",clockShiftX:0,clockShiftY:0,bcOn:false,bcUrl:"",bcType:""};
+  var THEMES=[{k:"night",n:"לילה כחול",bg:"linear-gradient(135deg,#17244d,#0a0f1e)",fg:"#e7c072"},{k:"apple",n:"אפל בהיר",bg:"#eceef3",fg:"#0a84ff"},{k:"sunrise",n:"זריחה",bg:"linear-gradient(135deg,#ff9a5a,#ff6a88)",fg:"#fff"},{k:"emerald",n:"אזמרגד",bg:"linear-gradient(160deg,#134a37,#0a2a20)",fg:"#dcbd6c"},{k:"gold",n:"זהב",bg:"radial-gradient(circle at 50% 0%,#17120a,#0a0806)",fg:"#d4af37"},{k:"contrast",n:"ניגודיות",bg:"#000",fg:"#ffe100"},{k:"glass",n:"זכוכית",bg:"linear-gradient(135deg,#7a50ff,#00c8ff)",fg:"#fff"},{k:"neon",n:"ניאון",bg:"radial-gradient(circle,#13131f,#05050a)",fg:"#2ee6ff"},{k:"royal",n:"כחול חב״ד",bg:"linear-gradient(160deg,#14408f,#0d2a63)",fg:"#ecc978"},{k:"blueprint",n:"שרטוט",bg:"#0a2744",fg:"#7fd0ff"},{k:"parchment",n:"קלף",bg:"linear-gradient(135deg,#f6ecd2,#ecdcb8)",fg:"#7d2436"},{k:"minimal",n:"מינימל",bg:"#050505",fg:"#f5a623"},{k:"wine",n:"בורדו",bg:"linear-gradient(160deg,#3a0e1a,#150406)",fg:"#e7c072"},{k:"ocean",n:"ים",bg:"linear-gradient(160deg,#07323a,#041a20)",fg:"#4fe0d0"},{k:"purple",n:"סגול מלכותי",bg:"radial-gradient(circle at 50% 0%,#241041,#120726)",fg:"#c3a6ff"},{k:"charcoal",n:"פחם",bg:"radial-gradient(130% 100% at 50% -10%,#20242b,#0e1013)",fg:"#6aa0ff"},{k:"cream",n:"קרם",bg:"#f3ecdd",fg:"#915e2a"},{k:"bronze",n:"ברונזה",bg:"radial-gradient(circle at 50% 0%,#241a10,#120c06)",fg:"#cf9a4e"},{k:"starry",n:"שמי כוכבים",bg:"radial-gradient(130% 100% at 50% -10%,#15244c,#05070f)",fg:"#e7c072"},{k:"aurora",n:"זוהר הקוטב",bg:"linear-gradient(120deg,#0b3b3a,#12507a,#2a2f6a)",fg:"#7ff0d4"},{k:"dots",n:"נקודות",bg:"linear-gradient(160deg,#1b2231,#0b0f18)",fg:"#6aa0ff"},{k:"mesh",n:"רשת צבעונית",bg:"radial-gradient(45% 45% at 18% 20%,#5e5ce6,transparent 70%),radial-gradient(50% 50% at 82% 82%,#ff6ea8,#0a0e1a)",fg:"#cdd6ff"},{k:"waves",n:"גלים",bg:"linear-gradient(180deg,#07323a,#041a24)",fg:"#4fe0d0"},{k:"ember",n:"גחלים",bg:"radial-gradient(70% 55% at 50% 38%,#3a241a,#0b0806)",fg:"#e8a24e"}];
   var PHONE_LEAD_MIN=10,LO_INFO_FROM_H=21,LO_LEAD_MIN=15,GOODNIGHT_MIN=20,LAT=32.0807,LON=34.8338,DIM_END_H=6.5;
   var config=Object.assign({},DEFAULTS),messages=[],store=null;
   var mediaList=[],mediaU=0,dailyPlaying=false,dailyPlayedKey=null;
@@ -758,7 +778,8 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     if(config.nightDim&&loD&&!onShab){var loH=loD.h+loD.m/60;dim=(h>=loH)||(h<DIM_END_H);}
     elDisplay.classList.toggle("dimmed",dim);applyBrightness();
     var scEl=document.getElementById("screenOff");if(scEl)scEl.classList.toggle("on",screenOffNow(now));
-    if(maybeDaily(now)){var _dmc=document.getElementById("mediaClock");if(_dmc)_dmc.textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());}
+    if(syncBroadcast(now)){/* שידור חי משתלט על המסך */}
+    else if(maybeDaily(now)){var _dmc=document.getElementById("mediaClock");if(_dmc)_dmc.textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());}
     else syncMedia(now);
     var mm=now.getMinutes();if(mm!==lastDriftMin){lastDriftMin=mm;driftI=(driftI+1)%driftPos.length;var p=driftPos[driftI];elDisplay.style.transform="translate("+p[0]+"px,"+p[1]+"px)";}
     if(now.getHours()===4&&now.getMinutes()===0&&now.toDateString()!==startDay)location.reload();
@@ -827,6 +848,52 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     var p=v.play();if(p&&p.catch)p.catch(function(){v.muted=true;v.play().catch(function(){endDaily(tkey);});});
   }
   function endDaily(tkey){dailyPlaying=false;if(tkey){dailyPlayedKey=tkey;try{localStorage.setItem("board_dailyvid_played",tkey);}catch(e){}}var ms=$("mediaShow"),st=$("mediaStage");if(st)st.innerHTML="";if(ms)ms.classList.remove("on");mediaCurKey="";}
+  /* ===== שידור חי / יוטיוב (שכבה מלאת-מסך מעל הכול) ===== */
+  function parseBroadcast(u){
+    u=(u||"").trim();if(!u)return null;
+    var m=u.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|live\/|shorts\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+    if(m)return{type:"youtube",id:m[1]};
+    if(/^[A-Za-z0-9_-]{11}$/.test(u))return{type:"youtube",id:u};
+    if(/\.(mp4|webm|ogg|m3u8|mov|m4v)(\?|#|$)/i.test(u))return{type:"video",url:u};
+    return{type:"iframe",url:(/^https?:\/\//i.test(u)?u:"https://"+u)};
+  }
+  function attachHls(v,url){
+    if(v.canPlayType&&v.canPlayType("application/vnd.apple.mpegurl")){v.src=url;return;}
+    if(window.Hls&&window.Hls.isSupported()){var h=new window.Hls();h.loadSource(url);h.attachMedia(v);return;}
+    var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js";
+    s.onload=function(){if(window.Hls&&window.Hls.isSupported()){var h=new window.Hls();h.loadSource(url);h.attachMedia(v);var p=v.play();if(p&&p.catch)p.catch(function(){});}else{v.src=url;}};
+    s.onerror=function(){v.src=url;};document.head.appendChild(s);
+  }
+  var _bcKey="";
+  function syncBroadcast(now){
+    var ms=$("bcShow"),st=$("bcStage");if(!ms||!st)return false;
+    var on=!!config.bcOn&&!!config.bcUrl;
+    if(!on){if(ms.classList.contains("on")){ms.classList.remove("on");st.innerHTML="";_bcKey="";}return false;}
+    if(mediaActive)stopMedia();
+    var key=(config.bcType||"")+"|"+config.bcUrl;
+    if(key!==_bcKey){_bcKey=key;st.innerHTML="";var b=parseBroadcast(config.bcUrl);
+      if(b&&b.type==="youtube"){
+        var fr=document.createElement("iframe");
+        fr.src="https://www.youtube-nocookie.com/embed/"+encodeURIComponent(b.id)+"?autoplay=1&mute=1&controls=0&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3&loop=1&playlist="+encodeURIComponent(b.id);
+        fr.setAttribute("allow","autoplay; encrypted-media; picture-in-picture");fr.setAttribute("frameborder","0");fr.allowFullscreen=true;
+        st.appendChild(fr);
+      }else if(b&&b.type==="video"){
+        var v=document.createElement("video");v.autoplay=true;v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute("playsinline","");v.controls=false;v.preload="auto";
+        st.appendChild(v);
+        if(/\.m3u8(\?|#|$)/i.test(b.url))attachHls(v,b.url);else v.src=b.url;
+        var pv=v.play();if(pv&&pv.catch)pv.catch(function(){});
+      }else if(b){
+        var ifr=document.createElement("iframe");ifr.src=b.url;ifr.setAttribute("allow","autoplay; encrypted-media; fullscreen");ifr.allowFullscreen=true;st.appendChild(ifr);
+      }
+    }
+    ms.classList.add("on");
+    var bc=$("bcClock");if(bc)bc.textContent=pad2(now.getHours())+":"+pad2(now.getMinutes());
+    return true;
+  }
+  function updateBroadcastUI(){
+    var u=$("bcUrl");if(u&&document.activeElement!==u&&config.bcUrl&&!u.value)u.value=config.bcUrl;
+    var s=$("bcStatus");if(s){if(config.bcOn&&config.bcUrl){s.textContent="🔴 משדר כעת";s.style.color="#ff453a";}else{s.textContent="⚫ כבוי";s.style.color="";}}
+  }
   function updateRebbeUI(){var rm=config.rebbeMode||"off";var rc=$("rebbeChips");if(rc)Array.prototype.forEach.call(rc.children,function(b){b.classList.toggle("on",b.getAttribute("data-rm")===rm);});}
   function updateMediaUI(){var mm=config.mediaMode||"off";var mc=$("mediaModeChips");if(mc)Array.prototype.forEach.call(mc.children,function(b){b.classList.toggle("on",b.getAttribute("data-mm")===mm);});var dv=config.mediaDwell||8;var dc=$("mediaDwellChips");if(dc)Array.prototype.forEach.call(dc.children,function(b){b.classList.toggle("on",(+b.getAttribute("data-dw"))===dv);});var dvl=$("mediaDwellVal");if(dvl)dvl.textContent=dv;}
   function renderAdminMedia(){
@@ -958,6 +1025,8 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     $("dailyFile").addEventListener("change",function(){uploadDaily(this.files&&this.files[0]);this.value="";});
     $("displayOff").addEventListener("change",function(){config.displayOff=$("displayOff").checked;saveConfig().then(function(){toast(config.displayOff?"המסך כובה ⏻":"המסך הודלק ✓");});});
     Array.prototype.forEach.call(document.querySelectorAll("#rebbeChips [data-rm]"),function(b){b.addEventListener("click",function(){config.rebbeMode=b.getAttribute("data-rm");updateRebbeUI();saveConfig().then(function(){toast("תמונת הרבי: "+({off:"כבוי",panel:"מעל השעון",background:"רקע מלא"}[config.rebbeMode]||""));});});});
+    var _bcU=$("bcUrl");if($("bcStart"))$("bcStart").addEventListener("click",function(){var u=(_bcU&&_bcU.value||"").trim();if(!u){toast("הדבק קישור קודם");return;}var b=parseBroadcast(u);config.bcUrl=u;config.bcType=b?b.type:"";config.bcOn=true;updateBroadcastUI();saveConfig().then(function(){toast("שידור הופעל ✓");});});
+    if($("bcStop"))$("bcStop").addEventListener("click",function(){config.bcOn=false;updateBroadcastUI();saveConfig().then(function(){toast("שידור נעצר");});});
     (function(){
       var joy=$("clockJoy"),knob=$("clockJoyKnob");if(!joy||!knob)return;
       var MAXX=32,MAXY=24,joyT,down=false;
@@ -988,7 +1057,7 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
     var loTime=$("loTime");if(document.activeElement!==loTime)loTime.value=effectiveLightsOut()||config.lightsOutDefault;
     $("loEnabled").checked=!!config.lightsOutEnabled;
     var pdTime=$("pdTime");if(document.activeElement!==pdTime)pdTime.value=config.phoneDepositTime;
-    $("pdEnabled").checked=!!config.phoneDepositEnabled;$("pdEveningEnabled").checked=!!config.phoneEveningEnabled;$("ksShow").checked=!!config.ksShow;$("shabbatMode").checked=!!config.shabbatMode;$("nightDim").checked=!!config.nightDim;$("scEnabled").checked=!!config.screenOffEnabled;var _scs=$("scStart");if(_scs&&document.activeElement!==_scs)_scs.value=config.screenOffStart||"01:00";var _sce=$("scEnd");if(_sce&&document.activeElement!==_sce)_sce.value=config.screenOffEnd||"06:00";updateMediaUI();var _de=$("dailyEnabled");if(_de)_de.checked=!!config.dailyVidEnabled;var _do=$("displayOff");if(_do)_do.checked=!!config.displayOff;updateRebbeUI();if(window._joyFromCfg)window._joyFromCfg();renderDailyUI();var _hm=config.hyyMode||"rotate";var _hc=$("hyyChips");if(_hc)Array.prototype.forEach.call(_hc.children,function(b){b.classList.toggle("on",b.getAttribute("data-hyy")===_hm);});
+    $("pdEnabled").checked=!!config.phoneDepositEnabled;$("pdEveningEnabled").checked=!!config.phoneEveningEnabled;$("ksShow").checked=!!config.ksShow;$("shabbatMode").checked=!!config.shabbatMode;$("nightDim").checked=!!config.nightDim;$("scEnabled").checked=!!config.screenOffEnabled;var _scs=$("scStart");if(_scs&&document.activeElement!==_scs)_scs.value=config.screenOffStart||"01:00";var _sce=$("scEnd");if(_sce&&document.activeElement!==_sce)_sce.value=config.screenOffEnd||"06:00";updateMediaUI();var _de=$("dailyEnabled");if(_de)_de.checked=!!config.dailyVidEnabled;var _do=$("displayOff");if(_do)_do.checked=!!config.displayOff;updateRebbeUI();updateBroadcastUI();if(window._joyFromCfg)window._joyFromCfg();renderDailyUI();var _hm=config.hyyMode||"rotate";var _hc=$("hyyChips");if(_hc)Array.prototype.forEach.call(_hc.children,function(b){b.classList.toggle("on",b.getAttribute("data-hyy")===_hm);});
     $("loDefault").textContent=config.lightsOutDefault;applyTheme();refreshKs();renderAdminMessages();updateBrightUI();
   }
   function renderAdminMessages(){
