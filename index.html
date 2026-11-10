@@ -681,7 +681,7 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
   function saveCache(){try{localStorage.setItem("board_config",JSON.stringify(config));localStorage.setItem("board_msgs",JSON.stringify({u:msgsU,list:messages}));localStorage.setItem("board_media",JSON.stringify({u:mediaU,list:mediaList}));}catch(e){}}
   function sortMsgs(){messages.sort(function(a,b){return (a.createdAt||0)-(b.createdAt||0);});}
   function fmtClock(ts){try{var d=new Date(ts);return d.getHours()+":"+pad2(d.getMinutes());}catch(e){return"";}}
-  function renderScreenStatus(){var el=$("screenStatus");if(!el)return;var ts=(lastScreen&&lastScreen.ts)||0,online=false;if(lastScreen&&lastScreen.online)online=(Date.now()-ts)<70000;if(online){el.textContent="🟢 מחובר";el.style.color="var(--c-green)";}else{el.textContent="🔴 לא מחובר"+(ts?" · נראה "+fmtClock(ts):"");el.style.color="#ff453a";}}
+  function renderScreenStatus(){var el=$("screenStatus");if(!el)return;var ts=(lastScreen&&lastScreen.ts)||0,online=false;if(lastScreen&&lastScreen.online)online=Math.abs(nowSync()-ts)<90000;if(online){el.textContent="🟢 מחובר";el.style.color="var(--c-green)";}else{el.textContent="🔴 לא מחובר"+(ts?" · נראה "+fmtClock(ts):"");el.style.color="#ff453a";}}
 
   function computeEvent(now){
     if(config.shabbatMode&&isShabbat(now))return{cls:"ev-shabbat",icon:"🕯️",label:"",value:"גוט שבת",sub:"",urgent:false};
