@@ -1098,9 +1098,15 @@ var MEDIA_UPLOAD = { cloud: "ri3ldqxm", preset: "luach770" };
       fsBtn.addEventListener("click",function(){if(fsElement())exitFs();else reqFs(el);});
       function upd(){var on=!!fsElement();fsLabel.textContent=on?"יציאה ממסך מלא":"מסך מלא";fsIco.textContent=on?"✕":"⛶";}
       document.addEventListener("fullscreenchange",upd);document.addEventListener("webkitfullscreenchange",upd);upd();
-      setTimeout(function(){if(!fsElement())reqFs(el);},800);
-      var once=function(){if(!fsElement())reqFs(el);document.removeEventListener("pointerdown",once);document.removeEventListener("keydown",once);};
-      document.addEventListener("pointerdown",once);document.addEventListener("keydown",once);
+      /* אם הדפדפן כבר במסך-מלא ברמת הדפדפן (קיוסק / F11) — לא מפעילים מסך-מלא של JS,
+         כי ריענון (לילי ב-04:00 או עדכון) מפיל מסך-מלא-של-JS וחושף את שורת המשימות.
+         רק במצב חלון רגיל נשתמש בו כגיבוי. */
+      var browserFull=(function(){try{return window.innerHeight>=screen.height-8;}catch(e){return false;}})();
+      if(!browserFull){
+        setTimeout(function(){if(!fsElement())reqFs(el);},800);
+        var once=function(){if(!fsElement())reqFs(el);document.removeEventListener("pointerdown",once);document.removeEventListener("keydown",once);};
+        document.addEventListener("pointerdown",once);document.addEventListener("keydown",once);
+      }
     }
     var idleT;function activity(){disp.classList.remove("ui-idle");clearTimeout(idleT);idleT=setTimeout(function(){disp.classList.add("ui-idle");},4000);}
     ["mousemove","mousedown","touchstart","keydown"].forEach(function(ev){document.addEventListener(ev,activity,{passive:true});});activity();
