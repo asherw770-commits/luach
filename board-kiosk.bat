@@ -9,14 +9,18 @@ set "FLAGS=--kiosk --start-fullscreen --user-data-dir=%PROFILE% --no-first-run -
 set "CHROME="
 if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" set "CHROME=C:\Program Files\Google\Chrome\Application\chrome.exe"
 if not defined CHROME if exist "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" set "CHROME=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+if not defined CHROME if exist "%LocalAppData%\Google\Chrome\Application\chrome.exe" set "CHROME=%LocalAppData%\Google\Chrome\Application\chrome.exe"
+if not defined CHROME if exist "C:\Users\luach\AppData\Local\Google\Chrome\Application\chrome.exe" set "CHROME=C:\Users\luach\AppData\Local\Google\Chrome\Application\chrome.exe"
 
-rem --- המתנה שהרשת תעלה (עד ~90 שניות) כדי לא להיתקע בדף שגיאה ---
+rem --- המתנה שהרשת תעלה (רימון חוסם ping! לכן בודקים HTTPS בפורט 443, עד ~60 שניות) ---
 set /a NETTRY=0
 :netwait
 if exist "%DIR%\STOP.flag" goto end
-ping -n 1 asherw770-commits.github.io >nul 2>&1 && goto netok
+set "NETOK=0"
+for /f %%i in ('powershell -NoProfile -Command "$c=New-Object Net.Sockets.TcpClient;try{[void]$c.ConnectAsync('asherw770-commits.github.io',443).Wait(2500);if($c.Connected){'1'}else{'0'}}catch{'0'}finally{$c.Close()}"') do set "NETOK=%%i"
+if "%NETOK%"=="1" goto netok
 set /a NETTRY+=1
-if %NETTRY% geq 30 goto netok
+if %NETTRY% geq 20 goto netok
 timeout /t 3 /nobreak >nul
 goto netwait
 :netok
